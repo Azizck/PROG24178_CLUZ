@@ -157,7 +157,7 @@ public class EditItemsController implements Initializable {
     public void editDisplay(ObservableList<Clothing> c) {
         
         //displays placeholder in the edit window
-        typeCombo.getSelectionModel().select(mainController.list.get(indexOnEditing).getProductType());
+        typeCombo.getSelectionModel().select(mainController.list.get(indexOnEditing).getType());
         sizeCombo.getSelectionModel().select(mainController.list.get(indexOnEditing).getSize());
         genderCombo.getSelectionModel().select(mainController.list.get(indexOnEditing).getGender());
         colorCombo.getSelectionModel().select(mainController.list.get(indexOnEditing).getColor());

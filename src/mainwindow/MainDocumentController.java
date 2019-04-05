@@ -5,10 +5,17 @@
  */
 package mainwindow;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import mainwindow.Clothing.*;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -32,6 +39,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -90,6 +98,10 @@ public class MainDocumentController implements Initializable {
     private ComboBox<Size> sizeFilter;
     @FXML
     private ComboBox<Colors> colorFilter;
+    @FXML
+    private Button saveFile;
+    @FXML
+    private Button openFile;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -132,9 +144,11 @@ public class MainDocumentController implements Initializable {
     }
     
     public void setList(Clothing c) {
-        
-        items.getItems().clear();
-        getList().add(c);
+        list.add(c);
+        items.setItems(list);
+        //items.getItems().setAll(list.add(c));
+        //items.getItems().clear();
+        //getList().add(c);
       
     }
     
@@ -271,6 +285,7 @@ public class MainDocumentController implements Initializable {
 
     @FXML
     private void typeFilterHandle(ActionEvent event) {
+      
          if (Clothing.Type.Dress == typeFilter.getSelectionModel().getSelectedItem()){
              
          }
@@ -332,5 +347,75 @@ public class MainDocumentController implements Initializable {
              
          }
     }
+
+    @FXML
+    private void saveHandle(ActionEvent event) {
+        Stage stage = new Stage();
+        FileChooser fileChooser = new FileChooser();
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT (*.txt)", "*.txt");
+        fileChooser.getExtensionFilters().add(extFilter);
+        fileChooser.setTitle("Save as");
+        File file = fileChooser.showSaveDialog(stage);
+        
+        
+        if (file != null) {
+            try {
+            PrintWriter writer = new PrintWriter(file);
+            for (Clothing c : list) {
+                writer.write(c.getProductId() + ", " + c.getType() + ", " 
+                        + c.getGender() + ", " + c.getSize() + ", " + c.getColor() 
+                        + ", " + c.getPrice() + ", " + c.getQuantity() + "\n");
+            }
+            
+            writer.close();
+            } catch (IOException ex) {
+                System.out.println("Error: " + ex);
+            }
+        }
+    }
+
+    @FXML
+    private void openFileHandle(ActionEvent event) {
+        /*
+        Stage stage = new Stage();
+        FileChooser fileChooser = new FileChooser();
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT (*.txt)", "*.txt");
+        fileChooser.getExtensionFilters().add(extFilter);
+        fileChooser.setTitle("Open File");
+        //File file = fileChooser.showOpenDialog(stage);
+        */
+        ArrayList<Clothing> c = null;
+  
+            c = open("D:\test.txt");
+            ObservableList<Clothing> d = FXCollections.observableArrayList(c);
+            items.setItems(d);
+      
+    }
+    
+    
+    private ArrayList<Clothing> open(String file){
+        
+        ArrayList<Clothing> c = new ArrayList<>();
+       try {
+           BufferedReader reader = Files.newBufferedReader(Paths.get(file));
+           String line;
+           while ((line = reader.readLine()) != null) {
+               String[] names = line.split(", ");
+               c.add(new Clothing(Integer.parseInt(names[0]), 
+                       Type.valueOf(names[1]), Gender.valueOf(names[2]), 
+                       names[3], Colors.valueOf(names[4]), 
+                       Double.parseDouble(names[5]), 
+                       Integer.parseInt(names[6])));
+           }
+           list.addAll(c);
+           items.setItems(list);
+         
+       } catch (IOException e){
+           e.printStackTrace();
+        }
+       return c;
+       
+    }
+    
 
 }

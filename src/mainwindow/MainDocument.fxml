@@ -24,19 +24,24 @@
             <ImageView fitHeight="123.0" fitWidth="199.0" pickOnBounds="true" preserveRatio="true" />
             <VBox alignment="CENTER" fillWidth="false" prefHeight="307.0" prefWidth="224.0" spacing="30.0">
                <children>
-                  <Button fx:id="addBtn" mnemonicParsing="false" onAction="#addHandle" prefHeight="50.0" prefWidth="110.0" text="Add">
+                  <Button fx:id="openFile" mnemonicParsing="false" onAction="#openFileHandle" prefHeight="50.0" prefWidth="115.0" text="Open File">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="addBtn" mnemonicParsing="false" onAction="#addHandle" prefHeight="50.0" prefWidth="115.0" text="Add">
                      <font>
                         <Font size="20.0" />
                      </font></Button>
-                  <Button fx:id="editBtn" mnemonicParsing="false" onAction="#editHandle" prefHeight="50.0" prefWidth="110.0" text="Edit">
+                  <Button fx:id="editBtn" mnemonicParsing="false" onAction="#editHandle" prefHeight="50.0" prefWidth="115.0" text="Edit">
                      <font>
                         <Font size="20.0" />
                      </font></Button>
-                  <Button fx:id="removeBtn" mnemonicParsing="false" onAction="#removeHandle" prefHeight="50.0" prefWidth="110.0" text="Remove">
+                  <Button fx:id="removeBtn" mnemonicParsing="false" onAction="#removeHandle" prefHeight="50.0" prefWidth="115.0" text="Remove">
                      <font>
                         <Font size="20.0" />
                      </font></Button>
-                  <Button fx:id="saveFile" mnemonicParsing="false" onAction="#saveHandle" prefHeight="50.0" prefWidth="110.0" text="Save File">
+                  <Button fx:id="saveFile" mnemonicParsing="false" onAction="#saveHandle" prefHeight="50.0" prefWidth="115.0" text="Save File">
                      <font>
                         <Font size="20.0" />
                      </font>

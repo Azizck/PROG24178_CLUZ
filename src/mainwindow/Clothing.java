@@ -75,6 +75,7 @@ public class Clothing {
         this.productId = productId;
     }
     
+    /*
     public Type getProductType() {
         return type;
     }
@@ -82,7 +83,8 @@ public class Clothing {
     public void setProductType(Type type) {
         this.type = type;
     }
-
+    */
+    
     public double getPrice() {
         return price;
     }

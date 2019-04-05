@@ -163,7 +163,7 @@ public class AddItemsController implements Initializable {
     //method to add the product given the product type
     public void addProduct(Clothing c) {
 
-        c.setProductType(typeCombo.getValue());
+        c.setType(typeCombo.getValue());
         c.setProductId(Integer.parseInt(idLabel.getText()));
         c.setSize(sizeCombo.getValue());
         c.setColor(colorCombo.getValue());
@@ -171,10 +171,8 @@ public class AddItemsController implements Initializable {
         c.setPrice(Double.parseDouble(priceLabel.getText()));
         c.setQuantity(Integer.parseInt(quantityLabel.getText()));
 
-        this.c = c;
-
         //adds cloth object to ArrayList clothList
-        clothList.add(c);
+        //clothList.add(c);
         mainController.setList(c);
 
         confirmation.setText("Item Added Successfully");

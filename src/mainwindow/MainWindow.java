@@ -22,39 +22,16 @@ import javafx.stage.Stage;
  */
 public class MainWindow extends Application {
     
-    /*
-    //Static global variable for the controller (where MyController is the name of your controller class
-
-static MainDocumentController mainDocumentController;
-
-@Override
-public void start(Stage stage) throws Exception {
-
-    //Set up instance instead of using static load() method
-    FXMLLoader loader = new FXMLLoader(getClass().getResource("MainDocument.fxml"));
-    Parent root = loader.load();
-
-    //Now we have access to getController() through the instance... don't forget the type cast
-    mainDocumentController = (MainDocumentController)loader.getController();
-
-    Scene scene = new Scene(root);
-
-    stage.setScene(scene);
-    stage.show();
-}
-    */
     
     @Override
     public void start(Stage stage) throws Exception {
         try {
         Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
         
-        Scene scene = new Scene(root, 850, 511);
+        Scene scene = new Scene(root);
         
         stage.setScene(scene);
         stage.setTitle("Cluz");
-        stage.setMinWidth(860);
-        stage.setMinHeight(521);
         stage.show();
                
         
