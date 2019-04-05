@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="511.0" prefWidth="734.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" 
+            fx:controller="mainwindow.MainDocumentController" > 
+
+  
+    <children>
+       
+      <VBox layoutY="7.0" prefHeight="511.0" prefWidth="168.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="566.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <ImageView fitHeight="140.0" fitWidth="168.0" pickOnBounds="true" preserveRatio="true" />
+            <VBox alignment="CENTER" fillWidth="false" prefHeight="289.0" prefWidth="168.0" spacing="30.0">
+               <children>
+                  <Button fx:id="addBtn" mnemonicParsing="false" onAction="#addHandle" text="Add">
+                     <font>
+                        <Font size="24.0" />
+                     </font></Button>
+                  <Button fx:id="editBtn" mnemonicParsing="false" onAction="#editHandle" text="Edit">
+                     <font>
+                        <Font size="24.0" />
+                     </font></Button>
+                  <Button fx:id="removeBtn" mnemonicParsing="false" onAction="#removeHandle" text="Remove">
+                     <font>
+                        <Font size="24.0" />
+                     </font></Button>
+               </children>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+            </VBox>
+         </children>
+      </VBox>
+      <VBox alignment="CENTER_LEFT" layoutX="169.0" prefHeight="511.0" prefWidth="566.0" spacing="20.0">
+         <children>
+            <HBox prefHeight="40.0" prefWidth="507.0" />
+            <HBox prefHeight="69.0" prefWidth="507.0">
+               <children>
+                  <Label text="Filters" />
+               </children>
+            </HBox>
+            <HBox prefHeight="385.0" prefWidth="544.0">
+               <children>
+                  <TableView fx:id="items" prefHeight="351.0" prefWidth="528.0">
+                    <columns>
+                        <TableColumn fx:id="tableId" prefWidth="75.0" text="ID" />
+                        <TableColumn fx:id="tableType" prefWidth="75.0" text="Type" />
+                      <TableColumn fx:id="tableGender" prefWidth="75.0" text="Gender" />
+                      <TableColumn fx:id="tableSize" prefWidth="75.0" text="Size" />
+                        <TableColumn fx:id="tableColor" prefWidth="75.0" text="Color" />
+                        <TableColumn fx:id="tablePrice" prefWidth="75.0" text="Price" />
+                        <TableColumn fx:id="tableQuantity" prefWidth="75.0" text="Quantity" />
+                    </columns>
+                  </TableView>
+               </children>
+            </HBox>
+            <HBox prefHeight="54.0" prefWidth="507.0" />
+         </children>
+         <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </padding>
+      </VBox>
+      
+   </children>
+</AnchorPane>
