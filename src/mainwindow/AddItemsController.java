@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-    package mainwindow;
+package mainwindow;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,6 +14,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -39,21 +40,22 @@ public class AddItemsController implements Initializable {
 
     private ArrayList<Clothing> clothList;
     private Clothing c;
-    
+    private ObservableList<Clothing> list;
+
     private MainDocumentController mainController;
-   
+
     private boolean inEditing;
     private int indexOnEditing;
     private String fileName;
     private int index;
     private Label label;
+    
     @FXML
     private ComboBox<Type> typeCombo;
     @FXML
     private TextField idLabel;
     @FXML
     private ComboBox<Gender> genderCombo;
-
     @FXML
     private ComboBox<String> sizeCombo;
     @FXML
@@ -74,34 +76,26 @@ public class AddItemsController implements Initializable {
     private Label confirmation;
     @FXML
     private Button imgButton;
-    
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         mainController = MainDocumentController.getController();
         clothList = new ArrayList<>();
-        inEditing = false;
-        
         typeCombo.getItems().setAll(Clothing.Type.values());
         cbDisable(true);
     }
-    
-    
+
     @FXML
     private void typeHandle(ActionEvent event) {
 
-        //Clothing.Type.valueOf("Dress");
-        //for (int i = 0; i < typeCombo.getItems().size(); i++) {
-        // if (Clothing.Type.values().equals(typeCombo.getSelectionModel().getSelectedItem())) {
-        //if (typeCombo.getSelectionModel().getSelectedItem().equals(Clothing.Type.values())) {
         if (Clothing.Type.Dress == typeCombo.getSelectionModel().getSelectedItem()) {
             cbDisable(false);
-            sizeCombo.getItems().setAll("0", "2", "4", "6", "8", "10");
+            sizeCombo.getItems().setAll("0", "2", "4", "6", "8", "10", "12");
             colorCombo.getItems().setAll(Clothing.Colors.values());
             genderCombo.getItems().setAll(Clothing.Gender.Girls, Clothing.Gender.Female);
         } else if (Clothing.Type.Shorts == typeCombo.getSelectionModel().getSelectedItem()) {
             cbDisable(false);
-            sizeCombo.getItems().setAll("30W", "32W", "34W", "36W");
+            sizeCombo.getItems().setAll("28W", "30W", "32W", "34W", "36W");
             colorCombo.getItems().setAll(Clothing.Colors.values());
             genderCombo.getItems().setAll(Clothing.Gender.values());
         } else {
@@ -120,60 +114,22 @@ public class AddItemsController implements Initializable {
     @FXML
     private void submitHandle(ActionEvent event) {
 
-       
-         
-                if (typeCombo.getSelectionModel().isEmpty() || colorCombo.getSelectionModel().isEmpty()
-                    || genderCombo.getSelectionModel().isEmpty()
-                    || priceLabel.getText().isEmpty() || quantityLabel.getText().isEmpty() 
-                    || sizeCombo.getSelectionModel().isEmpty()) {
-                confirmation.setText("Please complete the fields");
-                
-            }
-                
-                else {
-                    Clothing c = new Clothing();
-                    addProduct(c);
-                }
-                /*
+        if (typeCombo.getSelectionModel().isEmpty() || colorCombo.getSelectionModel().isEmpty()
+                || genderCombo.getSelectionModel().isEmpty()
+                || priceLabel.getText().isEmpty() || quantityLabel.getText().isEmpty()
+                || sizeCombo.getSelectionModel().isEmpty()) {
+            confirmation.setText("Please complete the fields");
 
-                if (Clothing.Type.Dress == typeCombo.getSelectionModel().getSelectedItem()) {
+        } else {
+            Clothing c = new Clothing();
+            addProduct(c);
+        }
 
-                    //Clothing c = new Dress(Integer.parseInt(idLabel.getText()), typeCombo.getValue(), genderCombo.getValue(), sizeCombo.getValue(), colorCombo.getValue(), Double.parseDouble(priceLabel.getText()), Integer.parseInt(quantityLabel.getText()));
-                   /* mainController.addToTable(new Dress(Integer.parseInt(idLabel.getText()), typeCombo.getValue(), 
-                            genderCombo.getValue(), sizeCombo.getValue(), colorCombo.getValue(), 
-                            Double.parseDouble(priceLabel.getText()), Integer.parseInt(quantityLabel.getText())));
-                            
-                   Clothing c = new Clothing();
-                    addProduct(c);
-               
-                 
-                } else if (typeCombo.getSelectionModel().getSelectedItem() == Clothing.Type.Shirts) {
-                   // Clothing c = new Shirts();
-                  Clothing c = new Clothing();
-                   addProduct(c);
-                    
-
-                } else if (typeCombo.getSelectionModel().getSelectedItem() == Clothing.Type.Jackets) {
-
-                   // Clothing c = new Jackets();
-                   addProduct(c);
-
-                } else if (typeCombo.getSelectionModel().getSelectedItem() == Clothing.Type.Shorts) {
-
-                   // Clothing c = new Shorts();
-                    addProduct(c);
-                
-                } else if (typeCombo.getSelectionModel().getSelectedItem() == Clothing.Type.Jackets) {
-
-                   // Clothing c = new Jackets();
-                    addProduct(c);
-                }
-                */
-            }
+    }
 
     @FXML
     private void cancelHandle(ActionEvent event) {
-        Stage stage = (Stage)cancelBtn.getScene().getWindow();
+        Stage stage = (Stage) cancelBtn.getScene().getWindow();
         stage.close();
     }
 
@@ -197,7 +153,6 @@ public class AddItemsController implements Initializable {
     public void clear() {
 
         typeCombo.getSelectionModel().clearSelection();
-        //typeCombo.valueProperty().set(null);
         idLabel.setText("");
         genderCombo.getSelectionModel().clearSelection();
         sizeCombo.getSelectionModel().clearSelection();
@@ -218,19 +173,26 @@ public class AddItemsController implements Initializable {
         c.setGender(genderCombo.getValue());
         c.setPrice(Double.parseDouble(priceLabel.getText()));
         c.setQuantity(Integer.parseInt(quantityLabel.getText()));
-      
+
+        this.c = c;
+
+        //adds cloth object to ArrayList clothList
         clothList.add(c);
-        mainController.setList(clothList);
-        
+        mainController.setList(c);
+
         confirmation.setText("Item Added Successfully");
-              
+
         clear();
 
     }
 
+    public Clothing getProduct() {
+        return c;
+    }
+
     @FXML
     private void imageHandle(ActionEvent event) {
-         FileChooser fileChooser = new FileChooser();
+        FileChooser fileChooser = new FileChooser();
 
         //Set extension filter
         FileChooser.ExtensionFilter extFilterJPG = new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.JPG");
@@ -245,11 +207,10 @@ public class AddItemsController implements Initializable {
             image.setImage(myImage);
         }
     }
-    
- 
-    
+
+    /*
     public void setParentController(MainDocumentController mainController) {
     this.mainController = mainController;
 }
-    
+     */
 }

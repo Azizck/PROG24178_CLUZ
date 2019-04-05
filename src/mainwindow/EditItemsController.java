@@ -5,11 +5,11 @@
  */
 package mainwindow;
 
-import java.io.File;
 import mainwindow.Clothing.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -19,10 +19,8 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 /**
@@ -85,18 +83,14 @@ public class EditItemsController implements Initializable {
     @FXML
     private void typeHandle(ActionEvent event) {
 
-        //Clothing.Type.valueOf("Dress");
-        //for (int i = 0; i < typeCombo.getItems().size(); i++) {
-        // if (Clothing.Type.values().equals(typeCombo.getSelectionModel().getSelectedItem())) {
-        //if (typeCombo.getSelectionModel().getSelectedItem().equals(Clothing.Type.values())) {
-        if (Clothing.Type.Dress == typeCombo.getSelectionModel().getSelectedItem()) {
+       if (Clothing.Type.Dress == typeCombo.getSelectionModel().getSelectedItem()) {
 
-            sizeCombo.getItems().setAll("0", "2", "4", "6", "8", "10");
+            sizeCombo.getItems().setAll("0", "2", "4", "6", "8", "10", "12");
             colorCombo.getItems().setAll(Clothing.Colors.values());
             genderCombo.getItems().setAll(Clothing.Gender.Girls, Clothing.Gender.Female);
         } else if (Clothing.Type.Shorts == typeCombo.getSelectionModel().getSelectedItem()) {
 
-            sizeCombo.getItems().setAll("30W", "32W", "34W", "36W");
+            sizeCombo.getItems().setAll("28W", "30W", "32W", "34W", "36W");
             colorCombo.getItems().setAll(Clothing.Colors.values());
             genderCombo.getItems().setAll(Clothing.Gender.values());
         } else {
@@ -114,11 +108,6 @@ public class EditItemsController implements Initializable {
 
     @FXML
     private void imageHandle(ActionEvent event) {
-//        FileChooser fileChooser = new FileChooser();
-//        File file = fileChooser.showOpenDialog(null);
-//        if (file != null) {
-//            Image myImage = new Image(file.toURI().toString());
-//            image.setImage(myImage);
     }
 
     @FXML
@@ -134,24 +123,11 @@ public class EditItemsController implements Initializable {
 
     @FXML
     private void submitHandle(ActionEvent event) {
-        
-        
-            c.setProductType(typeCombo.getValue());
-            c.setProductId(Integer.parseInt(idLabel.getText()));
-            c.setSize(sizeCombo.getValue());
-            c.setColor(colorCombo.getValue());
-            c.setGender(genderCombo.getValue());
-            c.setPrice(Double.parseDouble(priceLabel.getText()));
-            c.setQuantity(Integer.parseInt(quantityLabel.getText()));
-
-            clothList.add(indexOnEditing, c);
-            mainController.updateList(clothList);
-            //mainController.setList(clothList);
-
+       
+            setList();
             confirmation.setText("Item Added Successfully");
             mainController.update();
-
-        
+    
     }
 
     @FXML
@@ -164,17 +140,31 @@ public class EditItemsController implements Initializable {
         this.indexOnEditing = i;
         return indexOnEditing;
     }
-    public void edit(Clothing c) {
-        //typeCombo.setSelectionModel(c.getType());
-        typeCombo.getSelectionModel().getSelectedItem();
-        idLabel.setText(c.getProductId() + "");
-        genderCombo.getItems().indexOf(c);
-        priceLabel.setText(c.getPrice() + "");
-        //c.getPrice(Double.parseDouble(priceLabel.getText()));
-        quantityLabel.setText(c.getQuantity() + "");
-     
-        this.c = c;
+    
+    
+    public void setList() {
+               
+        mainController.list.get(indexOnEditing).setColor(colorCombo.getSelectionModel().getSelectedItem());      
+        mainController.list.get(indexOnEditing).setType(typeCombo.getSelectionModel().getSelectedItem());
+        mainController.list.get(indexOnEditing).setProductId(Integer.parseInt(idLabel.getText()));
+        mainController.list.get(indexOnEditing).setGender(genderCombo.getSelectionModel().getSelectedItem());
+        mainController.list.get(indexOnEditing).setSize(sizeCombo.getValue());
+        mainController.list.get(indexOnEditing).setPrice(Double.parseDouble(priceLabel.getText()));
+        mainController.list.get(indexOnEditing).setQuantity(Integer.parseInt(quantityLabel.getText()));
         
+  
+    }
+    public void editDisplay(ObservableList<Clothing> c) {
+        
+        //displays placeholder in the edit window
+        typeCombo.getSelectionModel().select(mainController.list.get(indexOnEditing).getProductType());
+        sizeCombo.getSelectionModel().select(mainController.list.get(indexOnEditing).getSize());
+        genderCombo.getSelectionModel().select(mainController.list.get(indexOnEditing).getGender());
+        colorCombo.getSelectionModel().select(mainController.list.get(indexOnEditing).getColor());
+        idLabel.setText(mainController.list.get(indexOnEditing).getProductId()+"");
+        quantityLabel.setText(mainController.list.get(indexOnEditing).getQuantity()+"");
+        priceLabel.setText(mainController.list.get(indexOnEditing).getPrice()+"");
+       
        
     }
 
@@ -191,8 +181,10 @@ public class EditItemsController implements Initializable {
 
     }
 
+    
     void setParentController(MainDocumentController mainController) {
         this.mainController = mainController;
     }
-
+    
+    
 }

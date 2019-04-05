@@ -11,8 +11,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -34,6 +32,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
@@ -47,13 +46,16 @@ public class MainDocumentController implements Initializable {
     private boolean inEdit;
     private int indexOnEditing;
 
-    private ObservableList<Clothing> list;
-
+    ObservableList<Clothing> list = FXCollections.observableArrayList();
+        
     private String fileName;
 
     private AddItemsController addItemsController;
     private EditItemsController editItemsController;
 
+    private static MainDocumentController controller;
+
+    
     private Label label;
     @FXML
     private TableView<Clothing> items;
@@ -77,20 +79,21 @@ public class MainDocumentController implements Initializable {
     private TableColumn<Clothing, Double> tablePrice;
     @FXML
     private TableColumn<Clothing, Integer> tableQuantity;
-
-    private static MainDocumentController controller;
-
-    public static MainDocumentController getController() {
-        return controller;
-    }
-
+    @FXML
+    private TextField searchField;
+    @FXML
+    private ComboBox<?> typeFilter;
+    @FXML
+    private ComboBox<?> genderFilter;
+    @FXML
+    private ComboBox<?> sizeFilter;
+    @FXML
+    private ComboBox<?> colorFilter;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         controller = this;
-        // addItemsController.setParentController(this);
-
-        //item = new ArrayList<>();
-        //items = new TableView<Clothing>(); 
+        indexOnEditing = 0;
         inEdit = false;
         
         tableId.setCellValueFactory(new PropertyValueFactory<>("productId"));
@@ -100,9 +103,9 @@ public class MainDocumentController implements Initializable {
         tableColor.setCellValueFactory(new PropertyValueFactory<>("color"));
         tablePrice.setCellValueFactory(new PropertyValueFactory<>("price"));
         tableQuantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
-
-        //list = FXCollections.observableArrayList();
-        int listSize = getList().size();
+        
+        
+        //display table with entries on load
         items.setItems(getList());
         
         items.setOnMouseClicked(e -> {
@@ -113,48 +116,31 @@ public class MainDocumentController implements Initializable {
         });
     }
     
+    public static MainDocumentController getController() {
+        return controller;
+    }
+
+    
     public void update() {
         items.refresh();
     }
     
-    public void setList(ArrayList<Clothing> c) {
-        //Clothing c = new Clothing(productId, type);
-        ObservableList<Clothing> list = FXCollections.observableArrayList(getList());
-        //items.getItems().clear();
-        //items.getItems().setAll(list);
-        list.addAll(c);
-        items.setItems(list);
+    public void setList(Clothing c) {
         
-        this.list = list;
-        //list.add(c);
-
+        items.getItems().clear();
+        getList().add(c);
+      
     }
     
-    public void updateList(ArrayList<Clothing> c) {
-        //Clothing c = new Clothing(productId, type);
-        ObservableList<Clothing> list = FXCollections.observableArrayList(getList());
-        //items.getItems().clear();
-        //items.getItems().setAll(list);
-        items.setItems(list);
-     
-        //list.add(c);
-
-    }
-
+  
+    
     public ObservableList<Clothing> getList() {
 
-        ObservableList<Clothing> list = FXCollections.observableArrayList(
-        
-        new Clothing(1, Type.Dress, Gender.Boys, "XS", Colors.Orange, 23.33, 2),
-           new Clothing(1, Type.Dress, Gender.Boys, "XS", Colors.Orange, 23.33, 2),
-           new Clothing(1, Type.Dress, Gender.Boys, "XS", Colors.Orange, 23.33, 2),
-           new Clothing(1, Type.Dress, Gender.Boys, "XS", Colors.Orange, 23.33, 2),
-           new Clothing(1, Type.Dress, Gender.Boys, "XS", Colors.Orange, 23.33, 2),
-           new Clothing(1, Type.Dress, Gender.Boys, "XS", Colors.Orange, 23.33, 2),  new Clothing(1, Type.Dress, Gender.Boys, "XS", Colors.Orange, 23.33, 2),
-           new Clothing(1, Type.Dress, Gender.Boys, "XS", Colors.Orange, 23.33, 2),
-           new Clothing(1, Type.Dress, Gender.Boys, "XS", Colors.Orange, 23.33, 2)
-               
-        );
+        list.add(new Clothing(1, Type.Dress, Gender.Girls, "XS", Colors.Orange, 23.33, 2));
+        list.add(new Clothing(2, Type.Jackets, Gender.Boys, "XS", Colors.Orange, 23.33, 2));
+        list.add(new Clothing(3, Type.Dress, Gender.Girls, "XS", Colors.Orange, 23.33, 2));
+        list.add(new Clothing(4, Type.Jackets, Gender.Boys, "XS", Colors.Orange, 23.33, 2));
+        list.add(new Clothing(5, Type.Dress, Gender.Girls, "XS", Colors.Orange, 23.33, 2));
         
         return list;
        
@@ -165,12 +151,17 @@ public class MainDocumentController implements Initializable {
         if (!items.getSelectionModel().isEmpty()) {
             inEdit = true;
             Clothing selected = items.getSelectionModel().getSelectedItem();
-            //indexOnEditing = items.getSelectionModel().getSelectedIndex();
-            System.out.println(indexOnEditing);
-            System.out.println(selected);
-              
+            indexOnEditing = items.getSelectionModel().getSelectedIndex();
+            this.indexOnEditing = indexOnEditing;
             this.selected = selected;
-
+            
+            //for testing purposes
+            System.out.println("index is" + indexOnEditing);
+            System.out.println(selected);
+            System.out.println("===========");
+            System.out.println("List size is: " + list.size());
+               
+         
         }
 
     }
@@ -185,10 +176,12 @@ public class MainDocumentController implements Initializable {
 
             Scene scene = new Scene(root);
             Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle("Add Items");
             stage.setScene(scene);
-            stage.show();
-
+            
+                stage.show();
+                
         } catch (Exception e) {
             System.out.println("Error" + e);
         }
@@ -198,7 +191,6 @@ public class MainDocumentController implements Initializable {
     @FXML
     private void editHandle(ActionEvent event) throws IOException {
 
-        //items.getSelectionModel().clearSelection();
         try {
             if (!items.getSelectionModel().isEmpty()) {
                 // Loading the modify part window
@@ -207,27 +199,25 @@ public class MainDocumentController implements Initializable {
 
                 loader.<EditItemsController>getController().setParentController(this);
                 EditItemsController editItemsController = loader.getController();
-                editItemsController.edit(selected);
+                
                 editItemsController.indexEdit(indexOnEditing);
-                Stage stage = new Stage();
+          
+                editItemsController.editDisplay(list);
+                
+                Stage stage = new Stage(); 
+                //keeps the new window focused
+                stage.initModality(Modality.APPLICATION_MODAL);
                 stage.setTitle("Edit Item");
-                stage.setScene(new Scene(root));
+                stage.setScene(new Scene(root));                
                 stage.show();
-
+                
                 /*
-
-                Parent root = FXMLLoader.load(getClass().getResource("EditItems.fxml"));
-
-                EditItemsController editItemsController = new FXMLLoader().getController();
-
-                editItemsController.edit(selected);
-                Scene scene = new Scene(root);
-
-                Stage stage2 = new Stage();
-                stage2.setTitle("Edit Item");
-                stage2.setScene(scene);
-                stage2.show();
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource("something.fxml");  
+                anna = loader.getController();
+                
                  */
+                
             } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
@@ -237,9 +227,7 @@ public class MainDocumentController implements Initializable {
 
         } catch (Exception e) {
             System.out.println("Error" + e);
-
         }
-
     }
 
     @FXML
@@ -269,6 +257,26 @@ public class MainDocumentController implements Initializable {
 
             alert.showAndWait();
         }
+    }
+
+    @FXML
+    private void searchHandle(ActionEvent event) {
+    }
+
+    @FXML
+    private void typeFilterHandle(ActionEvent event) {
+    }
+
+    @FXML
+    private void genderFilterHandle(ActionEvent event) {
+    }
+
+    @FXML
+    private void sizeFilterHandle(ActionEvent event) {
+    }
+
+    @FXML
+    private void colorFilterHandle(ActionEvent event) {
     }
 
 }

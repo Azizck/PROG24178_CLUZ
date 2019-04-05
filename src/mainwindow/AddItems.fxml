@@ -15,7 +15,7 @@
    <top>
       <HBox alignment="CENTER" prefHeight="79.0" prefWidth="632.0" BorderPane.alignment="CENTER">
          <children>
-            <Label text="Add an Item" textAlignment="CENTER">
+            <Label text="Add Item" textAlignment="CENTER">
                <font>
                   <Font name="Times New Roman" size="40.0" />
                </font>
@@ -34,13 +34,13 @@
             </HBox>
             <HBox prefHeight="48.0" prefWidth="381.0">
                <children>
-                  <Label prefHeight="20.0" prefWidth="126.0" text="Product ID" />
-                  <TextField fx:id="idLabel" prefHeight="30.0" prefWidth="149.0" />
+                  <Label prefHeight="20.0" prefWidth="129.0" text="Product ID" />
+                  <TextField fx:id="idLabel" prefHeight="30.0" prefWidth="150.0" />
                </children>
             </HBox>
             <HBox prefHeight="49.0" prefWidth="381.0">
                <children>
-                  <Label prefHeight="20.0" prefWidth="127.0" text="Gender" />
+                  <Label prefHeight="20.0" prefWidth="129.0" text="Gender" />
                   <ComboBox fx:id="genderCombo" onAction="#genderHandle" prefWidth="150.0" />
                </children>
             </HBox>
@@ -58,14 +58,14 @@
             </HBox>
             <HBox prefHeight="51.0" prefWidth="381.0">
                <children>
-                  <Label prefHeight="20.0" prefWidth="130.0" text="Price" />
-                  <TextField fx:id="priceLabel" prefHeight="30.0" prefWidth="147.0" />
+                  <Label prefHeight="20.0" prefWidth="129.0" text="Price" />
+                  <TextField fx:id="priceLabel" prefHeight="30.0" prefWidth="150.0" />
                </children>
             </HBox>
             <HBox prefHeight="48.0" prefWidth="381.0">
                <children>
                   <Label prefHeight="20.0" prefWidth="130.0" text="Quantity" />
-                  <TextField fx:id="quantityLabel" prefHeight="30.0" prefWidth="147.0" />
+                  <TextField fx:id="quantityLabel" prefHeight="30.0" prefWidth="150.0" />
                </children>
             </HBox>
          </children>
@@ -78,19 +78,20 @@
       <VBox prefHeight="421.0" prefWidth="251.0" BorderPane.alignment="CENTER">
          <children>
             <ImageView fx:id="image" fitHeight="241.0" fitWidth="260.0" pickOnBounds="true" preserveRatio="true" />
-            <HBox alignment="CENTER" prefHeight="48.0" prefWidth="260.0">
-               <children>
-                  <Label fx:id="confirmation" text="Confirm" textAlignment="CENTER" />
-               </children></HBox>
             <HBox alignment="CENTER" prefHeight="67.0" prefWidth="260.0" spacing="30.0">
                <children>
                   <Button fx:id="imgButton" mnemonicParsing="false" onAction="#imageHandle" text="Image" />
-                  <Button fx:id="showBtn" mnemonicParsing="false" onAction="#showHandle" text="Show" />
                </children></HBox>
             <HBox alignment="CENTER" prefHeight="72.0" prefWidth="260.0" spacing="30.0">
                <children>
-                  <Button fx:id="submitBtn" mnemonicParsing="false" onAction="#submitHandle" text="Submit" />
-                  <Button fx:id="cancelBtn" mnemonicParsing="false" onAction="#cancelHandle" text="Cancel" />
+                  <Button fx:id="submitBtn" mnemonicParsing="false" onAction="#submitHandle" prefHeight="20.0" prefWidth="90.0" text="Submit" textAlignment="CENTER">
+                     <font>
+                        <Font size="18.0" />
+                     </font></Button>
+                  <Button fx:id="cancelBtn" mnemonicParsing="false" onAction="#cancelHandle" prefHeight="20.0" prefWidth="90.0" text="Close">
+                     <font>
+                        <Font size="18.0" />
+                     </font></Button>
                </children>
             </HBox>
          </children>

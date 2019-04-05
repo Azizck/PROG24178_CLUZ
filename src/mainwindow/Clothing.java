@@ -7,6 +7,7 @@ package mainwindow;
 
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.scene.image.Image;
 
 /**
  *
@@ -28,7 +29,6 @@ public class Clothing {
      
     public enum Size {
         XS, S, M, L, XL;
-        
     }
     
     private int productId;
@@ -40,6 +40,7 @@ public class Clothing {
     private Type type;
     private Size s;
     private String size;
+    private Image img;
    
   public Clothing() {}
         
@@ -54,6 +55,12 @@ public class Clothing {
            
         }
         
+    public Image getImage() {
+        return img;
+    }
+    public void setImage() {
+        this.img = img;
+    }
     public Colors getColor() {
         return color;
     }

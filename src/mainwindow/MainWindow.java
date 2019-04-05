@@ -47,9 +47,9 @@ public void start(Stage stage) throws Exception {
     @Override
     public void start(Stage stage) throws Exception {
         try {
-        Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("MainDocument.fxml"));
         
-        Scene scene = new Scene(root, 750, 500);
+        Scene scene = new Scene(root);
         
         stage.setScene(scene);
         stage.setTitle("Cluz");
