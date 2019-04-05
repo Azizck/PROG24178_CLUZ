@@ -53,6 +53,8 @@ public void start(Stage stage) throws Exception {
         
         stage.setScene(scene);
         stage.setTitle("Cluz");
+        stage.setMinWidth(860);
+        stage.setMinHeight(521);
         stage.show();
                
         

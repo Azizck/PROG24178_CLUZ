@@ -78,6 +78,15 @@
       <VBox prefHeight="421.0" prefWidth="251.0" BorderPane.alignment="CENTER">
          <children>
             <ImageView fx:id="image" fitHeight="241.0" fitWidth="260.0" pickOnBounds="true" preserveRatio="true" />
+            <HBox alignment="CENTER" prefHeight="55.0" prefWidth="260.0">
+               <children>
+                  <Label fx:id="confirmation" textAlignment="CENTER">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
             <HBox alignment="CENTER" prefHeight="67.0" prefWidth="260.0" spacing="30.0">
                <children>
                   <Button fx:id="imgButton" mnemonicParsing="false" onAction="#imageHandle" text="Image" />
