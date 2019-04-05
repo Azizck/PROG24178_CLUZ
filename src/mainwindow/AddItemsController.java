@@ -71,8 +71,6 @@ public class AddItemsController implements Initializable {
     @FXML
     private Button cancelBtn;
     @FXML
-    private Button showBtn;
-    @FXML
     private Label confirmation;
     @FXML
     private Button imgButton;
@@ -133,7 +131,6 @@ public class AddItemsController implements Initializable {
         stage.close();
     }
 
-    @FXML
     private void showHandle(ActionEvent event
     ) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION, mainController.getList().toString().replace("[", "").replace("]", "").replace(",", ""), ButtonType.OK);
