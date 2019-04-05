@@ -46,6 +46,7 @@ public class MainDocumentController implements Initializable {
     private boolean inEdit;
     private int indexOnEditing;
 
+
     ObservableList<Clothing> list = FXCollections.observableArrayList();
         
     private String fileName;
@@ -82,13 +83,13 @@ public class MainDocumentController implements Initializable {
     @FXML
     private TextField searchField;
     @FXML
-    private ComboBox<?> typeFilter;
+    private ComboBox<Type> typeFilter;
     @FXML
-    private ComboBox<?> genderFilter;
+    private ComboBox<Gender> genderFilter;
     @FXML
-    private ComboBox<?> sizeFilter;
+    private ComboBox<Size> sizeFilter;
     @FXML
-    private ComboBox<?> colorFilter;
+    private ComboBox<Colors> colorFilter;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -114,6 +115,11 @@ public class MainDocumentController implements Initializable {
                 select();
             }
         });
+        
+        typeFilter.getItems().addAll(Type.values());
+        genderFilter.getItems().addAll(Gender.values());
+//        sizeFilter.getItems().addAll(Size.values());
+        colorFilter.getItems().addAll(Colors.values());
     }
     
     public static MainDocumentController getController() {
@@ -265,18 +271,66 @@ public class MainDocumentController implements Initializable {
 
     @FXML
     private void typeFilterHandle(ActionEvent event) {
+         if (Clothing.Type.Dress == typeFilter.getSelectionModel().getSelectedItem()){
+             
+         }
+         if (Clothing.Type.Shorts == typeFilter.getSelectionModel().getSelectedItem()){
+             
+         }
+         if (Clothing.Type.Jackets == typeFilter.getSelectionModel().getSelectedItem()){
+             
+         }
+         if (Clothing.Type.Shirts == typeFilter.getSelectionModel().getSelectedItem()){
+             
+         }
     }
 
     @FXML
     private void genderFilterHandle(ActionEvent event) {
+        if (Clothing.Gender.Male == genderFilter.getSelectionModel().getSelectedItem()){
+             
+         }
+        if (Clothing.Gender.Female == genderFilter.getSelectionModel().getSelectedItem()){
+             
+         }
+        if (Clothing.Gender.Girls == genderFilter.getSelectionModel().getSelectedItem()){
+             
+         }
+        if (Clothing.Gender.Boys == genderFilter.getSelectionModel().getSelectedItem()){
+             
+         }
     }
 
     @FXML
     private void sizeFilterHandle(ActionEvent event) {
+//        if (Clothing.Size.XS == sizeFilter.getSelectionModel().getSelectedItem()){
+//             
+//         }
     }
 
     @FXML
     private void colorFilterHandle(ActionEvent event) {
+        if (Clothing.Colors.Red == colorFilter.getSelectionModel().getSelectedItem()){
+             
+         }
+        if (Clothing.Colors.Orange == colorFilter.getSelectionModel().getSelectedItem()){
+             
+         }
+        if (Clothing.Colors.Yellow == colorFilter.getSelectionModel().getSelectedItem()){
+             
+         }
+        if (Clothing.Colors.Green == colorFilter.getSelectionModel().getSelectedItem()){
+             
+         }
+        if (Clothing.Colors.Blue == colorFilter.getSelectionModel().getSelectedItem()){
+             
+         }
+        if (Clothing.Colors.White == colorFilter.getSelectionModel().getSelectedItem()){
+             
+         }
+        if (Clothing.Colors.Black == colorFilter.getSelectionModel().getSelectedItem()){
+             
+         }
     }
 
 }
