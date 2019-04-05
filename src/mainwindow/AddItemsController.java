@@ -5,6 +5,7 @@
  */
     package mainwindow;
 
+import java.io.File;
 import java.io.IOException;
 import mainwindow.Clothing.*;
 import java.net.URL;
@@ -24,8 +25,10 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 /**
@@ -71,6 +74,7 @@ public class AddItemsController implements Initializable {
     private Label confirmation;
     @FXML
     private Button imgButton;
+    
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -226,6 +230,20 @@ public class AddItemsController implements Initializable {
 
     @FXML
     private void imageHandle(ActionEvent event) {
+         FileChooser fileChooser = new FileChooser();
+
+        //Set extension filter
+        FileChooser.ExtensionFilter extFilterJPG = new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.JPG");
+        FileChooser.ExtensionFilter extFilterPNG = new FileChooser.ExtensionFilter("PNG files (*.png)", "*.PNG");
+        fileChooser.getExtensionFilters().addAll(extFilterJPG, extFilterPNG);
+
+        //Show open file dialog
+        File file = fileChooser.showOpenDialog(null);
+
+        if (file != null) {
+            Image myImage = new Image(file.toURI().toString());
+            image.setImage(myImage);
+        }
     }
     
  

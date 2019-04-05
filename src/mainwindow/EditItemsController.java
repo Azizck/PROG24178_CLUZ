@@ -5,6 +5,7 @@
  */
 package mainwindow;
 
+import java.io.File;
 import mainwindow.Clothing.*;
 import java.net.URL;
 import java.util.ArrayList;
@@ -18,8 +19,10 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 /**
@@ -111,6 +114,11 @@ public class EditItemsController implements Initializable {
 
     @FXML
     private void imageHandle(ActionEvent event) {
+//        FileChooser fileChooser = new FileChooser();
+//        File file = fileChooser.showOpenDialog(null);
+//        if (file != null) {
+//            Image myImage = new Image(file.toURI().toString());
+//            image.setImage(myImage);
     }
 
     @FXML
