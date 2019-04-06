@@ -335,7 +335,7 @@ public class MainDocumentController implements Initializable {
 
     @FXML
     private void typeFilterHandle(ActionEvent event) {
-         // takes a selection and compares it with parameters in observableList using addListener
+        // takes a selection and compares it with parameters in observableList using addListener
         typeFilter.getSelectionModel().selectedItemProperty()
                 .addListener((observable, oldValue, newValue) -> {
                     // filters for all Clothing objects
@@ -596,7 +596,7 @@ public class MainDocumentController implements Initializable {
         sizeFilter.setValue(null);
         colorFilter.setValue(null);
         searchField.setText("");
-
+        items.setItems(list);
     }
 
     // search bar 
