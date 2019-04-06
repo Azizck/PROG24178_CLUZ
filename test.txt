@@ -1,0 +1,5 @@
+1, Dress, Girls, XS, Orange, 23.33, 2
+2, Jackets, Boys, XS, Orange, 23.33, 2
+3, Dress, Girls, XS, Orange, 23.33, 2
+4, Jackets, Boys, XS, Orange, 23.33, 2
+5, Dress, Girls, XS, Orange, 23.33, 2

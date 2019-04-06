@@ -15,9 +15,11 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -105,6 +107,11 @@ public class MainDocumentController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+   
+        items.setItems(getList());
+        
+  
         controller = this;
         indexOnEditing = 0;
         inEdit = false;
@@ -119,7 +126,7 @@ public class MainDocumentController implements Initializable {
         
         
         //display table with entries on load
-        items.setItems(getList());
+        
         
         items.setOnMouseClicked(e -> {
             if (e.getClickCount() > 0) {
@@ -160,11 +167,11 @@ public class MainDocumentController implements Initializable {
     
     public ObservableList<Clothing> getList() {
 
-        list.add(new Clothing(1, Type.Dress, Gender.Girls, "XS", Colors.Orange, 23.33, 2));
-        list.add(new Clothing(2, Type.Jackets, Gender.Boys, "XS", Colors.Orange, 23.33, 2));
-        list.add(new Clothing(3, Type.Dress, Gender.Girls, "XS", Colors.Orange, 23.33, 2));
-        list.add(new Clothing(4, Type.Jackets, Gender.Boys, "XS", Colors.Orange, 23.33, 2));
-        list.add(new Clothing(5, Type.Dress, Gender.Girls, "XS", Colors.Orange, 23.33, 2));
+        list.add(new Clothing(14, Type.Dress, Gender.Girls, "XS", Colors.Orange, 53.33, 2));
+        list.add(new Clothing(22, Type.Jackets, Gender.Boys, "XS", Colors.Orange, 83.33, 2));
+        list.add(new Clothing(34, Type.Dress, Gender.Girls, "XS", Colors.Orange, 21.33, 2));
+        list.add(new Clothing(41, Type.Jackets, Gender.Boys, "XS", Colors.Orange, 223.33, 2));
+        list.add(new Clothing(5, Type.Dress, Gender.Girls, "XS", Colors.Orange, 2335.33, 2));
         
         return list;
        
@@ -368,7 +375,7 @@ public class MainDocumentController implements Initializable {
             for (Clothing c : list) {
                 writer.write(c.getProductId() + ", " + c.getType() + ", " 
                         + c.getGender() + ", " + c.getSize() + ", " + c.getColor() 
-                        + ", " + c.getPrice() + ", " + c.getQuantity() + "\n");
+                        + ", " + c.getPrice() + ", " + c.getQuantity() + " \n");
             }
             
             writer.close();
@@ -380,28 +387,25 @@ public class MainDocumentController implements Initializable {
 
     @FXML
     private void openFileHandle(ActionEvent event) {
-        /*
+        items.setItems(open());
+        
+    }
+    
+    private ObservableList<Clothing> open(){
+        
         Stage stage = new Stage();
         FileChooser fileChooser = new FileChooser();
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT (*.txt)", "*.txt");
         fileChooser.getExtensionFilters().add(extFilter);
         fileChooser.setTitle("Open File");
-        //File file = fileChooser.showOpenDialog(stage);
-        */
-        ArrayList<Clothing> c = null;
-  
-            c = open("D:\test.txt");
-            ObservableList<Clothing> d = FXCollections.observableArrayList(c);
-            items.setItems(d);
-      
-    }
-    
-    
-    private ArrayList<Clothing> open(String file){
+       
         
-        ArrayList<Clothing> c = new ArrayList<>();
-       try {
-           BufferedReader reader = Files.newBufferedReader(Paths.get(file));
+       ArrayList<Clothing> c = new ArrayList<>();
+       BufferedReader reader = null;
+
+        try {
+            File file = fileChooser.showOpenDialog(stage);
+            reader = new BufferedReader(new FileReader(file));
            String line;
            while ((line = reader.readLine()) != null) {
                String[] names = line.split(", ");
@@ -410,16 +414,16 @@ public class MainDocumentController implements Initializable {
                        names[3], Colors.valueOf(names[4]), 
                        Double.parseDouble(names[5]), 
                        Integer.parseInt(names[6])));
+               //System.out.println(c);
            }
-           list.addAll(c);
-           items.setItems(list);
-         
+ 
        } catch (IOException e){
            e.printStackTrace();
         }
-       return c;
+      ObservableList<Clothing> list = FXCollections.observableArrayList(c);
        
+       this.list = list;
+       return list;
+     
     }
-    
-
 }
