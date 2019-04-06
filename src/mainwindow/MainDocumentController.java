@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package mainwindow;
 
 import java.io.BufferedReader;
@@ -18,7 +13,6 @@ import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -40,9 +34,14 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+
 /**
- *
- * @author CS
+ * This project is developed for a clothing retailer whose needs are to manage inventory on 
+ * a day-to-day basis. The required functionalities are adding, editing, removing items while 
+ * giving users the freedom to select clothing types accordingly.
+ * 
+ * April 5th, 2019
+ * @author Jingwei Sun, John Chen, Aziz Omar
  */
 public class MainDocumentController implements Initializable {
 
@@ -57,7 +56,6 @@ public class MainDocumentController implements Initializable {
     private EditItemsController editItemsController;
     private static MainDocumentController controller;
 
-    
     private Label label;
     @FXML
     private TableView<Clothing> items;
@@ -95,16 +93,16 @@ public class MainDocumentController implements Initializable {
     private Button saveFile;
     @FXML
     private Button openFile;
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+
         items.setItems(getList());
-       
+
         controller = this;
         indexOnEditing = 0;
         inEdit = false;
-        
+
         tableId.setCellValueFactory(new PropertyValueFactory<>("productId"));
         tableType.setCellValueFactory(new PropertyValueFactory<>("type"));
         tableGender.setCellValueFactory(new PropertyValueFactory<>("gender"));
@@ -112,44 +110,38 @@ public class MainDocumentController implements Initializable {
         tableColor.setCellValueFactory(new PropertyValueFactory<>("color"));
         tablePrice.setCellValueFactory(new PropertyValueFactory<>("price"));
         tableQuantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
-        
-        
+
         //display table with entries on load
-        
-        
         items.setOnMouseClicked(e -> {
             if (e.getClickCount() > 0) {
-                
+
                 select();
             }
         });
-        
+
         typeFilter.getItems().addAll(Type.values());
-        genderFilter.getItems().addAll(Gender.values()); 
+        genderFilter.getItems().addAll(Gender.values());
         colorFilter.getItems().addAll(Colors.values());
- 
+
     }
-    
+
     public static MainDocumentController getController() {
         return controller;
     }
 
-    
     public void update() {
         items.refresh();
     }
-    
+
     public void setList(Clothing c) {
         list.add(c);
         items.setItems(list);
         //items.getItems().setAll(list.add(c));
         //items.getItems().clear();
         //getList().add(c);
-      
+
     }
-    
-  
-    
+
     public ObservableList<Clothing> getList() {
 
         list.add(new Clothing(14, Type.Dress, Gender.Girls, "XS", Colors.Orange, 53.33, 2));
@@ -157,9 +149,9 @@ public class MainDocumentController implements Initializable {
         list.add(new Clothing(34, Type.Dress, Gender.Girls, "XS", Colors.Orange, 21.33, 2));
         list.add(new Clothing(41, Type.Shorts, Gender.Boys, "XS", Colors.Orange, 223.33, 2));
         list.add(new Clothing(5, Type.Dress, Gender.Girls, "XS", Colors.Orange, 2335.33, 2));
-        
+
         return list;
-       
+
     }
 
     public void select() {
@@ -170,14 +162,13 @@ public class MainDocumentController implements Initializable {
             indexOnEditing = items.getSelectionModel().getSelectedIndex();
             this.indexOnEditing = indexOnEditing;
             this.selected = selected;
-            
+
             //for testing purposes
             System.out.println("index is" + indexOnEditing);
             System.out.println(selected);
             System.out.println("===========");
             System.out.println("List size is: " + list.size());
-               
-         
+
         }
 
     }
@@ -195,9 +186,9 @@ public class MainDocumentController implements Initializable {
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle("Add Items");
             stage.setScene(scene);
-            
-                stage.show();
-                
+
+            stage.show();
+
         } catch (Exception e) {
             System.out.println("Error" + e);
         }
@@ -215,25 +206,24 @@ public class MainDocumentController implements Initializable {
 
                 loader.<EditItemsController>getController().setParentController(this);
                 EditItemsController editItemsController = loader.getController();
-                
+
                 editItemsController.indexEdit(indexOnEditing);
-          
+
                 editItemsController.editDisplay(list);
-                
-                Stage stage = new Stage(); 
+
+                Stage stage = new Stage();
                 //keeps the new window focused
                 stage.initModality(Modality.APPLICATION_MODAL);
                 stage.setTitle("Edit Item");
-                stage.setScene(new Scene(root));                
+                stage.setScene(new Scene(root));
                 stage.show();
-                
+
                 /*
                 FXMLLoader loader = new FXMLLoader();
                 loader.setLocation(getClass().getResource("something.fxml");  
                 anna = loader.getController();
                 
                  */
-                
             } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
@@ -248,12 +238,12 @@ public class MainDocumentController implements Initializable {
 
     @FXML
     private void removeHandle(ActionEvent event) {
-        
+
         if (!items.getSelectionModel().isEmpty()) {
 
             inEdit = true;
             Clothing selected = items.getSelectionModel().getSelectedItem();
-            
+
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Delete");
             alert.setContentText("Confirm if you would like to delete?");
@@ -275,75 +265,69 @@ public class MainDocumentController implements Initializable {
         }
     }
 
-    
-     
     public void pantSize() {
         sizeFilter.getItems().setAll("28W", "30W", "32W", "34W", "36W");
         colorFilter.getItems().setAll(Clothing.Colors.values());
         genderFilter.getItems().setAll(Clothing.Gender.values());
     }
-    
+
     public void girlSize() {
         sizeFilter.getItems().setAll("0", "2", "4", "6", "8", "10", "12");
         colorFilter.getItems().setAll(Clothing.Colors.values());
         genderFilter.getItems().setAll(Clothing.Gender.Girls, Clothing.Gender.Female);
     }
-    
+
     @FXML
     private void searchHandle(ActionEvent event) {
     }
 
     @FXML
     private void typeFilterHandle(ActionEvent event) {
-        
-       
-       if (Clothing.Type.Dress == typeFilter.getSelectionModel().getSelectedItem()) {
-           girlSize();
-            
+
+        if (Clothing.Type.Dress == typeFilter.getSelectionModel().getSelectedItem()) {
+            girlSize();
+
         } else if (Clothing.Type.Skirts == typeFilter.getSelectionModel().getSelectedItem()) {
             girlSize();
-        }   
-       else if (Clothing.Type.Shorts == typeFilter.getSelectionModel().getSelectedItem()) {
+        } else if (Clothing.Type.Shorts == typeFilter.getSelectionModel().getSelectedItem()) {
             pantSize();
-       }
-       else if (Clothing.Type.Jeans == typeFilter.getSelectionModel().getSelectedItem()) {
-           pantSize();
-       } else if (Clothing.Type.Pants == typeFilter.getSelectionModel().getSelectedItem()) {
-           pantSize();
-       } 
-       else {
+        } else if (Clothing.Type.Jeans == typeFilter.getSelectionModel().getSelectedItem()) {
+            pantSize();
+        } else if (Clothing.Type.Pants == typeFilter.getSelectionModel().getSelectedItem()) {
+            pantSize();
+        } else {
             sizeFilter.getItems().setAll("XS", "S", "M", "L", "XL");
             genderFilter.getItems().setAll(Clothing.Gender.values());
             colorFilter.getItems().setAll(Clothing.Colors.values());
         }
-         if (Clothing.Type.Dress == typeFilter.getSelectionModel().getSelectedItem()){
-             
-         }
-         if (Clothing.Type.Shorts == typeFilter.getSelectionModel().getSelectedItem()){
-             
-         }
-         if (Clothing.Type.Skirts == typeFilter.getSelectionModel().getSelectedItem()){
-             
-         }
-         if (Clothing.Type.Shirts == typeFilter.getSelectionModel().getSelectedItem()){
-             
-         }
+        if (Clothing.Type.Dress == typeFilter.getSelectionModel().getSelectedItem()) {
+
+        }
+        if (Clothing.Type.Shorts == typeFilter.getSelectionModel().getSelectedItem()) {
+
+        }
+        if (Clothing.Type.Skirts == typeFilter.getSelectionModel().getSelectedItem()) {
+
+        }
+        if (Clothing.Type.Shirts == typeFilter.getSelectionModel().getSelectedItem()) {
+
+        }
     }
 
     @FXML
     private void genderFilterHandle(ActionEvent event) {
-        if (Clothing.Gender.Male == genderFilter.getSelectionModel().getSelectedItem()){
-             
-         }
-        if (Clothing.Gender.Female == genderFilter.getSelectionModel().getSelectedItem()){
-             
-         }
-        if (Clothing.Gender.Girls == genderFilter.getSelectionModel().getSelectedItem()){
-             
-         }
-        if (Clothing.Gender.Boys == genderFilter.getSelectionModel().getSelectedItem()){
-             
-         }
+        if (Clothing.Gender.Male == genderFilter.getSelectionModel().getSelectedItem()) {
+
+        }
+        if (Clothing.Gender.Female == genderFilter.getSelectionModel().getSelectedItem()) {
+
+        }
+        if (Clothing.Gender.Girls == genderFilter.getSelectionModel().getSelectedItem()) {
+
+        }
+        if (Clothing.Gender.Boys == genderFilter.getSelectionModel().getSelectedItem()) {
+
+        }
     }
 
     @FXML
@@ -355,27 +339,27 @@ public class MainDocumentController implements Initializable {
 
     @FXML
     private void colorFilterHandle(ActionEvent event) {
-        if (Clothing.Colors.Red == colorFilter.getSelectionModel().getSelectedItem()){
-             
-         }
-        if (Clothing.Colors.Orange == colorFilter.getSelectionModel().getSelectedItem()){
-             
-         }
-        if (Clothing.Colors.Yellow == colorFilter.getSelectionModel().getSelectedItem()){
-             
-         }
-        if (Clothing.Colors.Green == colorFilter.getSelectionModel().getSelectedItem()){
-             
-         }
-        if (Clothing.Colors.Blue == colorFilter.getSelectionModel().getSelectedItem()){
-             
-         }
-        if (Clothing.Colors.White == colorFilter.getSelectionModel().getSelectedItem()){
-             
-         }
-        if (Clothing.Colors.Black == colorFilter.getSelectionModel().getSelectedItem()){
-             
-         }
+        if (Clothing.Colors.Red == colorFilter.getSelectionModel().getSelectedItem()) {
+
+        }
+        if (Clothing.Colors.Orange == colorFilter.getSelectionModel().getSelectedItem()) {
+
+        }
+        if (Clothing.Colors.Yellow == colorFilter.getSelectionModel().getSelectedItem()) {
+
+        }
+        if (Clothing.Colors.Green == colorFilter.getSelectionModel().getSelectedItem()) {
+
+        }
+        if (Clothing.Colors.Blue == colorFilter.getSelectionModel().getSelectedItem()) {
+
+        }
+        if (Clothing.Colors.White == colorFilter.getSelectionModel().getSelectedItem()) {
+
+        }
+        if (Clothing.Colors.Black == colorFilter.getSelectionModel().getSelectedItem()) {
+
+        }
     }
 
     @FXML
@@ -386,18 +370,17 @@ public class MainDocumentController implements Initializable {
         fileChooser.getExtensionFilters().add(extFilter);
         fileChooser.setTitle("Save as");
         File file = fileChooser.showSaveDialog(stage);
-        
-        
+
         if (file != null) {
             try {
-            PrintWriter writer = new PrintWriter(file);
-            for (Clothing c : list) {
-                writer.write(c.getProductId() + ", " + c.getType() + ", " 
-                        + c.getGender() + ", " + c.getSize() + ", " + c.getColor() 
-                        + ", " + c.getPrice() + ", " + c.getQuantity() + "\n");
-            }
-            
-            writer.close();
+                PrintWriter writer = new PrintWriter(file);
+                for (Clothing c : list) {
+                    writer.write(c.getProductId() + ", " + c.getType() + ", "
+                            + c.getGender() + ", " + c.getSize() + ", " + c.getColor()
+                            + ", " + c.getPrice() + ", " + c.getQuantity() + "\n");
+                }
+
+                writer.close();
             } catch (IOException ex) {
                 System.out.println("Error: " + ex);
             }
@@ -407,42 +390,41 @@ public class MainDocumentController implements Initializable {
     @FXML
     private void openFileHandle(ActionEvent event) {
         items.setItems(open());
-        
+
     }
-    
-    private ObservableList<Clothing> open(){
-        
+
+    private ObservableList<Clothing> open() {
+
         Stage stage = new Stage();
         FileChooser fileChooser = new FileChooser();
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT (*.txt)", "*.txt");
         fileChooser.getExtensionFilters().add(extFilter);
         fileChooser.setTitle("Open File");
-       
-        
-       ArrayList<Clothing> c = new ArrayList<>();
-       BufferedReader reader = null;
+
+        ArrayList<Clothing> c = new ArrayList<>();
+        BufferedReader reader = null;
 
         try {
             File file = fileChooser.showOpenDialog(stage);
             reader = new BufferedReader(new FileReader(file));
-           String line;
-           while ((line = reader.readLine()) != null) {
-               String[] names = line.split(", ");
-               c.add(new Clothing(Integer.parseInt(names[0]), 
-                       Type.valueOf(names[1]), Gender.valueOf(names[2]), 
-                       names[3], Colors.valueOf(names[4]), 
-                       Double.parseDouble(names[5]), 
-                       Integer.parseInt(names[6])));
-               //System.out.println(c);
-           }
- 
-       } catch (IOException e){
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] names = line.split(", ");
+                c.add(new Clothing(Integer.parseInt(names[0]),
+                        Type.valueOf(names[1]), Gender.valueOf(names[2]),
+                        names[3], Colors.valueOf(names[4]),
+                        Double.parseDouble(names[5]),
+                        Integer.parseInt(names[6])));
+                //System.out.println(c);
+            }
+
+        } catch (IOException e) {
             System.out.println(e);
         }
-      ObservableList<Clothing> list = FXCollections.observableArrayList(c);
-       
-       this.list = list;
-       return list;
-     
+        ObservableList<Clothing> list = FXCollections.observableArrayList(c);
+
+        this.list = list;
+        return list;
+
     }
 }

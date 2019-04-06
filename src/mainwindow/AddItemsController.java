@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package mainwindow;
 
 import java.io.File;
@@ -33,23 +28,24 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 /**
- *
- * @author CS
+ * This project is developed for a clothing retailer whose needs are to manage inventory on 
+ * a day-to-day basis. The required functionalities are adding, editing, removing items while 
+ * giving users the freedom to select clothing types accordingly.
+ * 
+ * April 5th, 2019
+ * @author Jingwei Sun, John Chen, Aziz Omar
  */
 public class AddItemsController implements Initializable {
-
-    private ArrayList<Clothing> clothList;
-    private Clothing c;
-    private ObservableList<Clothing> list;
-
+    
+    //variables to be used in the controller
+    private Clothing c; //Clothing class
+    private ObservableList<Clothing> list; //arraylist to hold all the clothing objects
     private MainDocumentController mainController;
 
-    private boolean inEditing;
-    private int indexOnEditing;
-    private String fileName;
-    private int index;
+    private boolean inEditing; //tracks if the array is being edited
+    private int indexOnEditing; //tracks the current index of the array being edited
     private Label label;
-    
+
     @FXML
     private ComboBox<Type> typeCombo;
     @FXML
@@ -77,30 +73,30 @@ public class AddItemsController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        //connect the MainDocumentController to be able to pass values/references
         mainController = MainDocumentController.getController();
-        clothList = new ArrayList<>();
+        //populate the type combo box in the add items window on load
         typeCombo.getItems().setAll(Clothing.Type.values());
+        //disable all other combo boxes until type is selected
         cbDisable(true);
     }
 
     @FXML
     private void typeHandle(ActionEvent event) {
 
-     if (typeCombo.getSelectionModel().getSelectedItem() == Clothing.Type.Dress) {
-           girlSize();
-            
+        //if statement checks the type of clothing selected and displays the appropriate sizes
+        if (Clothing.Type.Dress == typeCombo.getSelectionModel().getSelectedItem()) {
+            girlSize();
         } else if (Clothing.Type.Skirts == typeCombo.getSelectionModel().getSelectedItem()) {
             girlSize();
-        }   
-       else if (Clothing.Type.Shorts == typeCombo.getSelectionModel().getSelectedItem()) {
+        } else if (Clothing.Type.Shorts == typeCombo.getSelectionModel().getSelectedItem()) {
             pantSize();
-       }
-       else if (Clothing.Type.Jeans == typeCombo.getSelectionModel().getSelectedItem()) {
-           pantSize();
-       } else if (Clothing.Type.Pants == typeCombo.getSelectionModel().getSelectedItem()) {
-           pantSize();
-       } 
-       else {
+        } else if (Clothing.Type.Jeans == typeCombo.getSelectionModel().getSelectedItem()) {
+            pantSize();
+        } else if (Clothing.Type.Pants == typeCombo.getSelectionModel().getSelectedItem()) {
+            pantSize();
+            //every other type of clothing will have these options to choose from
+        } else {
             cbDisable(false);
             sizeCombo.getItems().setAll("XS", "S", "M", "L", "XL");
             genderCombo.getItems().setAll(Clothing.Gender.values());
@@ -108,84 +104,83 @@ public class AddItemsController implements Initializable {
         }
     }
 
+    //method that displays the waist size if pants/shorts/jeans are selected as type
     public void pantSize() {
         cbDisable(false);
         sizeCombo.getItems().setAll("28W", "30W", "32W", "34W", "36W");
         colorCombo.getItems().setAll(Clothing.Colors.values());
         genderCombo.getItems().setAll(Clothing.Gender.values());
     }
-    
+
+    //method that displays dress size if dress/skirt is selected, only provides female/girl as gender choices
     public void girlSize() {
         cbDisable(false);
         sizeCombo.getItems().setAll("0", "2", "4", "6", "8", "10", "12");
         colorCombo.getItems().setAll(Clothing.Colors.values());
         genderCombo.getItems().setAll(Clothing.Gender.Girls, Clothing.Gender.Female);
     }
-    
+
+    //not needed
     @FXML
     private void genderHandle(ActionEvent event) {
     }
 
+    //upon clicking submit the handler will validate the data before creating the new object
     @FXML
     private void submitHandle(ActionEvent event) {
-        
-        
+
         //checks if the fields are completed, prompt if not
         try {
-        if (typeCombo.getSelectionModel().isEmpty() || colorCombo.getSelectionModel().isEmpty()
-                || genderCombo.getSelectionModel().isEmpty()
-                || priceLabel.getText().isEmpty() || quantityLabel.getText().isEmpty()
-                || sizeCombo.getSelectionModel().isEmpty() || idLabel.getText().isEmpty()) {
-            confirmation.setText("Please complete the missing fields");
-            
-        }
-        //loops through the arraylist and checks if productID is duplicate
-        boolean duplicate = false;
-        if (!idLabel.getText().isEmpty()) {
-            
-                for (int i=0; i < mainController.list.size(); i++) {
-                if (idLabel.getText().equals(""+mainController.list.get(i).getProductId())) {
-                confirmation.setText("Please enter an unique ID"); 
-                duplicate = true; //if duplicate then true
+            if (typeCombo.getSelectionModel().isEmpty() || colorCombo.getSelectionModel().isEmpty()
+                    || genderCombo.getSelectionModel().isEmpty()
+                    || priceLabel.getText().isEmpty() || quantityLabel.getText().isEmpty()
+                    || sizeCombo.getSelectionModel().isEmpty() || idLabel.getText().isEmpty()) {
+                confirmation.setText("Please fill in the fields");
+            } else {
+                //if all fields are filled then the ID, price, and quantity must be greater than 0 otherwise display message
+                if ((Integer.parseInt(idLabel.getText()) <= 0) || Double.parseDouble(priceLabel.getText()) < 0
+                        || Integer.parseInt(quantityLabel.getText()) < 0) {
+                    confirmation.setText("Please enter positive numbers");
+                } //if product ID is above zero then iterate through the list to find matching IDs
+                else if (Integer.parseInt(idLabel.getText()) > 0) {
+                    boolean duplicate = false;
+                    for (int i = 0; i < mainController.list.size(); i++) {
+
+                        //if a match was found then display message and set duplicate to true
+                        if (Integer.parseInt(idLabel.getText()) == mainController.list.get(i).getProductId()) {
+                            confirmation.setText("Please enter an unique ID");
+                            duplicate = true;
+                            //if duplicate then true
+                        }
+                    }
+                    //if all fields are valid then a new object of clothing is created
+                    if (!duplicate) {
+                        Clothing c = new Clothing();
+                        addProduct(c); //passes the object reference to the method
+                    }
                 }
-               }
-                if (Integer.parseInt(idLabel.getText()) < 0) {
-                    confirmation.setText("Please enter a valid ID");
-                }
-                //if not duplicate then create the object
-                if (!duplicate) {
-    
-                //creates a new clothing object if fields are all valid and call addProduct() 
-                Clothing c = new Clothing();
-                addProduct(c);
             }
-        }
-        }catch (Exception e) {
-            e.printStackTrace();
+            //display error if anything outside of numbers are entered
+        } catch (NumberFormatException e) {
+            System.out.println(e);
         }
     }
+
+    //close the current window if cancel/close button is clicked
     @FXML
     private void cancelHandle(ActionEvent event) {
         Stage stage = (Stage) cancelBtn.getScene().getWindow();
         stage.close();
     }
 
-    private void showHandle(ActionEvent event
-    ) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION, mainController.getList().toString().replace("[", "").replace("]", "").replace(",", ""), ButtonType.OK);
-        alert.setHeaderText("Products");
-        alert.setTitle("Product List");
-        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
-        alert.getDialogPane().setMinWidth(Region.USE_PREF_SIZE);
-        alert.show();
-    }
-
+    //disables or enables size/color/gender combo boxes given the parmaters
     public void cbDisable(boolean b) {
         sizeCombo.setDisable(b);
         colorCombo.setDisable(b);
         genderCombo.setDisable(b);
     }
 
+    //clears the fields after each submit
     public void clear() {
 
         typeCombo.getSelectionModel().clearSelection();
@@ -196,10 +191,9 @@ public class AddItemsController implements Initializable {
         priceLabel.setText("");
         quantityLabel.setText("");
         cbDisable(false);
-
     }
 
-    //method to add the product given the product type
+    //method that takes in the new object and sets the new values to it
     public void addProduct(Clothing c) {
 
         c.setType(typeCombo.getValue());
@@ -210,20 +204,16 @@ public class AddItemsController implements Initializable {
         c.setPrice(Double.parseDouble(priceLabel.getText()));
         c.setQuantity(Integer.parseInt(quantityLabel.getText()));
 
-        //adds cloth object to ArrayList clothList
-        //clothList.add(c);
+        //passes the object to the main controller's setList method
         mainController.setList(c);
-
+        //displays a success message
         confirmation.setText("Item Added Successfully");
-
+        //clear all the input fields
         clear();
 
     }
 
-    public Clothing getProduct() {
-        return c;
-    }
-
+    //image handler that adds image to product
     @FXML
     private void imageHandle(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
@@ -242,7 +232,7 @@ public class AddItemsController implements Initializable {
         }
     }
 
-    /*
+    /* testing purposes
     public void setParentController(MainDocumentController mainController) {
     this.mainController = mainController;
 }
