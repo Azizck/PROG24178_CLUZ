@@ -443,6 +443,7 @@ public class MainDocumentController implements Initializable {
     private void resetHandle(ActionEvent event) {
     }
     // search bar 
+    @FXML
     private void search(KeyEvent event) {
         // takes an input and compares it with parameters in observableList using addListener
         searchField.textProperty().addListener((observable, oldValue, newValue) -> {

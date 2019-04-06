@@ -35,9 +35,9 @@ public class FXMLsplashController implements Initializable {
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 		// an object of PauseTransation with duration of two seconds
-		PauseTransition delay = new PauseTransition(Duration.seconds(2));
+		PauseTransition delay = new PauseTransition(Duration.seconds(1));
 		// set the delay on event to be called swapScenes when the duration time finishes
-		delay.setOnFinished(event
+		delay.setOnFinished(event2
 			//call swap screen to swap the scenes
 			-> swapScenes()
 		);
