@@ -135,18 +135,15 @@ public class MainDocumentController implements Initializable {
             if (e.getClickCount() == 1) {
 
                 select();
-            }
-            //double click
+            } //double click
             else if (e.getClickCount() == 2) {
                 select();
-                
+
                 showEdit();
-               
+
+            } else {
+
             }
-            else {
-               
-           
-        }
         });
 
         typeFilter.getItems().addAll(Type.values());
@@ -156,7 +153,6 @@ public class MainDocumentController implements Initializable {
         items.setItems(list);
         filter = new FilteredList(list, e -> true);
 
-        
         update();
     }
 
@@ -168,18 +164,18 @@ public class MainDocumentController implements Initializable {
         items.refresh();
         calculate();
     }
-    
+
     public void calculate() {
         int q = 0;
         double v = 0;
         for (int i = 0; i < list.size(); i++) {
-            q+=list.get(i).getQuantity();
-            v+=(list.get(i).getPrice()*list.get(i).getQuantity());
+            q += list.get(i).getQuantity();
+            v += (list.get(i).getPrice() * list.get(i).getQuantity());
         }
         uniqueProducts.setText("Unique Products: " + Integer.toString(list.size()));
         totalProducts.setText("Total Products: " + q);
         totalValue.setText("Total Value: $" + String.format("%.2f", v));
-        
+
     }
 
     public void setList(Clothing c) {
@@ -249,11 +245,11 @@ public class MainDocumentController implements Initializable {
     private void editHandle(ActionEvent event) {
         showEdit();
     }
-    
+
     private void showEdit() {
-        
-       try {
-           
+
+        try {
+
             if (!items.getSelectionModel().isEmpty()) {
                 // Loading the modify part window
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("EditItems.fxml"));
@@ -287,7 +283,7 @@ public class MainDocumentController implements Initializable {
             }
 
         } catch (IOException e) {
-        System.out.println("Error" + e);
+            System.out.println("Error" + e);
         }
     }
 
@@ -339,63 +335,120 @@ public class MainDocumentController implements Initializable {
 
     @FXML
     private void typeFilterHandle(ActionEvent event) {
-
-        ObservableList<Clothing> subList = FXCollections.observableArrayList();
-                    
-        
-        if (typeFilter.getSelectionModel().getSelectedItem() == Type.Dress) {
-            girlSize();
-            
-            for (Clothing c : list) {
-                    subList.add(c);
-                }
-                items.setItems(subList);
-            
-            
-            
-            
-            
-        } else if (Clothing.Type.Skirts == typeFilter.getSelectionModel().getSelectedItem()) {
-            girlSize();
-        } else if (Clothing.Type.Shorts == typeFilter.getSelectionModel().getSelectedItem()) {
-            pantSize();
-        } else if (Clothing.Type.Jeans == typeFilter.getSelectionModel().getSelectedItem()) {
-            pantSize();
-        } else if (Clothing.Type.Pants == typeFilter.getSelectionModel().getSelectedItem()) {
-            pantSize();
-        } else {
-            sizeFilter.getItems().setAll("XS", "S", "M", "L", "XL");
-            genderFilter.getItems().setAll(Clothing.Gender.values());
-            colorFilter.getItems().setAll(Clothing.Colors.values());
-        }
-        if (Clothing.Type.Dress == typeFilter.getSelectionModel().getSelectedItem()) {
-
-        }
-        if (Clothing.Type.Shorts == typeFilter.getSelectionModel().getSelectedItem()) {
-
-        }
-        if (Clothing.Type.Skirts == typeFilter.getSelectionModel().getSelectedItem()) {
-
-        }
-        if (Clothing.Type.Shirts == typeFilter.getSelectionModel().getSelectedItem()) {
-
-        }
+         // takes a selection and compares it with parameters in observableList using addListener
+        typeFilter.getSelectionModel().selectedItemProperty()
+                .addListener((observable, oldValue, newValue) -> {
+                    // filters for all Clothing objects
+                    filter.setPredicate((Predicate<? super Clothing>) (Clothing c) -> {
+                        // when DRESS type selection is made, do something
+                        if (Clothing.Type.Dress == typeFilter.getSelectionModel().getSelectedItem()) {
+                            // search all items currently in ArrayList list
+                            for (int i = 0; i < list.size(); i++) {
+                                // if type of clothing object is DRESS then return true to be sorted
+                                if (c.getType() == Type.Dress) {
+                                    return true;
+                                }
+                            }
+                        }
+                        if (Clothing.Type.Shorts == typeFilter.getSelectionModel().getSelectedItem()) {
+                            for (int i = 0; i < list.size(); i++) {
+                                if (c.getType() == Type.Shorts) {
+                                    return true;
+                                }
+                            }
+                        }
+                        if (Clothing.Type.Skirts == typeFilter.getSelectionModel().getSelectedItem()) {
+                            for (int i = 0; i < list.size(); i++) {
+                                if (c.getType() == Type.Skirts) {
+                                    return true;
+                                }
+                            }
+                        }
+                        if (Clothing.Type.Shirts == typeFilter.getSelectionModel().getSelectedItem()) {
+                            for (int i = 0; i < list.size(); i++) {
+                                if (c.getType() == Type.Shirts) {
+                                    return true;
+                                }
+                            }
+                        }
+                        if (Clothing.Type.Outerwear == typeFilter.getSelectionModel().getSelectedItem()) {
+                            for (int i = 0; i < list.size(); i++) {
+                                if (c.getType() == Type.Outerwear) {
+                                    return true;
+                                }
+                            }
+                        }
+                        if (Clothing.Type.Jeans == typeFilter.getSelectionModel().getSelectedItem()) {
+                            for (int i = 0; i < list.size(); i++) {
+                                if (c.getType() == Type.Jeans) {
+                                    return true;
+                                }
+                            }
+                        }
+                        if (Clothing.Type.Sleepwear == typeFilter.getSelectionModel().getSelectedItem()) {
+                            for (int i = 0; i < list.size(); i++) {
+                                if (c.getType() == Type.Sleepwear) {
+                                    return true;
+                                }
+                            }
+                        }
+                        if (Clothing.Type.Sweaters == typeFilter.getSelectionModel().getSelectedItem()) {
+                            for (int i = 0; i < list.size(); i++) {
+                                if (c.getType() == Type.Sweaters) {
+                                    return true;
+                                }
+                            }
+                        }
+                        return false;
+                    });
+                });
+        // returns a new SortedList with FilteredList applied using the combobox parameters
+        SortedList sort = new SortedList(filter);
+        sort.comparatorProperty().bind(items.comparatorProperty());
+        items.setItems(sort);
     }
 
     @FXML
     private void genderFilterHandle(ActionEvent event) {
-        if (Clothing.Gender.Male == genderFilter.getSelectionModel().getSelectedItem()) {
+        genderFilter.getSelectionModel().selectedItemProperty()
+                .addListener((observable, oldValue, newValue) -> {
+                    filter.setPredicate((Predicate<? super Clothing>) (Clothing c) -> {
+                        if (Clothing.Gender.Male == genderFilter.getSelectionModel().getSelectedItem()) {
+                            for (int i = 0; i < list.size(); i++) {
+                                if (c.getGender() == Gender.Male) {
+                                    return true;
+                                }
+                            }
 
-        }
-        if (Clothing.Gender.Female == genderFilter.getSelectionModel().getSelectedItem()) {
+                        }
+                        if (genderFilter.getSelectionModel().getSelectedItem() == Gender.Female) {
+                            for (int i = 0; i < list.size(); i++) {
+                                if (c.getGender() == Gender.Female) {
+                                    return true;
+                                }
+                            }
 
-        }
-        if (Clothing.Gender.Girls == genderFilter.getSelectionModel().getSelectedItem()) {
-
-        }
-        if (Clothing.Gender.Boys == genderFilter.getSelectionModel().getSelectedItem()) {
-
-        }
+                        }
+                        if (Clothing.Gender.Girls == genderFilter.getSelectionModel().getSelectedItem()) {
+                            for (int i = 0; i < list.size(); i++) {
+                                if (c.getGender() == Gender.Girls) {
+                                    return true;
+                                }
+                            }
+                        }
+                        if (Clothing.Gender.Boys == genderFilter.getSelectionModel().getSelectedItem()) {
+                            for (int i = 0; i < list.size(); i++) {
+                                if (c.getGender() == Gender.Boys) {
+                                    return true;
+                                }
+                            }
+                        }
+                        return false;
+                    });
+                });
+        SortedList sort = new SortedList(filter);
+        sort.comparatorProperty().bind(items.comparatorProperty());
+        items.setItems(sort);
     }
 
     @FXML
@@ -407,27 +460,64 @@ public class MainDocumentController implements Initializable {
 
     @FXML
     private void colorFilterHandle(ActionEvent event) {
-        if (Clothing.Colors.Red == colorFilter.getSelectionModel().getSelectedItem()) {
-
-        }
-        if (Clothing.Colors.Orange == colorFilter.getSelectionModel().getSelectedItem()) {
-
-        }
-        if (Clothing.Colors.Yellow == colorFilter.getSelectionModel().getSelectedItem()) {
-
-        }
-        if (Clothing.Colors.Green == colorFilter.getSelectionModel().getSelectedItem()) {
-
-        }
-        if (Clothing.Colors.Blue == colorFilter.getSelectionModel().getSelectedItem()) {
-
-        }
-        if (Clothing.Colors.White == colorFilter.getSelectionModel().getSelectedItem()) {
-
-        }
-        if (Clothing.Colors.Black == colorFilter.getSelectionModel().getSelectedItem()) {
-
-        }
+        colorFilter.getSelectionModel().selectedItemProperty()
+                .addListener((observable, oldValue, newValue) -> {
+                    filter.setPredicate((Predicate<? super Clothing>) (Clothing c) -> {
+                        if (Clothing.Colors.Red == colorFilter.getSelectionModel().getSelectedItem()) {
+                            for (int i = 0; i < list.size(); i++) {
+                                if (c.getColor() == Colors.Red) {
+                                    return true;
+                                }
+                            }
+                        }
+                        if (Clothing.Colors.Orange == colorFilter.getSelectionModel().getSelectedItem()) {
+                            for (int i = 0; i < list.size(); i++) {
+                                if (c.getColor() == Colors.Orange) {
+                                    return true;
+                                }
+                            }
+                        }
+                        if (Clothing.Colors.Yellow == colorFilter.getSelectionModel().getSelectedItem()) {
+                            for (int i = 0; i < list.size(); i++) {
+                                if (c.getColor() == Colors.Yellow) {
+                                    return true;
+                                }
+                            }
+                        }
+                        if (Clothing.Colors.Green == colorFilter.getSelectionModel().getSelectedItem()) {
+                            for (int i = 0; i < list.size(); i++) {
+                                if (c.getColor() == Colors.Green) {
+                                    return true;
+                                }
+                            }
+                        }
+                        if (Clothing.Colors.Blue == colorFilter.getSelectionModel().getSelectedItem()) {
+                            for (int i = 0; i < list.size(); i++) {
+                                if (c.getColor() == Colors.Blue) {
+                                    return true;
+                                }
+                            }
+                        }
+                        if (Clothing.Colors.White == colorFilter.getSelectionModel().getSelectedItem()) {
+                            for (int i = 0; i < list.size(); i++) {
+                                if (c.getColor() == Colors.White) {
+                                    return true;
+                                }
+                            }
+                        }
+                        if (Clothing.Colors.Black == colorFilter.getSelectionModel().getSelectedItem()) {
+                            for (int i = 0; i < list.size(); i++) {
+                                if (c.getColor() == Colors.Black) {
+                                    return true;
+                                }
+                            }
+                        }
+                        return false;
+                    });
+                });
+        SortedList sort = new SortedList(filter);
+        sort.comparatorProperty().bind(items.comparatorProperty());
+        items.setItems(sort);
     }
 
     @FXML
@@ -500,14 +590,15 @@ public class MainDocumentController implements Initializable {
 
     @FXML
     private void resetHandle(ActionEvent event) {
-        
+
         typeFilter.setValue(null);
         genderFilter.getSelectionModel().clearSelection();
         sizeFilter.setValue(null);
         colorFilter.setValue(null);
         searchField.setText("");
-        
+
     }
+
     // search bar 
     @FXML
     private void search(KeyEvent event) {
@@ -517,25 +608,22 @@ public class MainDocumentController implements Initializable {
                 searchKey((String)oldVal, (String)newVal);
             }
         });
-        */
-        
+         */
+
         // takes an input and compares it with parameters in observableList using addListener
         searchField.textProperty().addListener((observable, oldValue, newValue) -> {
             filter.setPredicate((Predicate<? super Clothing>) (Clothing c) -> {
                 if (newValue.isEmpty() || newValue == null) {
                     return true;
-                }else if (c.getSize().toLowerCase().contains(newValue)) {
+                } else if (c.getSize().toLowerCase().contains(newValue)) {
                     return true;
-                }else if (String.valueOf(c.getProductId()).toLowerCase().contains(newValue)){
+                } else if (String.valueOf(c.getProductId()).toLowerCase().contains(newValue)) {
                     return true;
-                }
-                else if (String.valueOf(c.getPrice()).toLowerCase().contains(newValue)){
+                } else if (String.valueOf(c.getPrice()).toLowerCase().contains(newValue)) {
                     return true;
-                }
-                else if (String.valueOf(c.getColor()).toLowerCase().contains(newValue)){
+                } else if (String.valueOf(c.getColor()).toLowerCase().contains(newValue)) {
                     return true;
-                }
-                else if (String.valueOf(c.getType()).toLowerCase().contains(newValue)){
+                } else if (String.valueOf(c.getType()).toLowerCase().contains(newValue)) {
                     return true;
                 }
                 return false;
@@ -545,13 +633,8 @@ public class MainDocumentController implements Initializable {
         SortedList sort = new SortedList(filter);
         sort.comparatorProperty().bind(items.comparatorProperty());
         items.setItems(sort);
-        
-        
-        
+
     }
-
-
-
 
     public void searchKey(String oldVal, String newVal) {
         if (oldVal != null && (newVal.length() < oldVal.length())) {
@@ -560,15 +643,14 @@ public class MainDocumentController implements Initializable {
         newVal = newVal.toUpperCase();
         ObservableList<Clothing> subList = FXCollections.observableArrayList();
         for (Clothing e : items.getItems()) {
-            Clothing searchText = (Clothing)e;
+            Clothing searchText = (Clothing) e;
             if (searchText.getColor().toString().contains(newVal)) {
                 subList.add(searchText);
             }
         }
         items.setItems(subList);
 
-}
-
+    }
 
 }
 
@@ -578,4 +660,4 @@ filtering and searching
 image viewing and editing
 bug tests
 
-*/
+ */
