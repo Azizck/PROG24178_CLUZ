@@ -2,6 +2,7 @@ package mainwindow;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import mainwindow.Clothing.*;
 import java.net.URL;
 import java.util.ArrayList;
@@ -45,6 +46,8 @@ public class AddItemsController implements Initializable {
     private boolean inEditing; //tracks if the array is being edited
     private int indexOnEditing; //tracks the current index of the array being edited
     private Label label;
+    private Image myImage;
+    private String url;
 
     @FXML
     private ComboBox<Type> typeCombo;
@@ -203,6 +206,7 @@ public class AddItemsController implements Initializable {
         c.setGender(genderCombo.getValue());
         c.setPrice(Double.parseDouble(priceLabel.getText()));
         c.setQuantity(Integer.parseInt(quantityLabel.getText()));
+        c.setImage(myImage);
 
         //passes the object to the main controller's setList method
         mainController.setList(c);
@@ -226,10 +230,16 @@ public class AddItemsController implements Initializable {
         //Show open file dialog
         File file = fileChooser.showOpenDialog(null);
 
+        // increased efficiency in storing img path. Now as string value
         if (file != null) {
-            Image myImage = new Image(file.toURI().toString());
+        try {
+            url = file.toURI().toURL().toExternalForm();
+            myImage = new Image(url);
             image.setImage(myImage);
+        } catch (MalformedURLException ex) {
+            throw new IllegalStateException(ex);
         }
+    }
     }
 
     /* testing purposes

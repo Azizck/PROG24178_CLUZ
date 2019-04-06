@@ -119,6 +119,7 @@ public class EditItemsController implements Initializable {
 
     @FXML
     private void imageHandle(ActionEvent event) {
+       // image.setImage(c.getImage()); doesnt work, cant figure out how to retrieve selected clothing object
     }
 
     @FXML
