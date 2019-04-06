@@ -62,11 +62,11 @@ public class EditItemsController implements Initializable {
     @FXML
     private Button imgButton;
     @FXML
-    private Button showBtn;
-    @FXML
     private Button submitBtn;
     @FXML
     private Button cancelBtn;
+    @FXML
+    private Label totalValue;
 
     /**
      * Initializes the controller class.
@@ -78,6 +78,8 @@ public class EditItemsController implements Initializable {
         inEditing = false;
 
         typeCombo.getItems().setAll(Clothing.Type.values());
+        
+        
     }
 
     @FXML
@@ -122,7 +124,6 @@ public class EditItemsController implements Initializable {
        // image.setImage(c.getImage()); doesnt work, cant figure out how to retrieve selected clothing object
     }
 
-    @FXML
     private void showHandle(ActionEvent event
     ) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION, clothList.toString().replace("[", "").replace("]", "").replace(",", ""), ButtonType.OK);
@@ -136,6 +137,9 @@ public class EditItemsController implements Initializable {
     @FXML
     private void submitHandle(ActionEvent event) {
 
+       //editing item does not allow using same ID
+       
+       
         //checks if the fields are completed, prompt if not
         try {
             if (typeCombo.getSelectionModel().isEmpty() || colorCombo.getSelectionModel().isEmpty()
@@ -177,6 +181,11 @@ public class EditItemsController implements Initializable {
             }
 
         } catch (NumberFormatException e) {
+             Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("");
+                alert.setContentText("Please enter valid numbers");
+                alert.showAndWait();
             System.out.println(e);
         }
 
@@ -216,6 +225,10 @@ public class EditItemsController implements Initializable {
         quantityLabel.setText(mainController.list.get(indexOnEditing).getQuantity() + "");
         priceLabel.setText(mainController.list.get(indexOnEditing).getPrice() + "");
 
+        //calculates total value = price*quantity of the selected item
+        double v = (mainController.list.get(indexOnEditing).getPrice() * mainController.list.get(indexOnEditing).getQuantity());
+        
+        totalValue.setText("$" + String.format("%.2f", v));
     }
 
     public void clear() {

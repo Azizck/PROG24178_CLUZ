@@ -11,6 +11,10 @@ import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.function.Predicate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -56,7 +60,7 @@ public class MainDocumentController implements Initializable {
     private int indexOnEditing;
 
     ObservableList<Clothing> list = FXCollections.observableArrayList();
-    FilteredList filter = new FilteredList(list, e -> true);
+    FilteredList filter;
 
     private AddItemsController addItemsController;
     private EditItemsController editItemsController;
@@ -101,6 +105,12 @@ public class MainDocumentController implements Initializable {
     private Button openFile;
     @FXML
     private Button resetBtn;
+    @FXML
+    private Label uniqueProducts;
+    @FXML
+    private Label totalProducts;
+    @FXML
+    private Label totalValue;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -121,10 +131,22 @@ public class MainDocumentController implements Initializable {
 
         //display table with entries on load
         items.setOnMouseClicked(e -> {
-            if (e.getClickCount() > 0) {
+            //single click
+            if (e.getClickCount() == 1) {
 
                 select();
             }
+            //double click
+            else if (e.getClickCount() == 2) {
+                select();
+                
+                showEdit();
+               
+            }
+            else {
+               
+           
+        }
         });
 
         typeFilter.getItems().addAll(Type.values());
@@ -132,7 +154,10 @@ public class MainDocumentController implements Initializable {
         colorFilter.getItems().addAll(Colors.values());
 
         items.setItems(list);
+        filter = new FilteredList(list, e -> true);
 
+        
+        update();
     }
 
     public static MainDocumentController getController() {
@@ -141,11 +166,26 @@ public class MainDocumentController implements Initializable {
 
     public void update() {
         items.refresh();
+        calculate();
+    }
+    
+    public void calculate() {
+        int q = 0;
+        double v = 0;
+        for (int i = 0; i < list.size(); i++) {
+            q+=list.get(i).getQuantity();
+            v+=(list.get(i).getPrice()*list.get(i).getQuantity());
+        }
+        uniqueProducts.setText("Unique Products: " + Integer.toString(list.size()));
+        totalProducts.setText("Total Products: " + q);
+        totalValue.setText("Total Value: $" + String.format("%.2f", v));
+        
     }
 
     public void setList(Clothing c) {
         list.add(c);
         items.setItems(list);
+        calculate();
         //items.getItems().setAll(list.add(c));
         //items.getItems().clear();
         //getList().add(c);
@@ -154,11 +194,11 @@ public class MainDocumentController implements Initializable {
 
     public ObservableList<Clothing> getList() {
 
-        list.add(new Clothing(14, Type.Dress, Gender.Girls, "XS", Colors.Orange, 53.33, 2));
-        list.add(new Clothing(22, Type.Pants, Gender.Boys, "XS", Colors.Orange, 83.33, 2));
-        list.add(new Clothing(34, Type.Dress, Gender.Girls, "XS", Colors.Orange, 21.33, 2));
-        list.add(new Clothing(41, Type.Shorts, Gender.Boys, "XS", Colors.Orange, 223.33, 2));
-        list.add(new Clothing(5, Type.Dress, Gender.Girls, "XS", Colors.Orange, 2335.33, 2));
+        list.add(new Clothing(14, Type.Dress, Gender.Girls, "0", Colors.Orange, 53.33, 2));
+        list.add(new Clothing(22, Type.Pants, Gender.Boys, "28W", Colors.Orange, 83.33, 2));
+        list.add(new Clothing(34, Type.Outerwear, Gender.Girls, "M", Colors.Orange, 21.33, 2));
+        list.add(new Clothing(41, Type.Shirts, Gender.Boys, "XS", Colors.Orange, 223.33, 2));
+        list.add(new Clothing(5, Type.Dress, Gender.Female, "8", Colors.Orange, 2335.33, 2));
 
         return list;
 
@@ -206,9 +246,14 @@ public class MainDocumentController implements Initializable {
     }
 
     @FXML
-    private void editHandle(ActionEvent event) throws IOException {
-
-        try {
+    private void editHandle(ActionEvent event) {
+        showEdit();
+    }
+    
+    private void showEdit() {
+        
+       try {
+           
             if (!items.getSelectionModel().isEmpty()) {
                 // Loading the modify part window
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("EditItems.fxml"));
@@ -241,8 +286,8 @@ public class MainDocumentController implements Initializable {
                 alert.showAndWait();
             }
 
-        } catch (Exception e) {
-            System.out.println("Error" + e);
+        } catch (IOException e) {
+        System.out.println("Error" + e);
         }
     }
 
@@ -295,9 +340,21 @@ public class MainDocumentController implements Initializable {
     @FXML
     private void typeFilterHandle(ActionEvent event) {
 
-        if (Clothing.Type.Dress == typeFilter.getSelectionModel().getSelectedItem()) {
+        ObservableList<Clothing> subList = FXCollections.observableArrayList();
+                    
+        
+        if (typeFilter.getSelectionModel().getSelectedItem() == Type.Dress) {
             girlSize();
-
+            
+            for (Clothing c : list) {
+                    subList.add(c);
+                }
+                items.setItems(subList);
+            
+            
+            
+            
+            
         } else if (Clothing.Type.Skirts == typeFilter.getSelectionModel().getSelectedItem()) {
             girlSize();
         } else if (Clothing.Type.Shorts == typeFilter.getSelectionModel().getSelectedItem()) {
@@ -401,6 +458,7 @@ public class MainDocumentController implements Initializable {
     @FXML
     private void openFileHandle(ActionEvent event) {
         items.setItems(open());
+        calculate();
 
     }
 
@@ -435,16 +493,32 @@ public class MainDocumentController implements Initializable {
         ObservableList<Clothing> list = FXCollections.observableArrayList(c);
 
         this.list = list;
+        this.filter = new FilteredList(list, e -> true);
         return list;
 
     }
 
     @FXML
     private void resetHandle(ActionEvent event) {
+        
+        typeFilter.setValue(null);
+        genderFilter.getSelectionModel().clearSelection();
+        sizeFilter.setValue(null);
+        colorFilter.setValue(null);
+        searchField.setText("");
+        
     }
     // search bar 
     @FXML
     private void search(KeyEvent event) {
+        /*
+        searchField.textProperty().addListener(new ChangeListener() {
+            public void changed(ObservableValue observable, Object oldVal, Object newVal) {
+                searchKey((String)oldVal, (String)newVal);
+            }
+        });
+        */
+        
         // takes an input and compares it with parameters in observableList using addListener
         searchField.textProperty().addListener((observable, oldValue, newValue) -> {
             filter.setPredicate((Predicate<? super Clothing>) (Clothing c) -> {
@@ -460,10 +534,32 @@ public class MainDocumentController implements Initializable {
         SortedList sort = new SortedList(filter);
         sort.comparatorProperty().bind(items.comparatorProperty());
         items.setItems(sort);
+        
+        
+        
     }
+
+
+
+
+    public void searchKey(String oldVal, String newVal) {
+        if (oldVal != null && (newVal.length() < oldVal.length())) {
+            items.setItems(list);
+        }
+        newVal = newVal.toUpperCase();
+        ObservableList<Clothing> subList = FXCollections.observableArrayList();
+        for (Clothing e : items.getItems()) {
+            Clothing searchText = (Clothing)e;
+            if (searchText.getColor().toString().contains(newVal)) {
+                subList.add(searchText);
+            }
+        }
+        items.setItems(subList);
 
 }
 
+
+}
 
 /*
 Need to implement:

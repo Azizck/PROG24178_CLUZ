@@ -165,6 +165,11 @@ public class AddItemsController implements Initializable {
             }
             //display error if anything outside of numbers are entered
         } catch (NumberFormatException e) {
+             Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("");
+                alert.setContentText("Please enter valid numbers");
+                alert.showAndWait();
             System.out.println(e);
         }
     }
