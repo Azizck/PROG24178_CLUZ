@@ -58,7 +58,7 @@ public class Clothing {
     public Image getImage() {
         return img;
     }
-    public void setImage() {
+    public void setImage(Image img) {
         this.img = img;
     }
     public Colors getColor() {
