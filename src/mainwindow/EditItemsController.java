@@ -84,24 +84,38 @@ public class EditItemsController implements Initializable {
     private void typeHandle(ActionEvent event) {
 
        if (Clothing.Type.Dress == typeCombo.getSelectionModel().getSelectedItem()) {
-
-            sizeCombo.getItems().setAll("0", "2", "4", "6", "8", "10", "12");
-            colorCombo.getItems().setAll(Clothing.Colors.values());
-            genderCombo.getItems().setAll(Clothing.Gender.Girls, Clothing.Gender.Female);
-        } else if (Clothing.Type.Shorts == typeCombo.getSelectionModel().getSelectedItem()) {
-
-            sizeCombo.getItems().setAll("28W", "30W", "32W", "34W", "36W");
-            colorCombo.getItems().setAll(Clothing.Colors.values());
-            genderCombo.getItems().setAll(Clothing.Gender.values());
-        } else {
-
+           girlSize();
+            
+        } else if (Clothing.Type.Skirts == typeCombo.getSelectionModel().getSelectedItem()) {
+            girlSize();
+        }   
+       else if (Clothing.Type.Shorts == typeCombo.getSelectionModel().getSelectedItem()) {
+            pantSize();
+       }
+       else if (Clothing.Type.Jeans == typeCombo.getSelectionModel().getSelectedItem()) {
+           pantSize();
+       } else if (Clothing.Type.Pants == typeCombo.getSelectionModel().getSelectedItem()) {
+           pantSize();
+       } 
+       else {
             sizeCombo.getItems().setAll("XS", "S", "M", "L", "XL");
             genderCombo.getItems().setAll(Clothing.Gender.values());
             colorCombo.getItems().setAll(Clothing.Colors.values());
         }
-
     }
 
+    public void pantSize() {
+        sizeCombo.getItems().setAll("28W", "30W", "32W", "34W", "36W");
+        colorCombo.getItems().setAll(Clothing.Colors.values());
+        genderCombo.getItems().setAll(Clothing.Gender.values());
+    }
+    
+    public void girlSize() {
+        sizeCombo.getItems().setAll("0", "2", "4", "6", "8", "10", "12");
+        colorCombo.getItems().setAll(Clothing.Colors.values());
+        genderCombo.getItems().setAll(Clothing.Gender.Girls, Clothing.Gender.Female);
+    }
+    
     @FXML
     private void genderHandle(ActionEvent event) {
     }

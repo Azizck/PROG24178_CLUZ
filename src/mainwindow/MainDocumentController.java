@@ -12,14 +12,9 @@ import mainwindow.Clothing.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -56,14 +51,10 @@ public class MainDocumentController implements Initializable {
     private boolean inEdit;
     private int indexOnEditing;
 
-
     ObservableList<Clothing> list = FXCollections.observableArrayList();
-        
-    private String fileName;
 
     private AddItemsController addItemsController;
     private EditItemsController editItemsController;
-
     private static MainDocumentController controller;
 
     
@@ -97,7 +88,7 @@ public class MainDocumentController implements Initializable {
     @FXML
     private ComboBox<Gender> genderFilter;
     @FXML
-    private ComboBox<Size> sizeFilter;
+    private ComboBox<String> sizeFilter;
     @FXML
     private ComboBox<Colors> colorFilter;
     @FXML
@@ -108,10 +99,8 @@ public class MainDocumentController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-   
         items.setItems(getList());
-        
-  
+       
         controller = this;
         indexOnEditing = 0;
         inEdit = false;
@@ -136,13 +125,9 @@ public class MainDocumentController implements Initializable {
         });
         
         typeFilter.getItems().addAll(Type.values());
-        genderFilter.getItems().addAll(Gender.values());
-//        sizeFilter.getItems().addAll(Size.values());
+        genderFilter.getItems().addAll(Gender.values()); 
         colorFilter.getItems().addAll(Colors.values());
-        
-        
-        
-    
+ 
     }
     
     public static MainDocumentController getController() {
@@ -168,9 +153,9 @@ public class MainDocumentController implements Initializable {
     public ObservableList<Clothing> getList() {
 
         list.add(new Clothing(14, Type.Dress, Gender.Girls, "XS", Colors.Orange, 53.33, 2));
-        list.add(new Clothing(22, Type.Jackets, Gender.Boys, "XS", Colors.Orange, 83.33, 2));
+        list.add(new Clothing(22, Type.Pants, Gender.Boys, "XS", Colors.Orange, 83.33, 2));
         list.add(new Clothing(34, Type.Dress, Gender.Girls, "XS", Colors.Orange, 21.33, 2));
-        list.add(new Clothing(41, Type.Jackets, Gender.Boys, "XS", Colors.Orange, 223.33, 2));
+        list.add(new Clothing(41, Type.Shorts, Gender.Boys, "XS", Colors.Orange, 223.33, 2));
         list.add(new Clothing(5, Type.Dress, Gender.Girls, "XS", Colors.Orange, 2335.33, 2));
         
         return list;
@@ -290,20 +275,54 @@ public class MainDocumentController implements Initializable {
         }
     }
 
+    
+     
+    public void pantSize() {
+        sizeFilter.getItems().setAll("28W", "30W", "32W", "34W", "36W");
+        colorFilter.getItems().setAll(Clothing.Colors.values());
+        genderFilter.getItems().setAll(Clothing.Gender.values());
+    }
+    
+    public void girlSize() {
+        sizeFilter.getItems().setAll("0", "2", "4", "6", "8", "10", "12");
+        colorFilter.getItems().setAll(Clothing.Colors.values());
+        genderFilter.getItems().setAll(Clothing.Gender.Girls, Clothing.Gender.Female);
+    }
+    
     @FXML
     private void searchHandle(ActionEvent event) {
     }
 
     @FXML
     private void typeFilterHandle(ActionEvent event) {
-      
+        
+       
+       if (Clothing.Type.Dress == typeFilter.getSelectionModel().getSelectedItem()) {
+           girlSize();
+            
+        } else if (Clothing.Type.Skirts == typeFilter.getSelectionModel().getSelectedItem()) {
+            girlSize();
+        }   
+       else if (Clothing.Type.Shorts == typeFilter.getSelectionModel().getSelectedItem()) {
+            pantSize();
+       }
+       else if (Clothing.Type.Jeans == typeFilter.getSelectionModel().getSelectedItem()) {
+           pantSize();
+       } else if (Clothing.Type.Pants == typeFilter.getSelectionModel().getSelectedItem()) {
+           pantSize();
+       } 
+       else {
+            sizeFilter.getItems().setAll("XS", "S", "M", "L", "XL");
+            genderFilter.getItems().setAll(Clothing.Gender.values());
+            colorFilter.getItems().setAll(Clothing.Colors.values());
+        }
          if (Clothing.Type.Dress == typeFilter.getSelectionModel().getSelectedItem()){
              
          }
          if (Clothing.Type.Shorts == typeFilter.getSelectionModel().getSelectedItem()){
              
          }
-         if (Clothing.Type.Jackets == typeFilter.getSelectionModel().getSelectedItem()){
+         if (Clothing.Type.Skirts == typeFilter.getSelectionModel().getSelectedItem()){
              
          }
          if (Clothing.Type.Shirts == typeFilter.getSelectionModel().getSelectedItem()){
@@ -375,7 +394,7 @@ public class MainDocumentController implements Initializable {
             for (Clothing c : list) {
                 writer.write(c.getProductId() + ", " + c.getType() + ", " 
                         + c.getGender() + ", " + c.getSize() + ", " + c.getColor() 
-                        + ", " + c.getPrice() + ", " + c.getQuantity() + " \n");
+                        + ", " + c.getPrice() + ", " + c.getQuantity() + "\n");
             }
             
             writer.close();
@@ -418,7 +437,7 @@ public class MainDocumentController implements Initializable {
            }
  
        } catch (IOException e){
-           e.printStackTrace();
+            System.out.println(e);
         }
       ObservableList<Clothing> list = FXCollections.observableArrayList(c);
        

@@ -16,7 +16,7 @@ import javafx.scene.image.Image;
 public class Clothing {
   
     public enum Type {
-        Dress, Jackets, Shirts, Shorts;     
+        Dress, Jeans, Outerwear, Pants, Shirts, Shorts, Skirts, Sleepwear, Sweaters;  
     }
     
     public enum Gender {
