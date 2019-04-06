@@ -111,20 +111,39 @@ public class AddItemsController implements Initializable {
 
     @FXML
     private void submitHandle(ActionEvent event) {
-
+        
+        
+        //checks if the fields are completed, prompt if not
+        try {
         if (typeCombo.getSelectionModel().isEmpty() || colorCombo.getSelectionModel().isEmpty()
                 || genderCombo.getSelectionModel().isEmpty()
                 || priceLabel.getText().isEmpty() || quantityLabel.getText().isEmpty()
-                || sizeCombo.getSelectionModel().isEmpty()) {
-            confirmation.setText("Please complete the fields");
-
-        } else {
-            Clothing c = new Clothing();
-            addProduct(c);
+                || sizeCombo.getSelectionModel().isEmpty() || idLabel.getText().isEmpty()) {
+            confirmation.setText("Please complete the missing fields");
+            
         }
-
+        //loops through the arraylist and checks if productID is duplicate
+        boolean duplicate = false;
+        if (!idLabel.getText().isEmpty()) {
+            
+                for (int i=0; i < mainController.list.size(); i++) {
+                if (idLabel.getText().equals(""+mainController.list.get(i).getProductId())) {
+                confirmation.setText("Please enter an unique ID"); 
+                duplicate = true; //if duplicate then true
+                }
+               }
+                //if not duplicate then create the object
+                if (!duplicate) {
+    
+                //creates a new clothing object if fields are all valid and call addProduct() 
+                Clothing c = new Clothing();
+                addProduct(c);
+            }
+        }
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
     }
-
     @FXML
     private void cancelHandle(ActionEvent event) {
         Stage stage = (Stage) cancelBtn.getScene().getWindow();

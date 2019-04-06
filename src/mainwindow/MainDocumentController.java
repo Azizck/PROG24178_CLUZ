@@ -132,6 +132,10 @@ public class MainDocumentController implements Initializable {
         genderFilter.getItems().addAll(Gender.values());
 //        sizeFilter.getItems().addAll(Size.values());
         colorFilter.getItems().addAll(Colors.values());
+        
+        
+        
+    
     }
     
     public static MainDocumentController getController() {
