@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" fx:id="splashScene" minHeight="525.0" minWidth="865.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #333333;" stylesheets="@Splash.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mainwindow.FXMLsplashController">
+   <children>
+      <HBox alignment="CENTER" layoutX="55.0" layoutY="104.0" prefHeight="297.0" prefWidth="756.0">
+         <children>
+            <ImageView fitHeight="272.0" fitWidth="274.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@logo.png" />
+               </image>
+               <HBox.margin>
+                  <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+               </HBox.margin>
+            </ImageView>
+            <Line endX="-99.99998474121094" endY="108.29289245605469" fill="#9e9e9e" startX="-100.0" stroke="#d7d7d7">
+               <HBox.margin>
+                  <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+               </HBox.margin>
+            </Line>
+            <Label graphicTextGap="5.0" prefHeight="89.0" prefWidth="391.0" text="Be Clued in on Your Clothing" textFill="#eeeeee" textOverrun="CLIP">
+               <font>
+                  <Font name="Californian FB" size="26.0" />
+               </font>
+               <HBox.margin>
+                  <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+               </HBox.margin>
+            </Label>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>
