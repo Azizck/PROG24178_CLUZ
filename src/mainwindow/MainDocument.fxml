@@ -74,6 +74,7 @@
                   <ComboBox fx:id="genderFilter" onAction="#genderFilterHandle" prefWidth="150.0" promptText="Gender" />
                   <ComboBox fx:id="sizeFilter" onAction="#sizeFilterHandle" prefWidth="150.0" promptText="Size" />
                   <ComboBox fx:id="colorFilter" onAction="#colorFilterHandle" prefWidth="150.0" promptText="Color" />
+                  <Button fx:id="resetBtn" mnemonicParsing="false" onAction="#resetHandle" prefHeight="30.0" prefWidth="111.0" text="Reset" />
                </children>
             </HBox>
             <HBox prefHeight="351.0" prefWidth="500.0">

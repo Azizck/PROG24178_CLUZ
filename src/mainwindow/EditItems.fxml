@@ -80,12 +80,11 @@
             <ImageView fx:id="image" fitHeight="241.0" fitWidth="260.0" pickOnBounds="true" preserveRatio="true" />
             <HBox alignment="CENTER" prefHeight="48.0" prefWidth="260.0">
                <children>
-                  <Label fx:id="confirmation" text="Confirm" textAlignment="CENTER" />
+                  <Label fx:id="confirmation" textAlignment="CENTER" />
                </children></HBox>
             <HBox alignment="CENTER" prefHeight="67.0" prefWidth="260.0" spacing="30.0">
                <children>
                   <Button fx:id="imgButton" mnemonicParsing="false" onAction="#imageHandle" text="Image" />
-                  <Button fx:id="showBtn" mnemonicParsing="false" onAction="#showHandle" text="Show" />
                </children></HBox>
             <HBox alignment="CENTER" prefHeight="72.0" prefWidth="260.0" spacing="30.0">
                <children>

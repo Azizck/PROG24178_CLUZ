@@ -162,8 +162,15 @@ public class EditItemsController implements Initializable {
                     if (!duplicate) {
                         //creates a new clothing object if fields are all valid and call addProduct() 
                         setList();
-                        confirmation.setText("Item Updated");
+           
                         mainController.update();
+                        Stage stage = (Stage) cancelBtn.getScene().getWindow();
+                        stage.close();
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Saved");
+                alert.setHeaderText("");
+                alert.setContentText("Item Saved Sucessfully");
+                alert.showAndWait();
                     }
                 }
             }

@@ -93,6 +93,8 @@ public class MainDocumentController implements Initializable {
     private Button saveFile;
     @FXML
     private Button openFile;
+    @FXML
+    private Button resetBtn;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -427,4 +429,17 @@ public class MainDocumentController implements Initializable {
         return list;
 
     }
+
+    @FXML
+    private void resetHandle(ActionEvent event) {
+    }
 }
+
+
+/*
+Need to implement:
+filtering and searching
+image viewing and editing
+bug tests
+
+*/
