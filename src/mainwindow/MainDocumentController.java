@@ -10,8 +10,11 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.function.Predicate;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -29,18 +32,20 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-
 /**
- * This project is developed for a clothing retailer whose needs are to manage inventory on 
- * a day-to-day basis. The required functionalities are adding, editing, removing items while 
- * giving users the freedom to select clothing types accordingly.
- * 
+ * This project is developed for a clothing retailer whose needs are to manage
+ * inventory on a day-to-day basis. The required functionalities are adding,
+ * editing, removing items while giving users the freedom to select clothing
+ * types accordingly.
+ *
  * April 5th, 2019
+ *
  * @author Jingwei Sun, John Chen, Aziz Omar
  */
 public class MainDocumentController implements Initializable {
@@ -51,6 +56,7 @@ public class MainDocumentController implements Initializable {
     private int indexOnEditing;
 
     ObservableList<Clothing> list = FXCollections.observableArrayList();
+    FilteredList filter = new FilteredList(list, e -> true);
 
     private AddItemsController addItemsController;
     private EditItemsController editItemsController;
@@ -122,6 +128,8 @@ public class MainDocumentController implements Initializable {
         typeFilter.getItems().addAll(Type.values());
         genderFilter.getItems().addAll(Gender.values());
         colorFilter.getItems().addAll(Colors.values());
+
+        items.setItems(list);
 
     }
 
@@ -279,6 +287,7 @@ public class MainDocumentController implements Initializable {
 
     @FXML
     private void searchHandle(ActionEvent event) {
+
     }
 
     @FXML
@@ -427,4 +436,25 @@ public class MainDocumentController implements Initializable {
         return list;
 
     }
+
+    @FXML
+    // search bar 
+    private void search(KeyEvent event) {
+        // takes an input and compares it with parameters in observableList using addListener
+        searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+            filter.setPredicate((Predicate<? super Clothing>) (Clothing c) -> {
+                if (newValue.isEmpty() || newValue == null) {
+                    return true;
+                }else if (c.getSize().toUpperCase().contains(newValue)) {
+                    return true;
+                }
+                return false;
+            });
+        });
+        // compares new sorted list with filtered list using SortedList 
+        SortedList sort = new SortedList(filter);
+        sort.comparatorProperty().bind(items.comparatorProperty());
+        items.setItems(sort);
+    }
+
 }
