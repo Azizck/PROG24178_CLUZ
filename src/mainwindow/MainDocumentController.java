@@ -524,7 +524,18 @@ public class MainDocumentController implements Initializable {
             filter.setPredicate((Predicate<? super Clothing>) (Clothing c) -> {
                 if (newValue.isEmpty() || newValue == null) {
                     return true;
-                }else if (c.getSize().toUpperCase().contains(newValue)) {
+                }else if (c.getSize().toLowerCase().contains(newValue)) {
+                    return true;
+                }else if (String.valueOf(c.getProductId()).toLowerCase().contains(newValue)){
+                    return true;
+                }
+                else if (String.valueOf(c.getPrice()).toLowerCase().contains(newValue)){
+                    return true;
+                }
+                else if (String.valueOf(c.getColor()).toLowerCase().contains(newValue)){
+                    return true;
+                }
+                else if (String.valueOf(c.getType()).toLowerCase().contains(newValue)){
                     return true;
                 }
                 return false;
