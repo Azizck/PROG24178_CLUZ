@@ -1,8 +1,7 @@
-14, Dress, Girls, XS, Orange, 53.33, 2
-22, Pants, Boys, XS, Orange, 83.33, 2
-34, Dress, Girls, XS, Orange, 21.33, 2
-41, Shorts, Boys, XS, Orange, 223.33, 2
-5, Dress, Girls, XS, Orange, 2335.33, 2
-1, Dress, Girls, 0, Red, 3.0, 3
-0, Pants, Male, 28W, Red, 4.0, 4
-99, Pants, Male, 28W, Red, 33.0, 3
+14, Dress, Girls, 0, Orange, 53.33, 2, null
+22, Pants, Boys, 28W, Orange, 83.33, 2, null
+34, Outerwear, Girls, M, Orange, 21.33, 2, null
+41, Shirts, Boys, XS, Orange, 223.33, 2, null
+5, Dress, Female, 8, Orange, 2335.33, 2, null
+1, Dress, Girls, 0, Red, 44.0, 44, C:/Users/CS/Documents/NetBeansProjects/PROG24178_CLUZ/Sleepwear.jpg
+53, Dress, Girls, 0, Red, 4.0, 23, C:/Users/CS/Documents/NetBeansProjects/PROG24178_CLUZ/Jeans.jpg

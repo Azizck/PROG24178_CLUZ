@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import mainwindow.Clothing.*;
 import java.net.URL;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -160,6 +161,7 @@ public class AddItemsController implements Initializable {
                     if (!duplicate) {
                         Clothing c = new Clothing();
                         addProduct(c); //passes the object reference to the method
+                                                
                     }
                 }
             }
@@ -198,6 +200,7 @@ public class AddItemsController implements Initializable {
         colorCombo.getSelectionModel().clearSelection();
         priceLabel.setText("");
         quantityLabel.setText("");
+        image.setImage(null);
         cbDisable(false);
     }
 
@@ -211,21 +214,32 @@ public class AddItemsController implements Initializable {
         c.setGender(genderCombo.getValue());
         c.setPrice(Double.parseDouble(priceLabel.getText()));
         c.setQuantity(Integer.parseInt(quantityLabel.getText()));
-        c.setImage(myImage);
-
+        
+       
+          if (url.startsWith("file:/")) 
+            url = url.substring(6,url.length());
+        
+          this.url=url;
+        c.setURL(url);
+          
+     
+     
         //passes the object to the main controller's setList method
         mainController.setList(c);
         //displays a success message
         confirmation.setText("Item Added Successfully");
         //clear all the input fields
         clear();
-
     }
+    
+    
 
     //image handler that adds image to product
     @FXML
     private void imageHandle(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
+        String currentPath = Paths.get(".").toAbsolutePath().normalize().toString();
+        fileChooser.setInitialDirectory(new File(currentPath));
 
         //Set extension filter
         FileChooser.ExtensionFilter extFilterJPG = new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.JPG");
@@ -234,19 +248,19 @@ public class AddItemsController implements Initializable {
 
         //Show open file dialog
         File file = fileChooser.showOpenDialog(null);
-
+      
         // increased efficiency in storing img path. Now as string value
         if (file != null) {
-        try {
-            url = file.toURI().toURL().toExternalForm();
+      
+            url = file.toURI().toString();
             myImage = new Image(url);
             image.setImage(myImage);
-        } catch (MalformedURLException ex) {
-            throw new IllegalStateException(ex);
-        }
+            this.url = url;
+            
     }
     }
 
+    
     /* testing purposes
     public void setParentController(MainDocumentController mainController) {
     this.mainController = mainController;

@@ -5,8 +5,11 @@
  */
 package mainwindow;
 
+import java.io.File;
+import java.net.MalformedURLException;
 import mainwindow.Clothing.*;
 import java.net.URL;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.collections.ObservableList;
@@ -19,8 +22,10 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 /**
@@ -40,6 +45,8 @@ public class EditItemsController implements Initializable {
     private String fileName;
     private int index;
     private Label label;
+    private Image myImage;
+    private String url;
 
     @FXML
     private ComboBox<Type> typeCombo;
@@ -78,8 +85,7 @@ public class EditItemsController implements Initializable {
         inEditing = false;
 
         typeCombo.getItems().setAll(Clothing.Type.values());
-        
-        
+
     }
 
     @FXML
@@ -121,71 +127,83 @@ public class EditItemsController implements Initializable {
 
     @FXML
     private void imageHandle(ActionEvent event) {
-       // image.setImage(c.getImage()); doesnt work, cant figure out how to retrieve selected clothing object
-    }
+        FileChooser fileChooser = new FileChooser();
+        String currentPath = Paths.get(".").toAbsolutePath().normalize().toString();
+        fileChooser.setInitialDirectory(new File(currentPath));
 
-    private void showHandle(ActionEvent event
-    ) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION, clothList.toString().replace("[", "").replace("]", "").replace(",", ""), ButtonType.OK);
-        alert.setHeaderText("Products");
-        alert.setTitle("Product List");
-        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
-        alert.getDialogPane().setMinWidth(Region.USE_PREF_SIZE);
-        alert.show();
+        //Set extension filter
+        FileChooser.ExtensionFilter extFilterJPG = new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.JPG");
+        FileChooser.ExtensionFilter extFilterPNG = new FileChooser.ExtensionFilter("PNG files (*.png)", "*.PNG");
+        fileChooser.getExtensionFilters().addAll(extFilterJPG, extFilterPNG);
+
+        //Show open file dialog
+        File file = fileChooser.showOpenDialog(null);
+
+        // increased efficiency in storing img path. Now as string value
+        if (file != null) {
+
+            url = file.toURI().toString();
+            myImage = new Image(url);
+            image.setImage(myImage);
+            this.url = url;
+
+        }
     }
 
     @FXML
     private void submitHandle(ActionEvent event) {
 
-       //editing item does not allow using same ID
-       
-       
+        
         //checks if the fields are completed, prompt if not
         try {
-            if (typeCombo.getSelectionModel().isEmpty() || colorCombo.getSelectionModel().isEmpty()
+            if ((Integer.parseInt(idLabel.getText()) <= 0) || Double.parseDouble(priceLabel.getText()) < 0
+                    || Integer.parseInt(quantityLabel.getText()) < 0) {
+                confirmation.setText("Please enter positive numbers");
+            } //Product ID entered is above zero then iterate through the list to find matching IDs
+            else if (Integer.parseInt(idLabel.getText()) > 0) {
+                boolean duplicate = false;
+                for (int i = 0; i < mainController.list.size(); i++) {
+
+                    //if a match was found then display message and set duplicate to true
+                    if (Integer.parseInt(idLabel.getText()) == mainController.list.get(i).getProductId()) {
+                        confirmation.setText("Please enter an unique ID");
+                        duplicate = true;
+                        //if duplicate then true
+                    }
+                }
+                if (Integer.parseInt(idLabel.getText()) == mainController.list.get(indexOnEditing).getProductId()) {
+                    duplicate = false;
+                }
+                if (!duplicate) {
+                    //creates a new clothing object if fields are all valid and call addProduct() 
+                    setList();
+
+                    mainController.update();
+                    Stage stage = (Stage) cancelBtn.getScene().getWindow();
+                    stage.close();
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Saved");
+                    alert.setHeaderText("");
+                    alert.setContentText("Item Saved Sucessfully");
+                    alert.showAndWait();
+                }
+
+            } else {
+                 if (typeCombo.getSelectionModel().isEmpty() || colorCombo.getSelectionModel().isEmpty()
                     || genderCombo.getSelectionModel().isEmpty()
                     || priceLabel.getText().isEmpty() || quantityLabel.getText().isEmpty()
                     || sizeCombo.getSelectionModel().isEmpty() || idLabel.getText().isEmpty()) {
                 confirmation.setText("Please fill in the fields");
-            } else {
-
-                if ((Integer.parseInt(idLabel.getText()) <= 0) || Double.parseDouble(priceLabel.getText()) < 0
-                        || Integer.parseInt(quantityLabel.getText()) < 0) {
-                    confirmation.setText("Please enter positive numbers");
-                } //Product ID entered is above zero then iterate through the list to find matching IDs
-                else if (Integer.parseInt(idLabel.getText()) > 0) {
-                    boolean duplicate = false;
-                    for (int i = 0; i < mainController.list.size(); i++) {
-
-                        //if a match was found then display message and set duplicate to true
-                        if (Integer.parseInt(idLabel.getText()) == mainController.list.get(i).getProductId()) {
-                            confirmation.setText("Please enter an unique ID");
-                            duplicate = true;
-                            //if duplicate then true
-                        }
-                    }
-                    if (!duplicate) {
-                        //creates a new clothing object if fields are all valid and call addProduct() 
-                        setList();
-           
-                        mainController.update();
-                        Stage stage = (Stage) cancelBtn.getScene().getWindow();
-                        stage.close();
-                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Saved");
-                alert.setHeaderText("");
-                alert.setContentText("Item Saved Sucessfully");
-                alert.showAndWait();
-                    }
-                }
+                
+            } 
             }
 
         } catch (NumberFormatException e) {
-             Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText("");
-                alert.setContentText("Please enter valid numbers");
-                alert.showAndWait();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("");
+            alert.setContentText("Please enter valid numbers");
+            alert.showAndWait();
             System.out.println(e);
         }
 
@@ -212,6 +230,13 @@ public class EditItemsController implements Initializable {
         mainController.list.get(indexOnEditing).setPrice(Double.parseDouble(priceLabel.getText()));
         mainController.list.get(indexOnEditing).setQuantity(Integer.parseInt(quantityLabel.getText()));
 
+        String url = mainController.list.get(indexOnEditing).getURL();
+        if (url.startsWith("file:/")) {
+            url = url.substring(6, url.length());
+        }
+        this.url = url;
+        mainController.list.get(indexOnEditing).setURL(url);
+
     }
 
     public void editDisplay(ObservableList<Clothing> c) {
@@ -225,9 +250,13 @@ public class EditItemsController implements Initializable {
         quantityLabel.setText(mainController.list.get(indexOnEditing).getQuantity() + "");
         priceLabel.setText(mainController.list.get(indexOnEditing).getPrice() + "");
 
+        //File file = new File(mainController.list.get(indexOnEditing).getURL());
+        Image img = new Image(new File(mainController.list.get(indexOnEditing).getURL()).toURI().toString());
+        image.setImage(img);
+
         //calculates total value = price*quantity of the selected item
         double v = (mainController.list.get(indexOnEditing).getPrice() * mainController.list.get(indexOnEditing).getQuantity());
-        
+
         totalValue.setText("$" + String.format("%.2f", v));
     }
 

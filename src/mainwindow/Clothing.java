@@ -1,18 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package mainwindow;
 
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.scene.image.Image;
-
 /**
+ * This project is developed for a clothing retailer whose needs are to manage
+ * inventory on a day-to-day basis. The required functionalities are adding,
+ * editing, removing items while giving users the freedom to select clothing
+ * types accordingly.
  *
- * @author CS
+ * April 5th, 2019
+ *
+ * @author Jingwei Sun, John Chen, Aziz Omar
  */
+
 public class Clothing {
   
     public enum Type {
@@ -40,7 +38,8 @@ public class Clothing {
     private Type type;
     private Size s;
     private String size;
-    private Image img;
+    private String url;
+
    
   public Clothing() {}
         
@@ -54,19 +53,19 @@ public class Clothing {
             this.quantity = quantity;
            
         }
-        
-    public Image getImage() {
-        return img;
+    
+    public String getURL() {
+    return url;
+}
+    
+    public void setURL(String url) {
+        this.url = url;
     }
-    public void setImage(Image img) {
-        this.img = img;
-    }
+    
     public Colors getColor() {
         return color;
     }
 
-    //public abstract void setSize(Size size);
-    //public abstract Size getSize();
     public void setColor(Colors color) {    
         this.color = color;
     }
@@ -74,16 +73,6 @@ public class Clothing {
     public void setProductId(int productId) {
         this.productId = productId;
     }
-    
-    /*
-    public Type getProductType() {
-        return type;
-    }
-
-    public void setProductType(Type type) {
-        this.type = type;
-    }
-    */
     
     public double getPrice() {
         return price;

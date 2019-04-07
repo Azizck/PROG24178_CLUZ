@@ -6,7 +6,9 @@ import java.io.FileReader;
 import mainwindow.Clothing.*;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -59,6 +61,7 @@ public class MainDocumentController implements Initializable {
     private boolean inEdit;
     private int indexOnEditing;
 
+    
     ObservableList<Clothing> list = FXCollections.observableArrayList();
     FilteredList filter;
 
@@ -209,11 +212,18 @@ public class MainDocumentController implements Initializable {
             this.indexOnEditing = indexOnEditing;
             this.selected = selected;
 
+         
             //for testing purposes
             System.out.println("index is" + indexOnEditing);
             System.out.println(selected);
             System.out.println("===========");
             System.out.println("List size is: " + list.size());
+            System.out.println("===================");
+  
+            
+            //System.out.println(list.get(5).getURL());
+          
+           
 
         }
 
@@ -269,12 +279,7 @@ public class MainDocumentController implements Initializable {
                 stage.setScene(new Scene(root));
                 stage.show();
 
-                /*
-                FXMLLoader loader = new FXMLLoader();
-                loader.setLocation(getClass().getResource("something.fxml");  
-                anna = loader.getController();
-                
-                 */
+               
             } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
@@ -304,7 +309,7 @@ public class MainDocumentController implements Initializable {
             if (result.get() == ButtonType.OK) {
 
                 items.getItems().remove(selected);
-
+                update();
             }
         } else {
 
@@ -535,7 +540,7 @@ public class MainDocumentController implements Initializable {
                 for (Clothing c : list) {
                     writer.write(c.getProductId() + ", " + c.getType() + ", "
                             + c.getGender() + ", " + c.getSize() + ", " + c.getColor()
-                            + ", " + c.getPrice() + ", " + c.getQuantity() + "\n");
+                            + ", " + c.getPrice() + ", " + c.getQuantity() + ", " + c.getURL() + "\n");
                 }
 
                 writer.close();
@@ -554,33 +559,46 @@ public class MainDocumentController implements Initializable {
 
     private ObservableList<Clothing> open() {
 
-        Stage stage = new Stage();
         FileChooser fileChooser = new FileChooser();
+        String currentPath = Paths.get(".").toAbsolutePath().normalize().toString();
+        fileChooser.setInitialDirectory(new File(currentPath));
+        
+    
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT (*.txt)", "*.txt");
         fileChooser.getExtensionFilters().add(extFilter);
         fileChooser.setTitle("Open File");
 
-        ArrayList<Clothing> c = new ArrayList<>();
+        ArrayList<Clothing> clist = new ArrayList<>();
+        Clothing c = new Clothing();
         BufferedReader reader = null;
 
         try {
-            File file = fileChooser.showOpenDialog(stage);
+            File file = fileChooser.showOpenDialog(null);
             reader = new BufferedReader(new FileReader(file));
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] names = line.split(", ");
-                c.add(new Clothing(Integer.parseInt(names[0]),
+                
+                c = new Clothing(Integer.parseInt(names[0]),
                         Type.valueOf(names[1]), Gender.valueOf(names[2]),
                         names[3], Colors.valueOf(names[4]),
                         Double.parseDouble(names[5]),
-                        Integer.parseInt(names[6])));
+                        Integer.parseInt(names[6]));
+                        c.setURL(names[7]);
+                        
+               // clist.add(new Clothing(Integer.parseInt(names[0]),
+                 //       Type.valueOf(names[1]), Gender.valueOf(names[2]),
+                   //     names[3], Colors.valueOf(names[4]),
+                     //   Double.parseDouble(names[5]),
+                       // Integer.parseInt(names[6])));
+                clist.add(c);
                 //System.out.println(c);
             }
 
         } catch (IOException e) {
             System.out.println(e);
         }
-        ObservableList<Clothing> list = FXCollections.observableArrayList(c);
+        ObservableList<Clothing> list = FXCollections.observableArrayList(clist);
 
         this.list = list;
         this.filter = new FilteredList(list, e -> true);
