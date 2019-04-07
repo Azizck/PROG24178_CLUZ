@@ -219,7 +219,7 @@ public class AddItemsController implements Initializable {
           if (url.startsWith("file:/")) 
             url = url.substring(6,url.length());
         
-          this.url=url;
+        this.url=url;
         c.setURL(url);
           
      

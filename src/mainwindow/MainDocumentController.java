@@ -527,12 +527,15 @@ public class MainDocumentController implements Initializable {
 
     @FXML
     private void saveHandle(ActionEvent event) {
-        Stage stage = new Stage();
+        
         FileChooser fileChooser = new FileChooser();
+        String currentPath = Paths.get(".").toAbsolutePath().normalize().toString();
+        fileChooser.setInitialDirectory(new File(currentPath));
+        
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT (*.txt)", "*.txt");
         fileChooser.getExtensionFilters().add(extFilter);
         fileChooser.setTitle("Save as");
-        File file = fileChooser.showSaveDialog(stage);
+        File file = fileChooser.showSaveDialog(null);
 
         if (file != null) {
             try {

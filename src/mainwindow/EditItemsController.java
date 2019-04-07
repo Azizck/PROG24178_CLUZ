@@ -42,7 +42,6 @@ public class EditItemsController implements Initializable {
 
     private boolean inEditing;
     private int indexOnEditing;
-    private String fileName;
     private int index;
     private Label label;
     private Image myImage;
@@ -177,7 +176,6 @@ public class EditItemsController implements Initializable {
                 if (!duplicate) {
                     //creates a new clothing object if fields are all valid and call addProduct() 
                     setList();
-
                     mainController.update();
                     Stage stage = (Stage) cancelBtn.getScene().getWindow();
                     stage.close();
@@ -230,12 +228,15 @@ public class EditItemsController implements Initializable {
         mainController.list.get(indexOnEditing).setPrice(Double.parseDouble(priceLabel.getText()));
         mainController.list.get(indexOnEditing).setQuantity(Integer.parseInt(quantityLabel.getText()));
 
-        String url = mainController.list.get(indexOnEditing).getURL();
-        if (url.startsWith("file:/")) {
+        //String url = mainController.list.get(indexOnEditing).getURL();
+        if (url != mainController.list.get(indexOnEditing).getURL()) {
+               if(url.startsWith("file:/")) {
             url = url.substring(6, url.length());
-        }
-        this.url = url;
-        mainController.list.get(indexOnEditing).setURL(url);
+            this.url = url;
+            mainController.list.get(indexOnEditing).setURL(url);
+               }
+        } else if (url == mainController.list.get(indexOnEditing).getURL())
+            mainController.list.get(indexOnEditing).setURL(mainController.list.get(indexOnEditing).getURL());
 
     }
 
@@ -250,10 +251,17 @@ public class EditItemsController implements Initializable {
         quantityLabel.setText(mainController.list.get(indexOnEditing).getQuantity() + "");
         priceLabel.setText(mainController.list.get(indexOnEditing).getPrice() + "");
 
-        //File file = new File(mainController.list.get(indexOnEditing).getURL());
-        Image img = new Image(new File(mainController.list.get(indexOnEditing).getURL()).toURI().toString());
-        image.setImage(img);
-
+        
+        
+            
+        File file = new File(mainController.list.get(indexOnEditing).getURL());
+        url = file.toURI().toString();
+        myImage = new Image(url);
+        image.setImage(myImage);
+        this.url = url;
+        //Image img = new Image(file).toURI().toString();
+        //image.setImage(img);
+            
         //calculates total value = price*quantity of the selected item
         double v = (mainController.list.get(indexOnEditing).getPrice() * mainController.list.get(indexOnEditing).getQuantity());
 
@@ -271,6 +279,32 @@ public class EditItemsController implements Initializable {
         priceLabel.setText("");
         quantityLabel.setText("");
 
+    }
+    
+    
+    public void chooseImg() {
+       
+        FileChooser fileChooser = new FileChooser();
+        String currentPath = Paths.get(".").toAbsolutePath().normalize().toString();
+        fileChooser.setInitialDirectory(new File(currentPath));
+
+        //Set extension filter
+        FileChooser.ExtensionFilter extFilterJPG = new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.JPG");
+        FileChooser.ExtensionFilter extFilterPNG = new FileChooser.ExtensionFilter("PNG files (*.png)", "*.PNG");
+        fileChooser.getExtensionFilters().addAll(extFilterJPG, extFilterPNG);
+
+        //Show open file dialog
+        File file = fileChooser.showOpenDialog(null);
+      
+        // increased efficiency in storing img path. Now as string value
+        if (file != null) {
+      
+            url = file.toURI().toString();
+            myImage = new Image(url);
+            image.setImage(myImage);
+            this.url = url;
+            
+    }
     }
 
     void setParentController(MainDocumentController mainController) {
