@@ -14,6 +14,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  *
@@ -31,6 +32,8 @@ public class MainWindow extends Application {
 			stage.setMinHeight(525);
 			stage.setScene(scene);
 			stage.setTitle("Cluz");
+			// test 
+			 stage.initStyle(StageStyle.UNDECORATED);
 			stage.show();
 
 		} catch (IOException e) {
