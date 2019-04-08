@@ -61,7 +61,6 @@ public class MainDocumentController implements Initializable {
     private boolean inEdit;
     private int indexOnEditing;
 
-    
     ObservableList<Clothing> list = FXCollections.observableArrayList();
     FilteredList filter;
 
@@ -155,6 +154,9 @@ public class MainDocumentController implements Initializable {
 
         items.setItems(list);
         filter = new FilteredList(list, e -> true);
+        
+        sizeFilter.getItems().addAll("XS","S","M","L","XL","0","2","4","6",
+                "8", "10", "12", "28W", "30W", "32W", "34W", "36W");
 
         update();
     }
@@ -212,19 +214,14 @@ public class MainDocumentController implements Initializable {
             this.indexOnEditing = indexOnEditing;
             this.selected = selected;
 
-         
             //for testing purposes
             System.out.println("index is" + indexOnEditing);
             System.out.println(selected);
             System.out.println("===========");
             System.out.println("List size is: " + list.size());
             System.out.println("===================");
-  
-            
-            //System.out.println(list.get(5).getURL());
-          
-           
 
+            //System.out.println(list.get(5).getURL());
         }
 
     }
@@ -279,7 +276,6 @@ public class MainDocumentController implements Initializable {
                 stage.setScene(new Scene(root));
                 stage.show();
 
-               
             } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
@@ -458,9 +454,119 @@ public class MainDocumentController implements Initializable {
 
     @FXML
     private void sizeFilterHandle(ActionEvent event) {
-//        if (Clothing.Size.XS == sizeFilter.getSelectionModel().getSelectedItem()){
-//             
-//         }
+        sizeFilter.getSelectionModel().selectedItemProperty()
+                .addListener((observable, oldValue, newValue) -> {
+                    filter.setPredicate((Predicate<? super Clothing>) (Clothing c) -> {
+                        if (sizeFilter.getSelectionModel().getSelectedItem() == "XS") {
+                            for (int i = 0; i < list.size(); i++) {
+                                if (c.getSize() == "XS") {
+                                    return true;
+                                }
+                            }
+                        }else if (sizeFilter.getSelectionModel().getSelectedItem() == "S") {
+                            for (int i = 0; i < list.size(); i++) {
+                                if (c.getSize() == "S") {
+                                    return true;
+                                }
+                            }
+                        }else if (sizeFilter.getSelectionModel().getSelectedItem() == "M") {
+                            for (int i = 0; i < list.size(); i++) {
+                                if (c.getSize() == "M") {
+                                    return true;
+                                }
+                            }
+                        }else if (sizeFilter.getSelectionModel().getSelectedItem() == "L") {
+                            for (int i = 0; i < list.size(); i++) {
+                                if (c.getSize() == "L") {
+                                    return true;
+                                }
+                            }
+                        }else if (sizeFilter.getSelectionModel().getSelectedItem() == "XL") {
+                            for (int i = 0; i < list.size(); i++) {
+                                if (c.getSize() == "XL") {
+                                    return true;
+                                }
+                            }
+                        }else if (sizeFilter.getSelectionModel().getSelectedItem() == "0") {
+                            for (int i = 0; i < list.size(); i++) {
+                                if (c.getSize() == "0") {
+                                    return true;
+                                }
+                            }
+                        }else if (sizeFilter.getSelectionModel().getSelectedItem() == "2") {
+                            for (int i = 0; i < list.size(); i++) {
+                                if (c.getSize() == "2") {
+                                    return true;
+                                }
+                            }
+                        }else if (sizeFilter.getSelectionModel().getSelectedItem() == "4") {
+                            for (int i = 0; i < list.size(); i++) {
+                                if (c.getSize() == "4") {
+                                    return true;
+                                }
+                            }
+                        }else if (sizeFilter.getSelectionModel().getSelectedItem() == "6") {
+                            for (int i = 0; i < list.size(); i++) {
+                                if (c.getSize() == "6") {
+                                    return true;
+                                }
+                            }
+                        }else if (sizeFilter.getSelectionModel().getSelectedItem() == "8") {
+                            for (int i = 0; i < list.size(); i++) {
+                                if (c.getSize() == "8") {
+                                    return true;
+                                }
+                            }
+                        }else if (sizeFilter.getSelectionModel().getSelectedItem() == "10") {
+                            for (int i = 0; i < list.size(); i++) {
+                                if (c.getSize() == "10") {
+                                    return true;
+                                }
+                            }
+                        }else if (sizeFilter.getSelectionModel().getSelectedItem() == "12") {
+                            for (int i = 0; i < list.size(); i++) {
+                                if (c.getSize() == "12") {
+                                    return true;
+                                }
+                            }
+                        }else if (sizeFilter.getSelectionModel().getSelectedItem() == "28W") {
+                            for (int i = 0; i < list.size(); i++) {
+                                if (c.getSize() == "28W") {
+                                    return true;
+                                }
+                            }
+                        }else if (sizeFilter.getSelectionModel().getSelectedItem() == "30W") {
+                            for (int i = 0; i < list.size(); i++) {
+                                if (c.getSize() == "30W") {
+                                    return true;
+                                }
+                            }
+                        }
+                        else if (sizeFilter.getSelectionModel().getSelectedItem() == "32W") {
+                            for (int i = 0; i < list.size(); i++) {
+                                if (c.getSize() == "32W") {
+                                    return true;
+                                }
+                            }
+                        }else if (sizeFilter.getSelectionModel().getSelectedItem() == "34W") {
+                            for (int i = 0; i < list.size(); i++) {
+                                if (c.getSize() == "34W") {
+                                    return true;
+                                }
+                            }
+                        }else if (sizeFilter.getSelectionModel().getSelectedItem() == "36W") {
+                            for (int i = 0; i < list.size(); i++) {
+                                if (c.getSize() == "36W") {
+                                    return true;
+                                }
+                            }
+                        }
+                        return false;
+                    });
+                });
+        SortedList sort = new SortedList(filter);
+        sort.comparatorProperty().bind(items.comparatorProperty());
+        items.setItems(sort);
     }
 
     @FXML
@@ -527,11 +633,11 @@ public class MainDocumentController implements Initializable {
 
     @FXML
     private void saveHandle(ActionEvent event) {
-        
+
         FileChooser fileChooser = new FileChooser();
         String currentPath = Paths.get(".").toAbsolutePath().normalize().toString();
         fileChooser.setInitialDirectory(new File(currentPath));
-        
+
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT (*.txt)", "*.txt");
         fileChooser.getExtensionFilters().add(extFilter);
         fileChooser.setTitle("Save as");
@@ -565,8 +671,7 @@ public class MainDocumentController implements Initializable {
         FileChooser fileChooser = new FileChooser();
         String currentPath = Paths.get(".").toAbsolutePath().normalize().toString();
         fileChooser.setInitialDirectory(new File(currentPath));
-        
-    
+
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT (*.txt)", "*.txt");
         fileChooser.getExtensionFilters().add(extFilter);
         fileChooser.setTitle("Open File");
@@ -581,19 +686,19 @@ public class MainDocumentController implements Initializable {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] names = line.split(", ");
-                
+
                 c = new Clothing(Integer.parseInt(names[0]),
                         Type.valueOf(names[1]), Gender.valueOf(names[2]),
                         names[3], Colors.valueOf(names[4]),
                         Double.parseDouble(names[5]),
                         Integer.parseInt(names[6]));
-                        c.setURL(names[7]);
-                        
-               // clist.add(new Clothing(Integer.parseInt(names[0]),
-                 //       Type.valueOf(names[1]), Gender.valueOf(names[2]),
-                   //     names[3], Colors.valueOf(names[4]),
-                     //   Double.parseDouble(names[5]),
-                       // Integer.parseInt(names[6])));
+                c.setURL(names[7]);
+
+                // clist.add(new Clothing(Integer.parseInt(names[0]),
+                //       Type.valueOf(names[1]), Gender.valueOf(names[2]),
+                //     names[3], Colors.valueOf(names[4]),
+                //   Double.parseDouble(names[5]),
+                // Integer.parseInt(names[6])));
                 clist.add(c);
                 //System.out.println(c);
             }
