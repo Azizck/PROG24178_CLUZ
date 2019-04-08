@@ -32,7 +32,7 @@
                         <Insets bottom="10.0" />
                      </VBox.margin>
                   </ImageView>
-                  <Button fx:id="openFile" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#openFileHandle" prefHeight="63.0" prefWidth="242.0" text="Open File" textFill="#252525">
+                  <Button fx:id="openFile" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#openFileHandle" prefHeight="63.0" prefWidth="242.0" text="Open File" textFill="WHITE">
                      <font>
                         <Font size="20.0" />
                      </font>
@@ -47,7 +47,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button fx:id="addBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#addHandle" prefHeight="70.0" prefWidth="242.0" text="Add">
+                  <Button fx:id="addBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#addHandle" prefHeight="70.0" prefWidth="242.0" text="Add" textFill="WHITE">
                      <font>
                         <Font size="20.0" />
                      </font>
@@ -55,7 +55,7 @@
                         <Insets left="10.0" right="10.0" top="15.0" />
                      </VBox.margin>
                   </Button>
-                  <Button fx:id="editBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#editHandle" prefHeight="69.0" prefWidth="242.0" text="Edit">
+                  <Button fx:id="editBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#editHandle" prefHeight="69.0" prefWidth="242.0" text="Edit" textFill="WHITE">
                      <font>
                         <Font size="20.0" />
                      </font>
@@ -63,7 +63,7 @@
                         <Insets left="10.0" right="10.0" top="15.0" />
                      </VBox.margin>
                   </Button>
-                  <Button fx:id="removeBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#removeHandle" prefHeight="60.0" prefWidth="190.0" text="Remove">
+                  <Button fx:id="removeBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#removeHandle" prefHeight="60.0" prefWidth="190.0" text="Remove" textFill="WHITE">
                      <font>
                         <Font size="20.0" />
                      </font>
@@ -71,7 +71,7 @@
                         <Insets left="10.0" right="10.0" top="15.0" />
                      </VBox.margin>
                   </Button>
-                  <Button fx:id="saveFile" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#saveHandle" prefHeight="60.0" prefWidth="190.0" text="Save File">
+                  <Button fx:id="saveFile" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#saveHandle" prefHeight="60.0" prefWidth="190.0" text="Save File" textFill="WHITE">
                      <font>
                         <Font size="20.0" />
                      </font>
@@ -118,13 +118,16 @@
                      <HBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </HBox.margin></ComboBox>
-                  <Button fx:id="resetBtn" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#resetHandle" prefHeight="38.0" prefWidth="155.0" styleClass="resetBtn" stylesheets="@mainStyle.css" text="Reset" textAlignment="CENTER">
+                  <Button fx:id="resetBtn" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#resetHandle" prefHeight="38.0" prefWidth="155.0" stylesheets="@mainStyle.css" text="Reset" textFill="WHITE">
                      <HBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </HBox.margin>
                      <opaqueInsets>
                         <Insets />
-                     </opaqueInsets></Button>
+                     </opaqueInsets>
+                     <padding>
+                        <Insets right="5.0" />
+                     </padding></Button>
                   <ImageView fitHeight="41.0" fitWidth="57.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@searcha.png" />
@@ -144,18 +147,21 @@
                <padding>
                   <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
                </padding>
+               <VBox.margin>
+                  <Insets top="-8.0" />
+               </VBox.margin>
             </HBox>
             <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="1200.0" prefWidth="1395.0">
                <children>
-                  <TableView fx:id="items" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" opacity="0.93" prefHeight="579.0" prefWidth="1264.0">
+                  <TableView id="styleReset" fx:id="items" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" opacity="0.93" prefHeight="579.0" prefWidth="1264.0">
                     <columns>
                         <TableColumn fx:id="tableId" maxWidth="1.7976931348623157E308" minWidth="100.0" prefWidth="100.0" text="ID" />
                         <TableColumn fx:id="tableType" minWidth="100.0" prefWidth="174.0" text="Type" />
-                      <TableColumn fx:id="tableGender" minWidth="100.0" prefWidth="174.0" text="Gender" />
-                      <TableColumn fx:id="tableSize" minWidth="100.0" prefWidth="174.0" text="Size" />
+                      <TableColumn fx:id="tableGender" minWidth="100.0" prefWidth="100.0" text="Gender" />
+                      <TableColumn fx:id="tableSize" minWidth="100.0" prefWidth="100.0" text="Size" />
                         <TableColumn fx:id="tableColor" minWidth="100.0" prefWidth="174.0" text="Color" />
                         <TableColumn fx:id="tablePrice" minWidth="100.0" prefWidth="174.0" text="Price" />
-                        <TableColumn fx:id="tableQuantity" minWidth="100.0" prefWidth="174.0" text="Quantity" />
+                        <TableColumn fx:id="tableQuantity" minWidth="0.0" prefWidth="182.0" text="Quantity" />
                     </columns>
                      <HBox.margin>
                         <Insets />
@@ -176,7 +182,7 @@
                   </TableView>
                </children>
             </HBox>
-            <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="38.0" prefWidth="600.0" style="-fx-background-color: white;">
+            <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="38.0" prefWidth="600.0" style="-fx-background-color: #edecea;">
                <children>
                   <Label fx:id="uniqueProducts" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="20.0" prefWidth="159.0" text="Unique Products" textAlignment="CENTER">
                      <padding>
@@ -191,6 +197,9 @@
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </padding></Label>
                </children>
+               <VBox.margin>
+                  <Insets bottom="-8.0" />
+               </VBox.margin>
             </HBox>
          </children>
          <padding>

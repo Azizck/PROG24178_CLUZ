@@ -14,40 +14,44 @@ and open the template in the editor.
 }
 
 .root {
-	-fx-background-color: #566771;
+	-fx-background-color: #2d3447;
 	-fx-font-family:try;
 }
 
 #sLeftSideBar{
-	-fx-background-color:#2d3447;
+	-fx-background-color:gray;
 	-fx-font-family:try;
 }
 .button{
-	-fx-background-color: #b8c5e6;
+	-fx-background-color: #2d3447;
 	-fx-background-radius: 1 1 1 1;
 	-fx-font-size: 15pt ;
 	-fx-border-color:white;
 }
-.button:hover{
-	-fx-background-color:gray;
-	-fx-font-size: 15pt ;
-}
+
 
 .content-section {
 	-fx-background-color: white;
 	-fx-background-radius: 1 1 1 1;
 }
+.content-section:hover {
+	-fx-background-color:#f4d086;
+}
 .comboxContainer{
 
-	-fx-background-color:#2d3447;
+	-fx-background-color:gray;
 }
 #resetBtn{
-	-fx-color:white;
-	-fx-border-color:#a6afb5;
+	-fx-background-radius: 31 31 31 31;
+	-fx-border-color:none;
+}
+.resetButtonClass:hover {
+	-fx-background-color:white;
+	
 
 }
-.resetBtn:hover{
-	-fx-background-color:gray;
+.button:hover{
+	-fx-background-color:#f4d086;
 	-fx-font-size: 15pt ;
 }
 .context-menu{
