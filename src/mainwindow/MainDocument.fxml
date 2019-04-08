@@ -1,110 +1,204 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Light.Distant?>
+<?import javafx.scene.effect.Lighting?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="511.0" prefWidth="851.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mainwindow.MainDocumentController"> 
-
-  
-    <children>
+<HBox minHeight="679.0" minWidth="983.0" prefHeight="768.0" prefWidth="1366.0" stylesheets="@mainStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mainwindow.MainDocumentController">
+   <children>
        
-      <VBox prefHeight="511.0" prefWidth="194.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="655.0" AnchorPane.topAnchor="0.0">
+            <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="755.0" prefWidth="400.0">
          <children>
-            <ImageView fitHeight="123.0" fitWidth="199.0" pickOnBounds="true" preserveRatio="true" />
-            <VBox alignment="CENTER" fillWidth="false" prefHeight="307.0" prefWidth="224.0" spacing="30.0">
+            <VBox id="sLeftSideBar" fx:id="sLeftSideBar" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="970.0" prefWidth="258.0" spacing="30.0">
                <children>
-                  <Button fx:id="openFile" mnemonicParsing="false" onAction="#openFileHandle" prefHeight="50.0" prefWidth="115.0" text="Open File">
+                  <ImageView fitHeight="119.0" fitWidth="224.0" opacity="0.93" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@logo.png" />
+                     </image>
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </ImageView>
+                  <Button fx:id="openFile" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#openFileHandle" prefHeight="63.0" prefWidth="242.0" text="Open File" textFill="#252525">
                      <font>
                         <Font size="20.0" />
                      </font>
+                     <VBox.margin>
+                        <Insets left="10.0" right="10.0" top="15.0" />
+                     </VBox.margin>
+                     <graphic>
+                        <ImageView fitHeight="73.0" fitWidth="49.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@openFile.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
                   </Button>
-                  <Button fx:id="addBtn" mnemonicParsing="false" onAction="#addHandle" prefHeight="50.0" prefWidth="115.0" text="Add">
-                     <font>
-                        <Font size="20.0" />
-                     </font></Button>
-                  <Button fx:id="editBtn" mnemonicParsing="false" onAction="#editHandle" prefHeight="50.0" prefWidth="115.0" text="Edit">
-                     <font>
-                        <Font size="20.0" />
-                     </font></Button>
-                  <Button fx:id="removeBtn" mnemonicParsing="false" onAction="#removeHandle" prefHeight="50.0" prefWidth="115.0" text="Remove">
-                     <font>
-                        <Font size="20.0" />
-                     </font></Button>
-                  <Button fx:id="saveFile" mnemonicParsing="false" onAction="#saveHandle" prefHeight="50.0" prefWidth="115.0" text="Save File">
+                  <Button fx:id="addBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#addHandle" prefHeight="70.0" prefWidth="242.0" text="Add">
                      <font>
                         <Font size="20.0" />
                      </font>
+                     <VBox.margin>
+                        <Insets left="10.0" right="10.0" top="15.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button fx:id="editBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#editHandle" prefHeight="69.0" prefWidth="242.0" text="Edit">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="10.0" right="10.0" top="15.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button fx:id="removeBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#removeHandle" prefHeight="60.0" prefWidth="190.0" text="Remove">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="10.0" right="10.0" top="15.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button fx:id="saveFile" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#saveHandle" prefHeight="60.0" prefWidth="190.0" text="Save File">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="10.0" right="10.0" top="15.0" />
+                     </VBox.margin>
                   </Button>
                </children>
                <padding>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                  <Insets bottom="10.0" left="5.0" right="10.0" />
                </padding>
+               <opaqueInsets>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </opaqueInsets>
+               <VBox.margin>
+                  <Insets bottom="10.0" top="10.0" />
+               </VBox.margin>
             </VBox>
          </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <HBox.margin>
+            <Insets left="25.0" />
+         </HBox.margin>
       </VBox>
-      <VBox alignment="CENTER_LEFT" layoutX="206.0" prefHeight="511.0" prefWidth="640.0" spacing="20.0">
+      <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="600.0" prefWidth="1200.0" spacing="20.0">
          <children>
-            <HBox prefHeight="45.0" prefWidth="600.0">
+            <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="37.0" prefWidth="600.0" spacing="30.0" style="-fx-border-color: black;" styleClass="comboxContainer">
                <children>
-                  <HBox prefHeight="32.0" prefWidth="411.0">
-                     <children>
-                        <Label prefHeight="32.0" prefWidth="144.0" text="Filters">
-                           <font>
-                              <Font size="24.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </HBox>
-                  <TextField fx:id="searchField" onAction="#searchHandle" onKeyReleased="#search" prefHeight="39.0" prefWidth="190.0" promptText="Search Field" />
-               </children></HBox>
-            <HBox prefHeight="37.0" prefWidth="600.0" spacing="30.0">
-               <children>
-                  <ComboBox fx:id="typeFilter" onAction="#typeFilterHandle" prefWidth="150.0" promptText="Type" />
-                  <ComboBox fx:id="genderFilter" onAction="#genderFilterHandle" prefWidth="150.0" promptText="Gender" />
-                  <ComboBox fx:id="sizeFilter" onAction="#sizeFilterHandle" prefWidth="150.0" promptText="Size" />
-                  <ComboBox fx:id="colorFilter" onAction="#colorFilterHandle" prefWidth="150.0" promptText="Color" />
-                  <Button fx:id="resetBtn" mnemonicParsing="false" onAction="#resetHandle" prefHeight="30.0" prefWidth="111.0" text="Reset" />
+                  <ComboBox fx:id="typeFilter" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#typeFilterHandle" prefHeight="38.0" prefWidth="160.0" promptText="Type" styleClass="content-section">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </HBox.margin></ComboBox>
+                  <ComboBox fx:id="genderFilter" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#genderFilterHandle" prefHeight="38.0" prefWidth="160.0" promptText="Gender" styleClass="content-section">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </HBox.margin></ComboBox>
+                  <ComboBox fx:id="sizeFilter" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#sizeFilterHandle" prefHeight="38.0" prefWidth="160.0" promptText="Size" styleClass="content-section">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </HBox.margin></ComboBox>
+                  <ComboBox fx:id="colorFilter" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#colorFilterHandle" prefHeight="38.0" prefWidth="160.0" promptText="Color" styleClass="content-section">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </HBox.margin></ComboBox>
+                  <Button fx:id="resetBtn" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#resetHandle" prefHeight="38.0" prefWidth="155.0" styleClass="resetBtn" stylesheets="@mainStyle.css" text="Reset" textAlignment="CENTER">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </HBox.margin>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets></Button>
+                  <ImageView fitHeight="41.0" fitWidth="57.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@searcha.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets right="-27.0" top="8.0" />
+                     </HBox.margin>
+                     <viewport>
+                        <Rectangle2D />
+                     </viewport>
+                  </ImageView>
+                  <TextField fx:id="searchField" onAction="#searchHandle" onKeyReleased="#search" prefHeight="39.0" prefWidth="190.0" promptText="Search Field">
+                     <HBox.margin>
+                        <Insets top="8.0" />
+                     </HBox.margin></TextField>
                </children>
+               <padding>
+                  <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
+               </padding>
             </HBox>
-            <HBox prefHeight="351.0" prefWidth="500.0">
+            <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="1200.0" prefWidth="1395.0">
                <children>
-                  <TableView fx:id="items" prefHeight="351.0" prefWidth="602.0">
+                  <TableView fx:id="items" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" opacity="0.93" prefHeight="579.0" prefWidth="1264.0">
                     <columns>
-                        <TableColumn fx:id="tableId" prefWidth="67.0" text="ID" />
-                        <TableColumn fx:id="tableType" prefWidth="92.0" text="Type" />
-                      <TableColumn fx:id="tableGender" prefWidth="95.0" text="Gender" />
-                      <TableColumn fx:id="tableSize" prefWidth="83.0" text="Size" />
-                        <TableColumn fx:id="tableColor" prefWidth="94.0" text="Color" />
-                        <TableColumn fx:id="tablePrice" prefWidth="83.0" text="Price" />
-                        <TableColumn fx:id="tableQuantity" prefWidth="79.0" text="Quantity" />
+                        <TableColumn fx:id="tableId" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="-1.0" text="ID" />
+                        <TableColumn fx:id="tableType" minWidth="100.0" prefWidth="174.0" text="Type" />
+                      <TableColumn fx:id="tableGender" minWidth="100.0" prefWidth="174.0" text="Gender" />
+                      <TableColumn fx:id="tableSize" minWidth="100.0" prefWidth="174.0" text="Size" />
+                        <TableColumn fx:id="tableColor" minWidth="100.0" prefWidth="174.0" text="Color" />
+                        <TableColumn fx:id="tablePrice" minWidth="100.0" prefWidth="174.0" text="Price" />
+                        <TableColumn fx:id="tableQuantity" minWidth="100.0" prefWidth="174.0" text="Quantity" />
                     </columns>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                     <opaqueInsets>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </opaqueInsets>
+                     <effect>
+                        <Lighting bumpInput="$null" diffuseConstant="2.0">
+                           <light>
+                              <Light.Distant color="#8d8d90" />
+                           </light>
+                        </Lighting>
+                     </effect>
+                     <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                     </cursor>
                   </TableView>
                </children>
             </HBox>
-            <HBox alignment="CENTER_RIGHT" prefHeight="38.0" prefWidth="600.0">
+            <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="38.0" prefWidth="600.0" style="-fx-background-color: white;">
                <children>
-                  <Label fx:id="uniqueProducts" prefHeight="20.0" prefWidth="159.0" text="Unique Products" />
-                  <Label fx:id="totalProducts" prefHeight="20.0" prefWidth="139.0" text="Total Products" />
-                  <Label fx:id="totalValue" prefHeight="20.0" prefWidth="159.0" text="Total Value" />
+                  <Label fx:id="uniqueProducts" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="20.0" prefWidth="159.0" text="Unique Products" textAlignment="CENTER">
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding></Label>
+                  <Label fx:id="totalProducts" prefHeight="20.0" prefWidth="139.0" text="Total Products">
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding></Label>
+                  <Label fx:id="totalValue" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="20.0" prefWidth="159.0" text="Total Value">
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding></Label>
                </children>
             </HBox>
          </children>
          <padding>
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
          </padding>
+         <HBox.margin>
+            <Insets left="25.0" />
+         </HBox.margin>
       </VBox>
-      <Separator layoutX="194.0" orientation="VERTICAL" prefHeight="511.0" prefWidth="19.0" />
-      
    </children>
-</AnchorPane>
+</HBox>

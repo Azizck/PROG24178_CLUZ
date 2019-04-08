@@ -54,8 +54,13 @@ public class FXMLsplashController implements Initializable {
 			Stage login = (Stage)splashScene.getScene().getWindow();
 			//load the main screen 	
 			Parent root = FXMLLoader.load(getClass().getResource("MainDocument.fxml"));
+			Scene scene = new Scene(root);
+			scene.getStylesheets().add("mainStyle.css");
+
+
 			// swap the scenes 
-			login.setScene(new Scene(root));
+			login.setScene(scene);
+
 			login.show();
 			
 

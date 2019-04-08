@@ -1,0 +1,56 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Apr 7, 2019, 4:36:29 PM
+    Author     : Aziz 
+*/
+
+@font-face {
+	font-family:'try';
+	src:url('try.otf');
+}
+
+.root {
+	-fx-background-color: #566771;
+	-fx-font-family:try;
+}
+
+#sLeftSideBar{
+	-fx-background-color:#2d3447;
+	-fx-font-family:try;
+}
+.button{
+	-fx-background-color: #b8c5e6;
+	-fx-background-radius: 1 1 1 1;
+	-fx-font-size: 15pt ;
+	-fx-border-color:white;
+}
+.button:hover{
+	-fx-background-color:gray;
+	-fx-font-size: 15pt ;
+}
+
+.content-section {
+	-fx-background-color: white;
+	-fx-background-radius: 1 1 1 1;
+}
+.comboxContainer{
+
+	-fx-background-color:#2d3447;
+}
+#resetBtn{
+	-fx-color:white;
+	-fx-border-color:#a6afb5;
+
+}
+.resetBtn:hover{
+	-fx-background-color:gray;
+	-fx-font-size: 15pt ;
+}
+.context-menu{
+    -fx-background-color:black;
+    -fx-focus-color:white;
+}
