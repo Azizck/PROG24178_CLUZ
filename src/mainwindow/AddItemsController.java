@@ -215,13 +215,14 @@ public class AddItemsController implements Initializable {
         c.setPrice(Double.parseDouble(priceLabel.getText()));
         c.setQuantity(Integer.parseInt(quantityLabel.getText()));
         
-       
-          if (url.startsWith("file:/")) 
+       if (image.getImage() != null) {
+          if (url.startsWith("file:/")) {
             url = url.substring(6,url.length());
         
         this.url=url;
         c.setURL(url);
-          
+          }
+       }
      
      
         //passes the object to the main controller's setList method

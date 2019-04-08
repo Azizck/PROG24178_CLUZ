@@ -187,20 +187,38 @@ public class MainDocumentController implements Initializable {
         list.add(c);
         items.setItems(list);
         calculate();
-        //items.getItems().setAll(list.add(c));
-        //items.getItems().clear();
-        //getList().add(c);
 
     }
 
     public ObservableList<Clothing> getList() {
+       
+        ArrayList<Clothing> clist = new ArrayList<>();
+        Clothing c = new Clothing();
+        BufferedReader reader = null;
 
-        list.add(new Clothing(14, Type.Dress, Gender.Girls, "0", Colors.Orange, 53.33, 2));
-        list.add(new Clothing(22, Type.Pants, Gender.Boys, "28W", Colors.Orange, 83.33, 2));
-        list.add(new Clothing(34, Type.Outerwear, Gender.Girls, "M", Colors.Orange, 21.33, 2));
-        list.add(new Clothing(41, Type.Shirts, Gender.Boys, "XS", Colors.Orange, 223.33, 2));
-        list.add(new Clothing(5, Type.Dress, Gender.Female, "8", Colors.Orange, 2335.33, 2));
+        try {
+            File file = new File("List.txt");
+            reader = new BufferedReader(new FileReader(file));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] names = line.split(", ");
 
+                c = new Clothing(Integer.parseInt(names[0]),
+                        Type.valueOf(names[1]), Gender.valueOf(names[2]),
+                        names[3], Colors.valueOf(names[4]),
+                        Double.parseDouble(names[5]),
+                        Integer.parseInt(names[6]));
+                c.setURL(names[7]); 
+                clist.add(c);
+            }
+
+        } catch (IOException e) {
+            System.out.println(e);
+        }
+        ObservableList<Clothing> list = FXCollections.observableArrayList(clist);
+
+        this.list = list;
+        this.filter = new FilteredList(list, e -> true);
         return list;
 
     }
@@ -772,15 +790,8 @@ public class MainDocumentController implements Initializable {
                         names[3], Colors.valueOf(names[4]),
                         Double.parseDouble(names[5]),
                         Integer.parseInt(names[6]));
-                c.setURL(names[7]);
-
-                // clist.add(new Clothing(Integer.parseInt(names[0]),
-                //       Type.valueOf(names[1]), Gender.valueOf(names[2]),
-                //     names[3], Colors.valueOf(names[4]),
-                //   Double.parseDouble(names[5]),
-                // Integer.parseInt(names[6])));
+                c.setURL(names[7]); 
                 clist.add(c);
-                //System.out.println(c);
             }
 
         } catch (IOException e) {

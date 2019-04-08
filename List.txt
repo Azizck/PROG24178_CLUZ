@@ -1,0 +1,10 @@
+1, Dress, Girls, 0, Red, 34.99, 5, C:/Users/CS/Documents/NetBeansProjects/PROG24178_CLUZ/Dress.jpg
+2, Jeans, Male, 28W, Red, 49.99, 10, C:/Users/CS/Documents/NetBeansProjects/PROG24178_CLUZ/Jeans.jpg
+3, Outerwear, Boys, XS, Red, 59.99, 5, C:/Users/CS/Documents/NetBeansProjects/PROG24178_CLUZ/Outerwear.jpg
+4, Pants, Girls, 28W, Red, 23.5, 4, C:/Users/CS/Documents/NetBeansProjects/PROG24178_CLUZ/Pants.jpg
+5, Jeans, Female, 28W, Red, 29.99, 9, C:/Users/CS/Documents/NetBeansProjects/PROG24178_CLUZ/Jeans.jpg
+6, Shirts, Female, XS, Red, 10.99, 500, C:/Users/CS/Documents/NetBeansProjects/PROG24178_CLUZ/Shirts.jpg
+7, Shorts, Female, 30W, Yellow, 29.99, 10, C:/Users/CS/Documents/NetBeansProjects/PROG24178_CLUZ/Shorts.jpg
+8, Skirts, Girls, 2, Green, 10.99, 5, C:/Users/CS/Documents/NetBeansProjects/PROG24178_CLUZ/Skirt.jpg
+9, Sleepwear, Boys, S, Orange, 10.99, 10, C:/Users/CS/Documents/NetBeansProjects/PROG24178_CLUZ/Sleepwear.jpg
+10, Sweaters, Boys, S, White, 49.99, 10, C:/Users/CS/Documents/NetBeansProjects/PROG24178_CLUZ/Sweater.jpg
