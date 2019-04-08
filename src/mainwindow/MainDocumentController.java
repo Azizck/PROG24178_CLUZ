@@ -646,6 +646,8 @@ public class MainDocumentController implements Initializable {
                     return true;
                 } else if (String.valueOf(c.getType()).toLowerCase().contains(newValue)) {
                     return true;
+                } else if (String.valueOf(c.getGender()).toLowerCase().contains(newValue)) {
+                    return true;
                 }
                 return false;
             });
