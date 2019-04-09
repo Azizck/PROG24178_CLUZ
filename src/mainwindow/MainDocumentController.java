@@ -329,7 +329,7 @@ public class MainDocumentController implements Initializable {
                 stage.setTitle("Edit Item");
                 stage.setScene(new Scene(root));
                 stage.show();
-
+                
             } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
