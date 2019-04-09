@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package mainwindow;
 
 import java.io.File;
@@ -29,20 +24,19 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 /**
- * FXML Controller class
+ * Edit Items controller
  *
- * @author CS
+ * @version 1.0
+ * @author Jingwei Sun, John Chen, Aziz Omar
  */
 public class EditItemsController implements Initializable {
 
+    //defined variables
     private ArrayList<Clothing> clothList;
     private Clothing c;
-
     private MainDocumentController mainController;
 
-    private boolean inEditing;
     private int indexOnEditing;
-    private int index;
     private Label label;
     private Image myImage;
     private String url;
@@ -79,20 +73,27 @@ public class EditItemsController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        //initializes the variables
         mainController = MainDocumentController.getController();
         clothList = new ArrayList<>();
-        inEditing = false;
-
+     
+        //activates the type combo box on load
         typeCombo.getItems().setAll(Clothing.Type.values());
 
     }
 
+    /**
+     * Type combo box handling
+     * @param event Enables the combo box of other settings of clothing items
+     */
     @FXML
     private void typeHandle(ActionEvent event) {
 
+        //if dress is selected, then only girl sizes are available
         if (Clothing.Type.Dress == typeCombo.getSelectionModel().getSelectedItem()) {
             girlSize();
 
+            //if skirt is selected then only girl sizes available
         } else if (Clothing.Type.Skirts == typeCombo.getSelectionModel().getSelectedItem()) {
             girlSize();
         } else if (Clothing.Type.Shorts == typeCombo.getSelectionModel().getSelectedItem()) {
@@ -102,28 +103,43 @@ public class EditItemsController implements Initializable {
         } else if (Clothing.Type.Pants == typeCombo.getSelectionModel().getSelectedItem()) {
             pantSize();
         } else {
+            //default sizes, all gender and all colors available for any other clothing types
             sizeCombo.getItems().setAll("XS", "S", "M", "L", "XL");
             genderCombo.getItems().setAll(Clothing.Gender.values());
             colorCombo.getItems().setAll(Clothing.Colors.values());
         }
     }
 
+    /**
+     * Selecting Pants type will set the values for size, color, gender
+     */
     public void pantSize() {
         sizeCombo.getItems().setAll("28W", "30W", "32W", "34W", "36W");
         colorCombo.getItems().setAll(Clothing.Colors.values());
         genderCombo.getItems().setAll(Clothing.Gender.values());
     }
 
+    /**
+     * Selecting the Skirt or Dress type will set the values for size, color, gender
+     */
     public void girlSize() {
         sizeCombo.getItems().setAll("0", "2", "4", "6", "8", "10", "12");
         colorCombo.getItems().setAll(Clothing.Colors.values());
         genderCombo.getItems().setAll(Clothing.Gender.Girls, Clothing.Gender.Female);
     }
 
+    /**
+     * 
+     * @param event 
+     */
     @FXML
     private void genderHandle(ActionEvent event) {
     }
 
+    /**
+     * Adds image to the clothing item
+     * @param event Chooses the image location upon clicking
+     */
     @FXML
     private void imageHandle(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
@@ -141,6 +157,7 @@ public class EditItemsController implements Initializable {
         // increased efficiency in storing img path. Now as string value
         if (file != null) {
 
+            //sets image location and stored as url
             url = file.toURI().toString();
             myImage = new Image(url);
             image.setImage(myImage);
@@ -149,10 +166,13 @@ public class EditItemsController implements Initializable {
         }
     }
 
+    /**
+     * Submitting the object to the ObservableList which then displays in the table
+     * @param event Data validation of entries before object reference can be passed
+     */
     @FXML
     private void submitHandle(ActionEvent event) {
 
-        
         //checks if the fields are completed, prompt if not
         try {
             if ((Integer.parseInt(idLabel.getText()) <= 0) || Double.parseDouble(priceLabel.getText()) < 0
@@ -170,6 +190,7 @@ public class EditItemsController implements Initializable {
                         //if duplicate then true
                     }
                 }
+                //if selected product ID matches the editing ID then it is not a duplicate
                 if (Integer.parseInt(idLabel.getText()) == mainController.list.get(indexOnEditing).getProductId()) {
                     duplicate = false;
                 }
@@ -187,13 +208,13 @@ public class EditItemsController implements Initializable {
                 }
 
             } else {
-                 if (typeCombo.getSelectionModel().isEmpty() || colorCombo.getSelectionModel().isEmpty()
-                    || genderCombo.getSelectionModel().isEmpty()
-                    || priceLabel.getText().isEmpty() || quantityLabel.getText().isEmpty()
-                    || sizeCombo.getSelectionModel().isEmpty() || idLabel.getText().isEmpty()) {
-                confirmation.setText("Please fill in the fields");
-                
-            } 
+                if (typeCombo.getSelectionModel().isEmpty() || colorCombo.getSelectionModel().isEmpty()
+                        || genderCombo.getSelectionModel().isEmpty()
+                        || priceLabel.getText().isEmpty() || quantityLabel.getText().isEmpty()
+                        || sizeCombo.getSelectionModel().isEmpty() || idLabel.getText().isEmpty()) {
+                    confirmation.setText("Please fill in the fields");
+
+                }
             }
 
         } catch (NumberFormatException e) {
@@ -207,17 +228,29 @@ public class EditItemsController implements Initializable {
 
     }
 
+    /**
+     * Closing the current stage
+     * @param event Cancels the current window
+     */
     @FXML
     private void cancelHandle(ActionEvent event) {
         Stage stage = (Stage) cancelBtn.getScene().getWindow();
         stage.close();
     }
 
+    /**
+     * Current index being edited
+     * @param i sets the indexOnEditing to the passed index value
+     * @return Current index value that is being edited
+     */
     public int indexEdit(int i) {
         this.indexOnEditing = i;
         return indexOnEditing;
     }
 
+    /**
+     * Edit mode sets the object's new values and passes it to the main controller's list
+     */
     public void setList() {
 
         mainController.list.get(indexOnEditing).setColor(colorCombo.getSelectionModel().getSelectedItem());
@@ -228,18 +261,24 @@ public class EditItemsController implements Initializable {
         mainController.list.get(indexOnEditing).setPrice(Double.parseDouble(priceLabel.getText()));
         mainController.list.get(indexOnEditing).setQuantity(Integer.parseInt(quantityLabel.getText()));
 
-        //String url = mainController.list.get(indexOnEditing).getURL();
+        //if an edited object wants to add a new image then set the url to the corresponding image location
         if (url != mainController.list.get(indexOnEditing).getURL()) {
-               if(url.startsWith("file:/")) {
-            url = url.substring(6, url.length());
-            this.url = url;
-            mainController.list.get(indexOnEditing).setURL(url);
-               }
-        } else if (url == mainController.list.get(indexOnEditing).getURL())
+            if (url.startsWith("file:/")) {
+                url = url.substring(6, url.length());
+                this.url = url;
+                mainController.list.get(indexOnEditing).setURL(url);
+            }
+            //otherwise if the edited object will keep the same image
+        } else if (url == mainController.list.get(indexOnEditing).getURL()) {
             mainController.list.get(indexOnEditing).setURL(mainController.list.get(indexOnEditing).getURL());
+        }
 
     }
 
+    /**
+     * Editing window displays the placeholder of the object
+     * @param c passes the list's specific object for viewing and editing
+     */
     public void editDisplay(ObservableList<Clothing> c) {
 
         //displays placeholder in the edit window
@@ -251,39 +290,23 @@ public class EditItemsController implements Initializable {
         quantityLabel.setText(mainController.list.get(indexOnEditing).getQuantity() + "");
         priceLabel.setText(mainController.list.get(indexOnEditing).getPrice() + "");
 
-        
-        
-            
+        //create an image based on the local storage location
         File file = new File(mainController.list.get(indexOnEditing).getURL());
         url = file.toURI().toString();
         myImage = new Image(url);
         image.setImage(myImage);
         this.url = url;
-        //Image img = new Image(file).toURI().toString();
-        //image.setImage(img);
-            
-        //calculates total value = price*quantity of the selected item
-        double v = (mainController.list.get(indexOnEditing).getPrice() * mainController.list.get(indexOnEditing).getQuantity());
 
+        //displays the total value of the selected product
+        double v = (mainController.list.get(indexOnEditing).getPrice() * mainController.list.get(indexOnEditing).getQuantity());
         totalValue.setText("$" + String.format("%.2f", v));
     }
 
-    public void clear() {
-
-        typeCombo.getSelectionModel().clearSelection();
-        //typeCombo.valueProperty().set(null);
-        idLabel.setText("");
-        genderCombo.getSelectionModel().clearSelection();
-        sizeCombo.getSelectionModel().clearSelection();
-        colorCombo.getSelectionModel().clearSelection();
-        priceLabel.setText("");
-        quantityLabel.setText("");
-
-    }
-    
-    
+    /**
+     * Selecting a new image file
+     */
     public void chooseImg() {
-       
+
         FileChooser fileChooser = new FileChooser();
         String currentPath = Paths.get(".").toAbsolutePath().normalize().toString();
         fileChooser.setInitialDirectory(new File(currentPath));
@@ -295,18 +318,22 @@ public class EditItemsController implements Initializable {
 
         //Show open file dialog
         File file = fileChooser.showOpenDialog(null);
-      
+
         // increased efficiency in storing img path. Now as string value
         if (file != null) {
-      
+
             url = file.toURI().toString();
             myImage = new Image(url);
             image.setImage(myImage);
             this.url = url;
-            
-    }
+
+        }
     }
 
+    /**
+     * Sets the parent controller
+     * @param mainController 
+     */
     void setParentController(MainDocumentController mainController) {
         this.mainController = mainController;
     }

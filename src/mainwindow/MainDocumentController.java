@@ -114,8 +114,6 @@ public class MainDocumentController implements Initializable {
 
     /**
      * Initializes the variables upon starting the application.
-     * @param url
-     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -171,8 +169,8 @@ public class MainDocumentController implements Initializable {
     }
 
     /**
-     *
-     * @return current controller rights
+     * Returns the MainDocumentController
+     * @return returns the main controller
      */
     public static MainDocumentController getController() {
         return controller;
@@ -205,8 +203,8 @@ public class MainDocumentController implements Initializable {
     }
 
     /**
-     *
-     * @param c sets the Clothing object c and adds to the ObservableList, calculates new values
+     * Sets the list of items using Clothing objects passed from add or edit controllers
+     * @param c
      */
     public void setList(Clothing c) {
         list.add(c);
@@ -215,7 +213,7 @@ public class MainDocumentController implements Initializable {
     }
 
     /**
-     *
+     * Creates the current list of items using the local List.txt file
      * @return the current list of clothing items from a text file
      */
     public ObservableList<Clothing> getList() {

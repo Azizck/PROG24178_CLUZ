@@ -86,7 +86,7 @@ public class Clothing {
     }
 
     /**
-     * @para color sets the color of clothing item
+     * @param color sets the color of clothing item
      */
     public void setColor(Colors color) {
         this.color = color;

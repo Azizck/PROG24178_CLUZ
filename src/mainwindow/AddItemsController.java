@@ -30,21 +30,18 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 /**
- * This project is developed for a clothing retailer whose needs are to manage inventory on 
- * a day-to-day basis. The required functionalities are adding, editing, removing items while 
- * giving users the freedom to select clothing types accordingly.
- * 
- * April 5th, 2019
+ * Add Items controller
+ *
+ * @version 1.0
  * @author Jingwei Sun, John Chen, Aziz Omar
  */
 public class AddItemsController implements Initializable {
-    
+
     //variables to be used in the controller
     private Clothing c; //Clothing class
     private ObservableList<Clothing> list; //arraylist to hold all the clothing objects
     private MainDocumentController mainController;
 
-    private boolean inEditing; //tracks if the array is being edited
     private int indexOnEditing; //tracks the current index of the array being edited
     private Label label;
     private Image myImage;
@@ -75,6 +72,9 @@ public class AddItemsController implements Initializable {
     @FXML
     private Button imgButton;
 
+    /**
+     * Initializes the controller variables
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //connect the MainDocumentController to be able to pass values/references
@@ -85,6 +85,10 @@ public class AddItemsController implements Initializable {
         cbDisable(true);
     }
 
+    /**
+     * Type combo box handling
+     * @param event Enables the combo box of other settings of clothing items
+     */
     @FXML
     private void typeHandle(ActionEvent event) {
 
@@ -101,6 +105,7 @@ public class AddItemsController implements Initializable {
             pantSize();
             //every other type of clothing will have these options to choose from
         } else {
+            //enables all the combo boxes
             cbDisable(false);
             sizeCombo.getItems().setAll("XS", "S", "M", "L", "XL");
             genderCombo.getItems().setAll(Clothing.Gender.values());
@@ -108,8 +113,11 @@ public class AddItemsController implements Initializable {
         }
     }
 
-    //method that displays the waist size if pants/shorts/jeans are selected as type
+    /**
+     * Selecting Pants type will set the values for size, color, gender
+     */
     public void pantSize() {
+        //enables all the combo boxes and preset the fields
         cbDisable(false);
         sizeCombo.getItems().setAll("28W", "30W", "32W", "34W", "36W");
         colorCombo.getItems().setAll(Clothing.Colors.values());
@@ -117,19 +125,30 @@ public class AddItemsController implements Initializable {
     }
 
     //method that displays dress size if dress/skirt is selected, only provides female/girl as gender choices
+
+     /**
+     * Selecting the Skirt or Dress type will set the values for size, color, gender
+     */
     public void girlSize() {
+        //enable all the combo boxes and preset the fields
         cbDisable(false);
         sizeCombo.getItems().setAll("0", "2", "4", "6", "8", "10", "12");
         colorCombo.getItems().setAll(Clothing.Colors.values());
         genderCombo.getItems().setAll(Clothing.Gender.Girls, Clothing.Gender.Female);
     }
 
-    //not needed
+    /**
+     * 
+     * @param event 
+     */
     @FXML
     private void genderHandle(ActionEvent event) {
     }
 
-    //upon clicking submit the handler will validate the data before creating the new object
+    /**
+     * Submitting the object to the ObservableList which then displays in the table
+     * @param event Data validation of entries before object reference can be passed
+     */
     @FXML
     private void submitHandle(ActionEvent event) {
 
@@ -161,36 +180,44 @@ public class AddItemsController implements Initializable {
                     if (!duplicate) {
                         Clothing c = new Clothing();
                         addProduct(c); //passes the object reference to the method
-                                                
+
                     }
                 }
             }
             //display error if anything outside of numbers are entered
         } catch (NumberFormatException e) {
-             Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText("");
-                alert.setContentText("Please enter valid numbers");
-                alert.showAndWait();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("");
+            alert.setContentText("Please enter valid numbers");
+            alert.showAndWait();
             System.out.println(e);
         }
     }
 
-    //close the current window if cancel/close button is clicked
+    /**
+     * Closing the current stage
+     * @param event Cancels the current window
+     */
     @FXML
     private void cancelHandle(ActionEvent event) {
         Stage stage = (Stage) cancelBtn.getScene().getWindow();
         stage.close();
     }
 
-    //disables or enables size/color/gender combo boxes given the parmaters
+    /**
+     * Enables or disables the combo boxes
+     * @param b Passes true or false values to control the combo boxes
+     */
     public void cbDisable(boolean b) {
         sizeCombo.setDisable(b);
         colorCombo.setDisable(b);
         genderCombo.setDisable(b);
     }
 
-    //clears the fields after each submit
+    /**
+     * Clears and resets the input fields upon submitting a product item
+     */
     public void clear() {
 
         typeCombo.getSelectionModel().clearSelection();
@@ -204,7 +231,10 @@ public class AddItemsController implements Initializable {
         cbDisable(false);
     }
 
-    //method that takes in the new object and sets the new values to it
+    /**
+     * Sets an object with selected values and passes it to the main controller list
+     * @param c
+     */
     public void addProduct(Clothing c) {
 
         c.setType(typeCombo.getValue());
@@ -214,17 +244,17 @@ public class AddItemsController implements Initializable {
         c.setGender(genderCombo.getValue());
         c.setPrice(Double.parseDouble(priceLabel.getText()));
         c.setQuantity(Integer.parseInt(quantityLabel.getText()));
-        
-       if (image.getImage() != null) {
-          if (url.startsWith("file:/")) {
-            url = url.substring(6,url.length());
-        
-        this.url=url;
-        c.setURL(url);
-          }
-       }
-     
-     
+
+        //if image does exist then store the local url
+        if (image.getImage() != null) {
+            if (url.startsWith("file:/")) {
+                url = url.substring(6, url.length());
+                
+                this.url = url;
+                c.setURL(url);
+            }
+        }
+
         //passes the object to the main controller's setList method
         mainController.setList(c);
         //displays a success message
@@ -232,10 +262,11 @@ public class AddItemsController implements Initializable {
         //clear all the input fields
         clear();
     }
-    
-    
 
-    //image handler that adds image to product
+    /**
+     * Adds image to the clothing item
+     * @param event Chooses the image location upon clicking
+     */
     @FXML
     private void imageHandle(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
@@ -249,22 +280,16 @@ public class AddItemsController implements Initializable {
 
         //Show open file dialog
         File file = fileChooser.showOpenDialog(null);
-      
+
         // increased efficiency in storing img path. Now as string value
         if (file != null) {
-      
+
             url = file.toURI().toString();
             myImage = new Image(url);
             image.setImage(myImage);
             this.url = url;
-            
-    }
+
+        }
     }
 
-    
-    /* testing purposes
-    public void setParentController(MainDocumentController mainController) {
-    this.mainController = mainController;
-}
-     */
 }
