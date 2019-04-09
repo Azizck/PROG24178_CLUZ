@@ -478,6 +478,11 @@ public class MainDocumentController implements Initializable {
         SortedList sort = new SortedList(filter);
         sort.comparatorProperty().bind(items.comparatorProperty());
         items.setItems(sort);
+        // clears filters after each selection
+        genderFilter.setValue(null);
+        sizeFilter.setValue(null);
+        colorFilter.setValue(null);
+        searchField.setText("");
     }
 
     /**
@@ -533,6 +538,10 @@ public class MainDocumentController implements Initializable {
         SortedList sort = new SortedList(filter);
         sort.comparatorProperty().bind(items.comparatorProperty());
         items.setItems(sort);
+        typeFilter.setValue(null);
+        sizeFilter.setValue(null);
+        colorFilter.setValue(null);
+        searchField.setText("");
     }
 
     /**
@@ -692,6 +701,10 @@ public class MainDocumentController implements Initializable {
         SortedList sort = new SortedList(filter);
         sort.comparatorProperty().bind(items.comparatorProperty());
         items.setItems(sort);
+        typeFilter.setValue(null);
+        genderFilter.setValue(null);
+        colorFilter.setValue(null);
+        searchField.setText("");
     }
 
     /**
@@ -771,6 +784,10 @@ public class MainDocumentController implements Initializable {
         SortedList sort = new SortedList(filter);
         sort.comparatorProperty().bind(items.comparatorProperty());
         items.setItems(sort);
+        typeFilter.setValue(null);
+        genderFilter.setValue(null);
+        sizeFilter.setValue(null);
+        searchField.setText("");
     }
 
     /**
@@ -871,7 +888,7 @@ public class MainDocumentController implements Initializable {
     private void resetHandle(ActionEvent event) {
 
         typeFilter.setValue(null);
-        genderFilter.getSelectionModel().clearSelection();
+        genderFilter.setValue(null);
         sizeFilter.setValue(null);
         colorFilter.setValue(null);
         searchField.setText("");
