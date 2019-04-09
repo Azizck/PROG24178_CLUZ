@@ -45,17 +45,15 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
- * This project is developed for a clothing retailer whose needs are to manage
- * inventory on a day-to-day basis. The required functionalities are adding,
- * editing, removing items while giving users the freedom to select clothing
- * types accordingly.
+ * This project is developed for a clothing retailer whose needs are to manage inventory on a day-to-day basis. The required functionalities are adding, editing, removing items while giving users the freedom to select clothing types accordingly.
  *
- * April 5th, 2019
- *
+ * 
+ * @version 1.0
  * @author Jingwei Sun, John Chen, Aziz Omar
  */
 public class MainDocumentController implements Initializable {
 
+    
     private ArrayList<Clothing> clothList;
     private Clothing selected;
     private boolean inEdit;
@@ -114,15 +112,20 @@ public class MainDocumentController implements Initializable {
     @FXML
     private Label totalValue;
 
+    /**
+     * Initializes the variables upon starting the application.
+     * @param url
+     * @param rb
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-        items.setItems(getList());
-
+        //initializes the variables
         controller = this;
         indexOnEditing = 0;
         inEdit = false;
 
+        //sets the table columns
         tableId.setCellValueFactory(new PropertyValueFactory<>("productId"));
         tableType.setCellValueFactory(new PropertyValueFactory<>("type"));
         tableGender.setCellValueFactory(new PropertyValueFactory<>("gender"));
@@ -131,71 +134,98 @@ public class MainDocumentController implements Initializable {
         tablePrice.setCellValueFactory(new PropertyValueFactory<>("price"));
         tableQuantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
 
-        //display table with entries on load
+        //TableView calls the getList method and populates the table on start
+        items.setItems(getList());
+        
+        //initializes the filter
+        filter = new FilteredList(list, e -> true);
+
+        //if the table is clicked
         items.setOnMouseClicked(e -> {
             //single click
             if (e.getClickCount() == 1) {
-
+                //calls the select method
                 select();
             } //double click
             else if (e.getClickCount() == 2) {
+                //calls select and showEdit methods
                 select();
-
                 showEdit();
-
             } else {
-
+                //empty
             }
         });
 
+        //default display of combo box filters
         typeFilter.getItems().addAll(Type.values());
         genderFilter.getItems().addAll(Gender.values());
         colorFilter.getItems().addAll(Colors.values());
 
-        items.setItems(list);
-        filter = new FilteredList(list, e -> true);
-
+        //items.setItems(list);
+        //populates the size filter combo box on start
         sizeFilter.getItems().addAll("XS", "S", "M", "L", "XL", "0", "2", "4", "6",
                 "8", "10", "12", "28W", "30W", "32W", "34W", "36W");
-
+        
+        //refreshes the table and calculates 
         update();
     }
 
+    /**
+     *
+     * @return current controller rights
+     */
     public static MainDocumentController getController() {
         return controller;
     }
 
+    /**
+     * Updates the table and calculates inventory statistics
+     */
     public void update() {
         items.refresh();
         calculate();
     }
 
+    /**
+     * Calculates the inventory's statistics
+     */
     public void calculate() {
         int q = 0;
         double v = 0;
+        //for loop to calculate total price and total quantity of items in inventory
         for (int i = 0; i < list.size(); i++) {
             q += list.get(i).getQuantity();
             v += (list.get(i).getPrice() * list.get(i).getQuantity());
         }
+        //sets the informational values
         uniqueProducts.setText("Unique Products: " + Integer.toString(list.size()));
         totalProducts.setText("Total Products: " + q);
         totalValue.setText("Total Value: $" + String.format("%.2f", v));
 
     }
 
+    /**
+     *
+     * @param c sets the Clothing object c and adds to the ObservableList, calculates new values
+     */
     public void setList(Clothing c) {
         list.add(c);
         items.setItems(list);
         calculate();
-
     }
 
+    /**
+     *
+     * @return the current list of clothing items from a text file
+     */
     public ObservableList<Clothing> getList() {
-       
+
+        //create new Clothing objects and an ArrayList
         ArrayList<Clothing> clist = new ArrayList<>();
         Clothing c = new Clothing();
         BufferedReader reader = null;
 
+        //read from a text file in local folder and add each line of object to an ArrayList
         try {
             File file = new File("List.txt");
             reader = new BufferedReader(new FileReader(file));
@@ -208,45 +238,46 @@ public class MainDocumentController implements Initializable {
                         names[3], Colors.valueOf(names[4]),
                         Double.parseDouble(names[5]),
                         Integer.parseInt(names[6]));
-                c.setURL(names[7]); 
+                c.setURL(names[7]);
                 clist.add(c);
             }
 
         } catch (IOException e) {
             System.out.println(e);
         }
+        
+        //add the ArrayList to the ObservableList
         ObservableList<Clothing> list = FXCollections.observableArrayList(clist);
 
+        //sets the current list to the new list and return the list
         this.list = list;
         this.filter = new FilteredList(list, e -> true);
         return list;
-
     }
 
+    /**
+     * Select method that activates inEdit variable and collects index from object
+     */
     public void select() {
 
+        //if the clicked item is not empty then set edit to true
         if (!items.getSelectionModel().isEmpty()) {
             inEdit = true;
             Clothing selected = items.getSelectionModel().getSelectedItem();
             indexOnEditing = items.getSelectionModel().getSelectedIndex();
             this.indexOnEditing = indexOnEditing;
             this.selected = selected;
-
-            //for testing purposes
-            System.out.println("index is" + indexOnEditing);
-            System.out.println(selected);
-            System.out.println("===========");
-            System.out.println("List size is: " + list.size());
-            System.out.println("===================");
-
-            //System.out.println(list.get(5).getURL());
         }
-
     }
 
+    /**
+     * 
+     * @param event Clicking Add opens a new Add Item window
+     */
     @FXML
     private void addHandle(ActionEvent event) {
 
+        //creates a new Add item window upon clicking Add
         try {
             Parent root = FXMLLoader.load(getClass().getResource("AddItems.fxml"));
 
@@ -257,7 +288,6 @@ public class MainDocumentController implements Initializable {
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle("Add Items");
             stage.setScene(scene);
-
             stage.show();
 
         } catch (Exception e) {
@@ -266,15 +296,23 @@ public class MainDocumentController implements Initializable {
 
     }
 
+    /**
+     * 
+     * @param event Calls the showEdit() method
+     */
     @FXML
     private void editHandle(ActionEvent event) {
+        //calls the showEdit method, displays Edit item window
         showEdit();
     }
 
-    private void showEdit() {
+    /**
+     * Opens a new Edit window
+     */
+    public void showEdit() {
 
         try {
-
+            
             if (!items.getSelectionModel().isEmpty()) {
                 // Loading the modify part window
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("EditItems.fxml"));
@@ -282,9 +320,9 @@ public class MainDocumentController implements Initializable {
 
                 loader.<EditItemsController>getController().setParentController(this);
                 EditItemsController editItemsController = loader.getController();
-
+                //passes the object index to the Edit controller
                 editItemsController.indexEdit(indexOnEditing);
-
+                //passes the current list of objects
                 editItemsController.editDisplay(list);
 
                 Stage stage = new Stage();
@@ -306,6 +344,10 @@ public class MainDocumentController implements Initializable {
         }
     }
 
+    /**
+     * 
+     * @param event Clicking Remove deletes the selected row of object
+     */
     @FXML
     private void removeHandle(ActionEvent event) {
 
@@ -321,7 +363,7 @@ public class MainDocumentController implements Initializable {
             Optional<ButtonType> result = alert.showAndWait();
 
             if (result.get() == ButtonType.OK) {
-
+                //gets the selected item and removes it, updates the table values
                 items.getItems().remove(selected);
                 update();
             }
@@ -335,23 +377,15 @@ public class MainDocumentController implements Initializable {
         }
     }
 
-    public void pantSize() {
-        sizeFilter.getItems().setAll("28W", "30W", "32W", "34W", "36W");
-        colorFilter.getItems().setAll(Clothing.Colors.values());
-        genderFilter.getItems().setAll(Clothing.Gender.values());
-    }
-
-    public void girlSize() {
-        sizeFilter.getItems().setAll("0", "2", "4", "6", "8", "10", "12");
-        colorFilter.getItems().setAll(Clothing.Colors.values());
-        genderFilter.getItems().setAll(Clothing.Gender.Girls, Clothing.Gender.Female);
-    }
-
     @FXML
     private void searchHandle(ActionEvent event) {
 
     }
 
+    /**
+     * 
+     * @param event Type filters for the clothing item list
+     */
     @FXML
     private void typeFilterHandle(ActionEvent event) {
         // takes a selection and compares it with parameters in observableList using addListener
@@ -448,6 +482,10 @@ public class MainDocumentController implements Initializable {
         items.setItems(sort);
     }
 
+    /**
+     * 
+     * @param event Gender filter for the clothing item list
+     */
     @FXML
     private void genderFilterHandle(ActionEvent event) {
         genderFilter.getSelectionModel().selectedItemProperty()
@@ -499,6 +537,10 @@ public class MainDocumentController implements Initializable {
         items.setItems(sort);
     }
 
+    /**
+     * 
+     * @param event Size filter for clothing item list
+     */
     @FXML
     private void sizeFilterHandle(ActionEvent event) {
         sizeFilter.getSelectionModel().selectedItemProperty()
@@ -654,6 +696,10 @@ public class MainDocumentController implements Initializable {
         items.setItems(sort);
     }
 
+    /**
+     * 
+     * @param event Color filter for the clothing item list
+     */
     @FXML
     private void colorFilterHandle(ActionEvent event) {
         colorFilter.getSelectionModel().selectedItemProperty()
@@ -729,9 +775,14 @@ public class MainDocumentController implements Initializable {
         items.setItems(sort);
     }
 
+    /**
+     * 
+     * @param event Saves the list of items as a text file in local storage
+     */
     @FXML
     private void saveHandle(ActionEvent event) {
 
+        //initializes a filechooser to allow user to choose where to save the text file
         FileChooser fileChooser = new FileChooser();
         String currentPath = Paths.get(".").toAbsolutePath().normalize().toString();
         fileChooser.setInitialDirectory(new File(currentPath));
@@ -741,6 +792,7 @@ public class MainDocumentController implements Initializable {
         fileChooser.setTitle("Save as");
         File file = fileChooser.showSaveDialog(null);
 
+        //if file exists then print the object one row at a time
         if (file != null) {
             try {
                 PrintWriter writer = new PrintWriter(file);
@@ -757,6 +809,10 @@ public class MainDocumentController implements Initializable {
         }
     }
 
+    /**
+     * 
+     * @param event Opening the file sets the table list as the text file opened then calculates the values
+     */
     @FXML
     private void openFileHandle(ActionEvent event) {
         items.setItems(open());
@@ -764,6 +820,10 @@ public class MainDocumentController implements Initializable {
 
     }
 
+    /**
+     * 
+     * @return Open method to read a file from a selected text file
+     */
     private ObservableList<Clothing> open() {
 
         FileChooser fileChooser = new FileChooser();
@@ -790,7 +850,7 @@ public class MainDocumentController implements Initializable {
                         names[3], Colors.valueOf(names[4]),
                         Double.parseDouble(names[5]),
                         Integer.parseInt(names[6]));
-                c.setURL(names[7]); 
+                c.setURL(names[7]);
                 clist.add(c);
             }
 
@@ -805,6 +865,10 @@ public class MainDocumentController implements Initializable {
 
     }
 
+    /**
+     * 
+     * @param event Resets the filter and search bar
+     */
     @FXML
     private void resetHandle(ActionEvent event) {
 
@@ -816,16 +880,12 @@ public class MainDocumentController implements Initializable {
         items.setItems(list);
     }
 
-    // search bar 
+    /**
+     * 
+     * @param event Search function for the search bar
+     */
     @FXML
     private void search(KeyEvent event) {
-        /*
-        searchField.textProperty().addListener(new ChangeListener() {
-            public void changed(ObservableValue observable, Object oldVal, Object newVal) {
-                searchKey((String)oldVal, (String)newVal);
-            }
-        });
-         */
 
         // takes an input and compares it with parameters in observableList using addListener
         searchField.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -854,29 +914,4 @@ public class MainDocumentController implements Initializable {
         items.setItems(sort);
 
     }
-
-    public void searchKey(String oldVal, String newVal) {
-        if (oldVal != null && (newVal.length() < oldVal.length())) {
-            items.setItems(list);
-        }
-        newVal = newVal.toUpperCase();
-        ObservableList<Clothing> subList = FXCollections.observableArrayList();
-        for (Clothing e : items.getItems()) {
-            Clothing searchText = (Clothing) e;
-            if (searchText.getColor().toString().contains(newVal)) {
-                subList.add(searchText);
-            }
-        }
-        items.setItems(subList);
-
-    }
-
 }
-
-/*
-Need to implement:
-filtering and searching
-image viewing and editing
-bug tests
-
- */
