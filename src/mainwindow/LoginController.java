@@ -5,8 +5,11 @@
  */
 package mainwindow;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Paths;
 import java.util.ResourceBundle;
 import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
@@ -20,22 +23,26 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 /**
- * FXML Controller class
+ * Login Controller class
  *
  * @author John
  */
 public class LoginController implements Initializable {
 
+
+    private Image image;
 	@FXML
 	private VBox Vbox;
-	@FXML
-	private Label title;
 	@FXML
 	private Label userlbl;
 	@FXML
@@ -47,7 +54,7 @@ public class LoginController implements Initializable {
 	@FXML
 	private Button loginBtn;
 	@FXML
-	private Button signupBtn;
+	private ImageView logo;
 
 
 	/**
@@ -55,9 +62,10 @@ public class LoginController implements Initializable {
 	 */
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
-		//mainController = MainDocumentController.getController();
-		// TODO
-
+		
+        Image image = new Image("file:logo.png");
+         logo.setImage(image);
+    
 	}
 
 	@FXML
@@ -70,12 +78,9 @@ public class LoginController implements Initializable {
 
 	@FXML
 	private void loginBtnHandler(ActionEvent event) {
-		//if (username.getText().equals("admin") && password.getText().equals("admin")) {
-		/*
-            Parent newRoot = FXMLLoader.load(getClass().getResource("MainDocument.fxml"));
-            root = ((Node) event.getSource()).getScene().getRoot();
-            ((Node) event.getSource()).getScene().setRoot(newRoot);
-		 */
+		if (username.getText().equals("admin") && password.getText().equals("admin")) {
+		
+         
 		Stage login = (Stage) loginBtn.getScene().getWindow();
 		login.close();
 
@@ -85,16 +90,16 @@ public class LoginController implements Initializable {
 			Scene scene = new Scene(root);
 			Stage stage = new Stage();
 			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.setMinWidth(865);
-			stage.setMinHeight(525);
+			
 			stage.setTitle("Cluz");
 			stage.setScene(scene);
+                         //stage.initStyle(StageStyle.UNDECORATED);
 			stage.show();
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		/*
+		
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("ERROR");
@@ -102,11 +107,6 @@ public class LoginController implements Initializable {
             alert.setContentText("Username or Password Incorrect");
             alert.showAndWait();
        }
-		 */
-	}
-
-	@FXML
-	private void signupBtnHandler(ActionEvent event) {
-
+		 
 	}
 }

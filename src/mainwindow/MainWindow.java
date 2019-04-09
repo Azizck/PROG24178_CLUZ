@@ -28,12 +28,12 @@ public class MainWindow extends Application {
 			Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
 
 			Scene scene = new Scene(root);
-			stage.setMinWidth(865);
-			stage.setMinHeight(525);
+			//stage.setMinWidth(865);
+			//stage.setMinHeight(525);
 			stage.setScene(scene);
 			stage.setTitle("Cluz");
 			// test 
-			 stage.initStyle(StageStyle.UNDECORATED);
+			//stage.initStyle(StageStyle.UNDECORATED);
 			stage.show();
 
 		} catch (IOException e) {
