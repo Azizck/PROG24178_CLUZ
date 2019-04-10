@@ -1,36 +1,28 @@
 package mainwindow;
 
 import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
 import mainwindow.Clothing.*;
 import java.net.URL;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.ResourceBundle;
-import java.util.Set;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Region;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 /**
- * Add Items controller
+ * Add Items controller Handles add button on main window Each field is required
+ * before saving list (image is optional) After saving, each list is saved as a
+ * clothing object in observable list
  *
  * @version 1.0
  * @author Jingwei Sun, John Chen, Aziz Omar
@@ -87,6 +79,7 @@ public class AddItemsController implements Initializable {
 
     /**
      * Type combo box handling
+     *
      * @param event Enables the combo box of other settings of clothing items
      */
     @FXML
@@ -125,9 +118,9 @@ public class AddItemsController implements Initializable {
     }
 
     //method that displays dress size if dress/skirt is selected, only provides female/girl as gender choices
-
-     /**
-     * Selecting the Skirt or Dress type will set the values for size, color, gender
+    /**
+     * Selecting the Skirt or Dress type will set the values for size, color,
+     * gender
      */
     public void girlSize() {
         //enable all the combo boxes and preset the fields
@@ -138,16 +131,19 @@ public class AddItemsController implements Initializable {
     }
 
     /**
-     * 
-     * @param event 
+     *
+     * @param event
      */
     @FXML
     private void genderHandle(ActionEvent event) {
     }
 
     /**
-     * Submitting the object to the ObservableList which then displays in the table
-     * @param event Data validation of entries before object reference can be passed
+     * Submitting the object to the ObservableList which then displays in the
+     * table
+     *
+     * @param event Data validation of entries before object reference can be
+     * passed
      */
     @FXML
     private void submitHandle(ActionEvent event) {
@@ -197,6 +193,7 @@ public class AddItemsController implements Initializable {
 
     /**
      * Closing the current stage
+     *
      * @param event Cancels the current window
      */
     @FXML
@@ -207,6 +204,7 @@ public class AddItemsController implements Initializable {
 
     /**
      * Enables or disables the combo boxes
+     *
      * @param b Passes true or false values to control the combo boxes
      */
     public void cbDisable(boolean b) {
@@ -232,7 +230,9 @@ public class AddItemsController implements Initializable {
     }
 
     /**
-     * Sets an object with selected values and passes it to the main controller list
+     * Sets an object with selected values and passes it to the main controller
+     * list
+     *
      * @param c
      */
     public void addProduct(Clothing c) {
@@ -249,7 +249,7 @@ public class AddItemsController implements Initializable {
         if (image.getImage() != null) {
             if (url.startsWith("file:/")) {
                 url = url.substring(6, url.length());
-                
+
                 this.url = url;
                 c.setURL(url);
             }
@@ -265,6 +265,7 @@ public class AddItemsController implements Initializable {
 
     /**
      * Adds image to the clothing item
+     *
      * @param event Chooses the image location upon clicking
      */
     @FXML

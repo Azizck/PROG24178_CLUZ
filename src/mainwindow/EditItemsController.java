@@ -1,7 +1,6 @@
 package mainwindow;
 
 import java.io.File;
-import java.net.MalformedURLException;
 import mainwindow.Clothing.*;
 import java.net.URL;
 import java.nio.file.Paths;
@@ -13,18 +12,20 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Region;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 /**
- * Edit Items controller
+ * Edit Items controller User can open this window by double clicking on the
+ * item in table view or by selecting item and clicking on the edit button
+ * Handles add button on main window Each field is required before saving list
+ * (image is optional) After saving, each list is saved as a clothing object in
+ * observable list
  *
  * @version 1.0
  * @author Jingwei Sun, John Chen, Aziz Omar
@@ -76,7 +77,7 @@ public class EditItemsController implements Initializable {
         //initializes the variables
         mainController = MainDocumentController.getController();
         clothList = new ArrayList<>();
-     
+
         //activates the type combo box on load
         typeCombo.getItems().setAll(Clothing.Type.values());
 
@@ -84,6 +85,7 @@ public class EditItemsController implements Initializable {
 
     /**
      * Type combo box handling
+     *
      * @param event Enables the combo box of other settings of clothing items
      */
     @FXML
@@ -120,7 +122,8 @@ public class EditItemsController implements Initializable {
     }
 
     /**
-     * Selecting the Skirt or Dress type will set the values for size, color, gender
+     * Selecting the Skirt or Dress type will set the values for size, color,
+     * gender
      */
     public void girlSize() {
         sizeCombo.getItems().setAll("0", "2", "4", "6", "8", "10", "12");
@@ -129,8 +132,8 @@ public class EditItemsController implements Initializable {
     }
 
     /**
-     * 
-     * @param event 
+     *
+     * @param event
      */
     @FXML
     private void genderHandle(ActionEvent event) {
@@ -138,6 +141,7 @@ public class EditItemsController implements Initializable {
 
     /**
      * Adds image to the clothing item
+     *
      * @param event Chooses the image location upon clicking
      */
     @FXML
@@ -167,52 +171,58 @@ public class EditItemsController implements Initializable {
     }
 
     /**
-     * Submitting the object to the ObservableList which then displays in the table
-     * @param event Data validation of entries before object reference can be passed
+     * Submitting the object to the ObservableList which then displays in the
+     * table
+     *
+     * @param event Data validation of entries before object reference can be
+     * passed
      */
     @FXML
     private void submitHandle(ActionEvent event) {
 
         //checks if the fields are completed, prompt if not
         try {
-            if ((Integer.parseInt(idLabel.getText()) <= 0) || Double.parseDouble(priceLabel.getText()) < 0
-                    || Integer.parseInt(quantityLabel.getText()) < 0) {
-                confirmation.setText("Please enter positive numbers");
-            } //Product ID entered is above zero then iterate through the list to find matching IDs
-            else if (Integer.parseInt(idLabel.getText()) > 0) {
-                boolean duplicate = false;
-                for (int i = 0; i < mainController.list.size(); i++) {
-
-                    //if a match was found then display message and set duplicate to true
-                    if (Integer.parseInt(idLabel.getText()) == mainController.list.get(i).getProductId()) {
-                        confirmation.setText("Please enter an unique ID");
-                        duplicate = true;
-                        //if duplicate then true
-                    }
-                }
-                //if selected product ID matches the editing ID then it is not a duplicate
-                if (Integer.parseInt(idLabel.getText()) == mainController.list.get(indexOnEditing).getProductId()) {
-                    duplicate = false;
-                }
-                if (!duplicate) {
-                    //creates a new clothing object if fields are all valid and call addProduct() 
-                    setList();
-                    mainController.update();
-                    Stage stage = (Stage) cancelBtn.getScene().getWindow();
-                    stage.close();
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Saved");
-                    alert.setHeaderText("");
-                    alert.setContentText("Item Saved Sucessfully");
-                    alert.showAndWait();
-                }
+            if ((genderCombo.getSelectionModel().getSelectedItem() == null)
+                    || (colorCombo.getSelectionModel().getSelectedItem() == null)
+                    || (sizeCombo.getSelectionModel().getSelectedItem() == null)
+                    || (idLabel.getText().length() <= 0)
+                    || (priceLabel.getText().length() <= 0)
+                    || (quantityLabel.getText().length() <= 0)) {
+                confirmation.setText("Please fill in the fields");
 
             } else {
-                if (typeCombo.getSelectionModel().isEmpty() || colorCombo.getSelectionModel().isEmpty()
-                        || genderCombo.getSelectionModel().isEmpty()
-                        || priceLabel.getText().isEmpty() || quantityLabel.getText().isEmpty()
-                        || sizeCombo.getSelectionModel().isEmpty() || idLabel.getText().isEmpty()) {
-                    confirmation.setText("Please fill in the fields");
+
+                if ((Integer.parseInt(idLabel.getText()) <= 0) || Double.parseDouble(priceLabel.getText()) < 0
+                        || Integer.parseInt(quantityLabel.getText()) < 0) {
+                    confirmation.setText("Please enter positive numbers");
+                } //Product ID entered is above zero then iterate through the list to find matching IDs
+                else if (Integer.parseInt(idLabel.getText()) > 0) {
+                    boolean duplicate = false;
+                    for (int i = 0; i < mainController.list.size(); i++) {
+
+                        //if a match was found then display message and set duplicate to true
+                        if (Integer.parseInt(idLabel.getText()) == mainController.list.get(i).getProductId()) {
+                            confirmation.setText("Please enter an unique ID");
+                            duplicate = true;
+                            //if duplicate then true
+                        }
+                    }
+                    //if selected product ID matches the editing ID then it is not a duplicate
+                    if (Integer.parseInt(idLabel.getText()) == mainController.list.get(indexOnEditing).getProductId()) {
+                        duplicate = false;
+                    }
+                    if (!duplicate) {
+                        //creates a new clothing object if fields are all valid and call addProduct() 
+                        setList();
+                        mainController.update();
+                        Stage stage = (Stage) cancelBtn.getScene().getWindow();
+                        stage.close();
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Saved");
+                        alert.setHeaderText("");
+                        alert.setContentText("Item Saved Sucessfully");
+                        alert.showAndWait();
+                    }
 
                 }
             }
@@ -225,11 +235,11 @@ public class EditItemsController implements Initializable {
             alert.showAndWait();
             System.out.println(e);
         }
-
     }
 
     /**
      * Closing the current stage
+     *
      * @param event Cancels the current window
      */
     @FXML
@@ -240,6 +250,7 @@ public class EditItemsController implements Initializable {
 
     /**
      * Current index being edited
+     *
      * @param i sets the indexOnEditing to the passed index value
      * @return Current index value that is being edited
      */
@@ -249,7 +260,8 @@ public class EditItemsController implements Initializable {
     }
 
     /**
-     * Edit mode sets the object's new values and passes it to the main controller's list
+     * Edit mode sets the object's new values and passes it to the main
+     * controller's list
      */
     public void setList() {
 
@@ -277,6 +289,7 @@ public class EditItemsController implements Initializable {
 
     /**
      * Editing window displays the placeholder of the object
+     *
      * @param c passes the list's specific object for viewing and editing
      */
     public void editDisplay(ObservableList<Clothing> c) {
@@ -291,12 +304,14 @@ public class EditItemsController implements Initializable {
         priceLabel.setText(mainController.list.get(indexOnEditing).getPrice() + "");
 
         //create an image based on the local storage location
-        File file = new File(mainController.list.get(indexOnEditing).getURL());
-        url = file.toURI().toString();
-        myImage = new Image(url);
-        image.setImage(myImage);
-        this.url = url;
+        if (mainController.list.get(indexOnEditing).getURL() != null) {
+            File file = new File(mainController.list.get(indexOnEditing).getURL());
+            url = file.toURI().toString();
+            myImage = new Image(url);
+            image.setImage(myImage);
+            this.url = url;
 
+        }
         //displays the total value of the selected product
         double v = (mainController.list.get(indexOnEditing).getPrice() * mainController.list.get(indexOnEditing).getQuantity());
         totalValue.setText("$" + String.format("%.2f", v));
@@ -332,7 +347,8 @@ public class EditItemsController implements Initializable {
 
     /**
      * Sets the parent controller
-     * @param mainController 
+     *
+     * @param mainController
      */
     void setParentController(MainDocumentController mainController) {
         this.mainController = mainController;

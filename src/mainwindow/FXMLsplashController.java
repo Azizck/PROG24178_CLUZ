@@ -15,58 +15,56 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
 /**
- * FXML Controller class
+ * Splash effects controller class
  *
  * @author Aziz
  */
 public class FXMLsplashController implements Initializable {
 
-	@FXML
-	private AnchorPane splashScene;
+    @FXML
+    private AnchorPane splashScene;
 
-	/**
-	 * Initializes the controller class.
-	 */
-	@Override
-	public void initialize(URL url, ResourceBundle rb) {
-		// an object of PauseTransation with duration of two seconds
-		PauseTransition delay = new PauseTransition(Duration.seconds(1));
-		// set the delay on event to be called swapScenes when the duration time finishes
-		delay.setOnFinished(event2
-			//call swap screen to swap the scenes
-			-> swapScenes()
-		);
-		
-		delay.play();
+    /**
+     * Initializes the controller class.
+     */
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        // an object of PauseTransation with duration of two seconds
+        PauseTransition delay = new PauseTransition(Duration.seconds(2));
+        // set the delay on event to be called swapScenes when the duration time finishes
+        delay.setOnFinished(event2
+                //call swap screen to swap the scenes
+                -> swapScenes()
+        );
 
-	}
+        delay.play();
 
-	//method replaces the splash screen scene with the main window screen 
-	public void swapScenes() {
+    }
 
-		try {
-			// get the stage of the current screen 
-			Stage login = (Stage)splashScene.getScene().getWindow();
-			//load the main screen 	
-			Parent root = FXMLLoader.load(getClass().getResource("MainDocument.fxml"));
-			Scene scene = new Scene(root);
-			scene.getStylesheets().add("mainStyle.css");
+    //method replaces the splash screen scene with the main window screen 
+    public void swapScenes() {
 
+        try {
+            // get the stage of the current screen 
+            Stage login = (Stage) splashScene.getScene().getWindow();
+            //load the main screen 	
+            Parent root = FXMLLoader.load(getClass().getResource("MainDocument.fxml"));
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add("mainStyle.css");
 
-			// swap the scenes 
-			login.setScene(scene);
+            //login.setMinHeight(560);
+            //login.setMinWidth(400);
+            // swap the scenes 
+            login.setScene(scene);
+            login.show();
 
-			login.show();
-			
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 }
