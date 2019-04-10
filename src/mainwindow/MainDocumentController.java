@@ -488,10 +488,7 @@ public class MainDocumentController implements Initializable {
             sort.comparatorProperty().bind(items.comparatorProperty());
             items.setItems(sort);
             // clears filters after each selection
-            genderFilter.setValue(null);
-            sizeFilter.setValue(null);
-            colorFilter.setValue(null);
-            searchField.setText("");
+          
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -555,10 +552,7 @@ public class MainDocumentController implements Initializable {
             SortedList sort = new SortedList(filter);
             sort.comparatorProperty().bind(items.comparatorProperty());
             items.setItems(sort);
-            typeFilter.setValue(null);
-            sizeFilter.setValue(null);
-            colorFilter.setValue(null);
-            searchField.setText("");
+        
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -726,10 +720,7 @@ public class MainDocumentController implements Initializable {
             SortedList sort = new SortedList(filter);
             sort.comparatorProperty().bind(items.comparatorProperty());
             items.setItems(sort);
-            typeFilter.setValue(null);
-            genderFilter.setValue(null);
-            colorFilter.setValue(null);
-            searchField.setText("");
+        
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -818,10 +809,7 @@ public class MainDocumentController implements Initializable {
             SortedList sort = new SortedList(filter);
             sort.comparatorProperty().bind(items.comparatorProperty());
             items.setItems(sort);
-            typeFilter.setValue(null);
-            genderFilter.setValue(null);
-            sizeFilter.setValue(null);
-            searchField.setText("");
+            
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -923,20 +911,23 @@ public class MainDocumentController implements Initializable {
      */
     @FXML
     private void resetHandle(ActionEvent event) {
-
+        setPrompt();
         typeFilter.setDisable(false);
         genderFilter.setDisable(false);
         sizeFilter.setDisable(false);
         colorFilter.setDisable(false);
 
-        typeFilter.setValue(null);
-        genderFilter.setValue(null);
-        sizeFilter.setValue(null);
-        colorFilter.setValue(null);
-        searchField.setText("");
+        
         items.setItems(list);
     }
 
+    public void setPrompt() {
+        typeFilter.setPromptText("Type");
+        genderFilter.setPromptText("Gender");
+        sizeFilter.setPromptText("Size");
+        colorFilter.setPromptText("Color");
+        searchField.setText("");
+    }
     /**
      *
      * @param event Search function for the search bar
