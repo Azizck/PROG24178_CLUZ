@@ -47,13 +47,12 @@ import javafx.stage.Stage;
 /**
  * This project is developed for a clothing retailer whose needs are to manage inventory on a day-to-day basis. The required functionalities are adding, editing, removing items while giving users the freedom to select clothing types accordingly.
  *
- * 
+ *
  * @version 1.0
  * @author Jingwei Sun, John Chen, Aziz Omar
  */
 public class MainDocumentController implements Initializable {
 
-    
     private ArrayList<Clothing> clothList;
     private Clothing selected;
     private boolean inEdit;
@@ -134,7 +133,7 @@ public class MainDocumentController implements Initializable {
 
         //TableView calls the getList method and populates the table on start
         items.setItems(getList());
-        
+
         //initializes the filter
         filter = new FilteredList(list, e -> true);
 
@@ -163,13 +162,14 @@ public class MainDocumentController implements Initializable {
         //populates the size filter combo box on start
         sizeFilter.getItems().addAll("XS", "S", "M", "L", "XL", "0", "2", "4", "6",
                 "8", "10", "12", "28W", "30W", "32W", "34W", "36W");
-        
+
         //refreshes the table and calculates 
         update();
     }
 
     /**
      * Returns the MainDocumentController
+     *
      * @return returns the main controller
      */
     public static MainDocumentController getController() {
@@ -204,6 +204,7 @@ public class MainDocumentController implements Initializable {
 
     /**
      * Sets the list of items using Clothing objects passed from add or edit controllers
+     *
      * @param c
      */
     public void setList(Clothing c) {
@@ -214,6 +215,7 @@ public class MainDocumentController implements Initializable {
 
     /**
      * Creates the current list of items using the local List.txt file
+     *
      * @return the current list of clothing items from a text file
      */
     public ObservableList<Clothing> getList() {
@@ -243,7 +245,7 @@ public class MainDocumentController implements Initializable {
         } catch (IOException e) {
             System.out.println(e);
         }
-        
+
         //add the ArrayList to the ObservableList
         ObservableList<Clothing> list = FXCollections.observableArrayList(clist);
 
@@ -269,7 +271,7 @@ public class MainDocumentController implements Initializable {
     }
 
     /**
-     * 
+     *
      * @param event Clicking Add opens a new Add Item window
      */
     @FXML
@@ -295,7 +297,7 @@ public class MainDocumentController implements Initializable {
     }
 
     /**
-     * 
+     *
      * @param event Calls the showEdit() method
      */
     @FXML
@@ -310,7 +312,7 @@ public class MainDocumentController implements Initializable {
     public void showEdit() {
 
         try {
-            
+
             if (!items.getSelectionModel().isEmpty()) {
                 // Loading the modify part window
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("EditItems.fxml"));
@@ -329,7 +331,7 @@ public class MainDocumentController implements Initializable {
                 stage.setTitle("Edit Item");
                 stage.setScene(new Scene(root));
                 stage.show();
-                
+
             } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
@@ -343,7 +345,7 @@ public class MainDocumentController implements Initializable {
     }
 
     /**
-     * 
+     *
      * @param event Clicking Remove deletes the selected row of object
      */
     @FXML
@@ -381,433 +383,452 @@ public class MainDocumentController implements Initializable {
     }
 
     /**
-     * 
+     *
      * @param event Type filters for the clothing item list
      */
     @FXML
     private void typeFilterHandle(ActionEvent event) {
-        
+
         try {
-        // takes a selection and compares it with parameters in observableList using addListener
-        typeFilter.getSelectionModel().selectedItemProperty()
-                .addListener((ObservableValue<? extends Type> observable, Type oldValue, Type newValue) -> {
-                    // filters for all Clothing objects
-                    filter.setPredicate((Predicate<? super Clothing>) (Clothing c) -> {
-                        if (null != typeFilter.getSelectionModel().getSelectedItem()) // when DRESS type selection is made, do something
-                        {
-                            switch (typeFilter.getSelectionModel().getSelectedItem()) {
-                                case Dress:
-                                    // search all items currently in ArrayList list
-                                    for (Clothing list1 : list) {
-                                        // if type of clothing object is DRESS then return true to be sorted
-                                        if (c.getType() == Type.Dress) {
-                                            return true;
-                                        }
-                                    }
-                                    break;
+            // takes a selection and compares it with parameters in observableList using addListener
+            //  typeFilter.getSelectionModel().selectedItemProperty()
+            //         .addListener((ObservableValue<? extends Type> observable, Type oldValue, Type newValue) -> {
+            // filters for all Clothing objects
+            filter.setPredicate((Predicate<? super Clothing>) (Clothing c) -> {
+                if (null != typeFilter.getSelectionModel().getSelectedItem()) // when DRESS type selection is made, do something
+                {
 
-                                case Shorts:
-                                    for (Clothing list1 : list) {
-                                        if (c.getType() == Type.Shorts) {
-                                            return true;
-                                        }
-                                    }
-                                    break;
+                    genderFilter.setDisable(true);
+                    sizeFilter.setDisable(true);
+                    colorFilter.setDisable(true);
 
-                                case Skirts:
-                                    for (Clothing list1 : list) {
-                                        if (c.getType() == Type.Skirts) {
-                                            return true;
-                                        }
-                                    }
-                                    break;
-
-                                case Shirts:
-                                    for (Clothing list1 : list) {
-                                        if (c.getType() == Type.Shirts) {
-                                            return true;
-                                        }
-                                    }
-                                    break;
-
-                                case Outerwear:
-                                    for (Clothing list1 : list) {
-                                        if (c.getType() == Type.Outerwear) {
-                                            return true;
-                                        }
-                                    }
-                                    break;
-
-                                case Jeans:
-                                    for (Clothing list1 : list) {
-                                        if (c.getType() == Type.Jeans) {
-                                            return true;
-                                        }
-                                    }
-                                    break;
-
-                                case Sleepwear:
-                                    for (Clothing list1 : list) {
-                                        if (c.getType() == Type.Sleepwear) {
-                                            return true;
-                                        }
-                                    }
-                                    break;
-                                case Pants:
-                                    for (Clothing list1 : list) {
-                                        if (c.getType() == Type.Pants) {
-                                            return true;
-                                        }
-                                    }
-                                    break;
-
-                                case Sweaters:
-                                    for (Clothing list1 : list) {
-                                        if (c.getType() == Type.Sweaters) {
-                                            return true;
-                                        }
-                                    }
-                                    break;
-
-                                default:
-                                    break;
+                    switch (typeFilter.getSelectionModel().getSelectedItem()) {
+                        case Dress:
+                            // search all items currently in ArrayList list
+                            for (Clothing list1 : list) {
+                                // if type of clothing object is DRESS then return true to be sorted
+                                if (c.getType() == Type.Dress) {
+                                    return true;
+                                }
                             }
-                        }
-                        return false;
-                    });
-                });
-        // returns a new SortedList with FilteredList applied using the combobox parameters
-        SortedList sort = new SortedList(filter);
-        sort.comparatorProperty().bind(items.comparatorProperty());
-        items.setItems(sort);
-        // clears filters after each selection
-        genderFilter.setValue(null);
-        sizeFilter.setValue(null);
-        colorFilter.setValue(null);
-        searchField.setText("");
-    } catch (Exception e) {
+                            break;
+
+                        case Shorts:
+                            for (Clothing list1 : list) {
+                                if (c.getType() == Type.Shorts) {
+                                    return true;
+                                }
+                            }
+                            break;
+
+                        case Skirts:
+                            for (Clothing list1 : list) {
+                                if (c.getType() == Type.Skirts) {
+                                    return true;
+                                }
+                            }
+                            break;
+
+                        case Shirts:
+                            for (Clothing list1 : list) {
+                                if (c.getType() == Type.Shirts) {
+                                    return true;
+                                }
+                            }
+                            break;
+
+                        case Outerwear:
+                            for (Clothing list1 : list) {
+                                if (c.getType() == Type.Outerwear) {
+                                    return true;
+                                }
+                            }
+                            break;
+
+                        case Jeans:
+                            for (Clothing list1 : list) {
+                                if (c.getType() == Type.Jeans) {
+                                    return true;
+                                }
+                            }
+                            break;
+
+                        case Sleepwear:
+                            for (Clothing list1 : list) {
+                                if (c.getType() == Type.Sleepwear) {
+                                    return true;
+                                }
+                            }
+                            break;
+                        case Pants:
+                            for (Clothing list1 : list) {
+                                if (c.getType() == Type.Pants) {
+                                    return true;
+                                }
+                            }
+                            break;
+
+                        case Sweaters:
+                            for (Clothing list1 : list) {
+                                if (c.getType() == Type.Sweaters) {
+                                    return true;
+                                }
+                            }
+                            break;
+
+                        default:
+                            break;
+                    }
+                }
+                return false;
+            });
+            //********** });
+            // returns a new SortedList with FilteredList applied using the combobox parameters
+            SortedList sort = new SortedList(filter);
+            sort.comparatorProperty().bind(items.comparatorProperty());
+            items.setItems(sort);
+            // clears filters after each selection
+            genderFilter.setValue(null);
+            sizeFilter.setValue(null);
+            colorFilter.setValue(null);
+            searchField.setText("");
+        } catch (Exception e) {
             System.out.println(e);
-    }
+        }
     }
 
     /**
-     * 
+     *
      * @param event Gender filter for the clothing item list
      */
     @FXML
     private void genderFilterHandle(ActionEvent event) {
         try {
-        genderFilter.getSelectionModel().selectedItemProperty()
-                .addListener((observable, oldValue, newValue) -> {
-                    filter.setPredicate((Predicate<? super Clothing>) (Clothing c) -> {
-                        if (null != genderFilter.getSelectionModel().getSelectedItem()) {
-                            switch (genderFilter.getSelectionModel().getSelectedItem()) {
-                                case Male:
-                                    for (Clothing list1 : list) {
-                                        if (c.getGender() == Gender.Male) {
-                                            return true;
-                                        }
-                                    }
-                                    break;
+            // genderFilter.getSelectionModel().selectedItemProperty()
+            //         .addListener((observable, oldValue, newValue) -> {
+            filter.setPredicate((Predicate<? super Clothing>) (Clothing c) -> {
+                if (null != genderFilter.getSelectionModel().getSelectedItem()) {
+                    typeFilter.setDisable(true);
+                    sizeFilter.setDisable(true);
+                    colorFilter.setDisable(true);
 
-                                case Female:
-                                    for (Clothing list1 : list) {
-                                        if (c.getGender() == Gender.Female) {
-                                            return true;
-                                        }
-                                    }
-                                    break;
-
-                                case Girls:
-                                    for (Clothing list1 : list) {
-                                        if (c.getGender() == Gender.Girls) {
-                                            return true;
-                                        }
-                                    }
-                                    break;
-
-                                case Boys:
-                                    for (Clothing list1 : list) {
-                                        if (c.getGender() == Gender.Boys) {
-                                            return true;
-                                        }
-                                    }
-                                    break;
-
-                                default:
-                                    break;
+                    switch (genderFilter.getSelectionModel().getSelectedItem()) {
+                        case Male:
+                            for (Clothing list1 : list) {
+                                if (c.getGender() == Gender.Male) {
+                                    return true;
+                                }
                             }
-                        }
-                        return false;
-                    });
-                });
-        SortedList sort = new SortedList(filter);
-        sort.comparatorProperty().bind(items.comparatorProperty());
-        items.setItems(sort);
-        typeFilter.setValue(null);
-        sizeFilter.setValue(null);
-        colorFilter.setValue(null);
-        searchField.setText("");
-    } catch (Exception e) {
+                            break;
+
+                        case Female:
+                            for (Clothing list1 : list) {
+                                if (c.getGender() == Gender.Female) {
+                                    return true;
+                                }
+                            }
+                            break;
+
+                        case Girls:
+                            for (Clothing list1 : list) {
+                                if (c.getGender() == Gender.Girls) {
+                                    return true;
+                                }
+                            }
+                            break;
+
+                        case Boys:
+                            for (Clothing list1 : list) {
+                                if (c.getGender() == Gender.Boys) {
+                                    return true;
+                                }
+                            }
+                            break;
+
+                        default:
+                            break;
+                    }
+                }
+                return false;
+            });
+            // });
+            SortedList sort = new SortedList(filter);
+            sort.comparatorProperty().bind(items.comparatorProperty());
+            items.setItems(sort);
+            typeFilter.setValue(null);
+            sizeFilter.setValue(null);
+            colorFilter.setValue(null);
+            searchField.setText("");
+        } catch (Exception e) {
             System.out.println(e);
-    }
+        }
     }
 
     /**
-     * 
+     *
      * @param event Size filter for clothing item list
      */
     @FXML
     private void sizeFilterHandle(ActionEvent event) {
         try {
-        sizeFilter.getSelectionModel().selectedItemProperty()
-                .addListener((observable, oldValue, newValue) -> {
-                    filter.setPredicate((Predicate<? super Clothing>) (Clothing c) -> {
-                        if (null != sizeFilter.getSelectionModel().getSelectedItem()) {
-                            switch (sizeFilter.getSelectionModel().getSelectedItem()) {
-                                case "XS":
-                                    for (Clothing list1 : list) {
-                                        if ("XS".equals(c.getSize())) {
-                                            return true;
-                                        }
-                                    }
-                                    break;
+            //sizeFilter.getSelectionModel().selectedItemProperty()
+            //      .addListener((observable, oldValue, newValue) -> {
+            filter.setPredicate((Predicate<? super Clothing>) (Clothing c) -> {
+                if (null != sizeFilter.getSelectionModel().getSelectedItem()) {
+                    typeFilter.setDisable(true);
+                    genderFilter.setDisable(true);
+                    colorFilter.setDisable(true);
 
-                                case "S":
-                                    for (Clothing list1 : list) {
-                                        if ("S".equals(c.getSize())) {
-                                            return true;
-                                        }
-                                    }
-                                    break;
-
-                                case "M":
-                                    for (Clothing list1 : list) {
-                                        if ("M".equals(c.getSize())) {
-                                            return true;
-                                        }
-                                    }
-                                    break;
-
-                                case "L":
-                                    for (Clothing list1 : list) {
-                                        if ("L".equals(c.getSize())) {
-                                            return true;
-                                        }
-                                    }
-                                    break;
-
-                                case "XL":
-                                    for (Clothing list1 : list) {
-                                        if ("XL".equals(c.getSize())) {
-                                            return true;
-                                        }
-                                    }
-                                    break;
-
-                                case "0":
-                                    for (Clothing list1 : list) {
-                                        if ("0".equals(c.getSize())) {
-                                            return true;
-                                        }
-                                    }
-                                    break;
-
-                                case "2":
-                                    for (Clothing list1 : list) {
-                                        if ("2".equals(c.getSize())) {
-                                            return true;
-                                        }
-                                    }
-                                    break;
-
-                                case "4":
-                                    for (Clothing list1 : list) {
-                                        if ("4".equals(c.getSize())) {
-                                            return true;
-                                        }
-                                    }
-                                    break;
-
-                                case "6":
-                                    for (Clothing list1 : list) {
-                                        if ("6".equals(c.getSize())) {
-                                            return true;
-                                        }
-                                    }
-                                    break;
-
-                                case "8":
-                                    for (Clothing list1 : list) {
-                                        if ("8".equals(c.getSize())) {
-                                            return true;
-                                        }
-                                    }
-                                    break;
-
-                                case "10":
-                                    for (Clothing list1 : list) {
-                                        if ("10".equals(c.getSize())) {
-                                            return true;
-                                        }
-                                    }
-                                    break;
-
-                                case "12":
-                                    for (Clothing list1 : list) {
-                                        if ("12".equals(c.getSize())) {
-                                            return true;
-                                        }
-                                    }
-                                    break;
-
-                                case "28W":
-                                    for (Clothing list1 : list) {
-                                        if ("28W".equals(c.getSize())) {
-                                            return true;
-                                        }
-                                    }
-                                    break;
-
-                                case "30W":
-                                    for (Clothing list1 : list) {
-                                        if ("30W".equals(c.getSize())) {
-                                            return true;
-                                        }
-                                    }
-                                    break;
-
-                                case "32W":
-                                    for (Clothing list1 : list) {
-                                        if ("32W".equals(c.getSize())) {
-                                            return true;
-                                        }
-                                    }
-                                    break;
-
-                                case "34W":
-                                    for (Clothing list1 : list) {
-                                        if ("34W".equals(c.getSize())) {
-                                            return true;
-                                        }
-                                    }
-                                    break;
-
-                                case "36W":
-                                    for (Clothing list1 : list) {
-                                        if ("36W".equals(c.getSize())) {
-                                            return true;
-                                        }
-                                    }
-                                    break;
-
-                                default:
-                                    break;
+                    switch (sizeFilter.getSelectionModel().getSelectedItem()) {
+                        case "XS":
+                            for (Clothing list1 : list) {
+                                if ("XS".equals(c.getSize())) {
+                                    return true;
+                                }
                             }
-                        }
-                        return false;
-                    });
-                });
-        SortedList sort = new SortedList(filter);
-        sort.comparatorProperty().bind(items.comparatorProperty());
-        items.setItems(sort);
-        typeFilter.setValue(null);
-        genderFilter.setValue(null);
-        colorFilter.setValue(null);
-        searchField.setText("");
-    } catch (Exception e) {
+                            break;
+
+                        case "S":
+                            for (Clothing list1 : list) {
+                                if ("S".equals(c.getSize())) {
+                                    return true;
+                                }
+                            }
+                            break;
+
+                        case "M":
+                            for (Clothing list1 : list) {
+                                if ("M".equals(c.getSize())) {
+                                    return true;
+                                }
+                            }
+                            break;
+
+                        case "L":
+                            for (Clothing list1 : list) {
+                                if ("L".equals(c.getSize())) {
+                                    return true;
+                                }
+                            }
+                            break;
+
+                        case "XL":
+                            for (Clothing list1 : list) {
+                                if ("XL".equals(c.getSize())) {
+                                    return true;
+                                }
+                            }
+                            break;
+
+                        case "0":
+                            for (Clothing list1 : list) {
+                                if ("0".equals(c.getSize())) {
+                                    return true;
+                                }
+                            }
+                            break;
+
+                        case "2":
+                            for (Clothing list1 : list) {
+                                if ("2".equals(c.getSize())) {
+                                    return true;
+                                }
+                            }
+                            break;
+
+                        case "4":
+                            for (Clothing list1 : list) {
+                                if ("4".equals(c.getSize())) {
+                                    return true;
+                                }
+                            }
+                            break;
+
+                        case "6":
+                            for (Clothing list1 : list) {
+                                if ("6".equals(c.getSize())) {
+                                    return true;
+                                }
+                            }
+                            break;
+
+                        case "8":
+                            for (Clothing list1 : list) {
+                                if ("8".equals(c.getSize())) {
+                                    return true;
+                                }
+                            }
+                            break;
+
+                        case "10":
+                            for (Clothing list1 : list) {
+                                if ("10".equals(c.getSize())) {
+                                    return true;
+                                }
+                            }
+                            break;
+
+                        case "12":
+                            for (Clothing list1 : list) {
+                                if ("12".equals(c.getSize())) {
+                                    return true;
+                                }
+                            }
+                            break;
+
+                        case "28W":
+                            for (Clothing list1 : list) {
+                                if ("28W".equals(c.getSize())) {
+                                    return true;
+                                }
+                            }
+                            break;
+
+                        case "30W":
+                            for (Clothing list1 : list) {
+                                if ("30W".equals(c.getSize())) {
+                                    return true;
+                                }
+                            }
+                            break;
+
+                        case "32W":
+                            for (Clothing list1 : list) {
+                                if ("32W".equals(c.getSize())) {
+                                    return true;
+                                }
+                            }
+                            break;
+
+                        case "34W":
+                            for (Clothing list1 : list) {
+                                if ("34W".equals(c.getSize())) {
+                                    return true;
+                                }
+                            }
+                            break;
+
+                        case "36W":
+                            for (Clothing list1 : list) {
+                                if ("36W".equals(c.getSize())) {
+                                    return true;
+                                }
+                            }
+                            break;
+
+                        default:
+                            break;
+                    }
+                }
+                return false;
+            });
+            //  });
+            SortedList sort = new SortedList(filter);
+            sort.comparatorProperty().bind(items.comparatorProperty());
+            items.setItems(sort);
+            typeFilter.setValue(null);
+            genderFilter.setValue(null);
+            colorFilter.setValue(null);
+            searchField.setText("");
+        } catch (Exception e) {
             System.out.println(e);
-    }
+        }
     }
 
     /**
-     * 
+     *
      * @param event Color filter for the clothing item list
      */
     @FXML
     private void colorFilterHandle(ActionEvent event) {
         try {
-        colorFilter.getSelectionModel().selectedItemProperty()
-                .addListener((observable, oldValue, newValue) -> {
-                    filter.setPredicate((Predicate<? super Clothing>) (Clothing c) -> {
-                        if (null != colorFilter.getSelectionModel().getSelectedItem()) {
-                            switch (colorFilter.getSelectionModel().getSelectedItem()) {
-                                case Red:
-                                    for (Clothing list1 : list) {
-                                        if (c.getColor() == Colors.Red) {
-                                            return true;
+          //  colorFilter.getSelectionModel().selectedItemProperty()
+            //        .addListener((observable, oldValue, newValue) -> {
+                        filter.setPredicate((Predicate<? super Clothing>) (Clothing c) -> {
+                            if (null != colorFilter.getSelectionModel().getSelectedItem()) {
+              typeFilter.setDisable(true);
+        genderFilter.setDisable(true);
+        sizeFilter.setDisable(true);
+       
+                                
+                                switch (colorFilter.getSelectionModel().getSelectedItem()) {
+                                    case Red:
+                                        for (Clothing list1 : list) {
+                                            if (c.getColor() == Colors.Red) {
+                                                return true;
+                                            }
                                         }
-                                    }
-                                    break;
+                                        break;
 
-                                case Orange:
-                                    for (Clothing list1 : list) {
-                                        if (c.getColor() == Colors.Orange) {
-                                            return true;
+                                    case Orange:
+                                        for (Clothing list1 : list) {
+                                            if (c.getColor() == Colors.Orange) {
+                                                return true;
+                                            }
                                         }
-                                    }
-                                    break;
+                                        break;
 
-                                case Yellow:
-                                    for (Clothing list1 : list) {
-                                        if (c.getColor() == Colors.Yellow) {
-                                            return true;
+                                    case Yellow:
+                                        for (Clothing list1 : list) {
+                                            if (c.getColor() == Colors.Yellow) {
+                                                return true;
+                                            }
                                         }
-                                    }
-                                    break;
+                                        break;
 
-                                case Green:
-                                    for (Clothing list1 : list) {
-                                        if (c.getColor() == Colors.Green) {
-                                            return true;
+                                    case Green:
+                                        for (Clothing list1 : list) {
+                                            if (c.getColor() == Colors.Green) {
+                                                return true;
+                                            }
                                         }
-                                    }
-                                    break;
+                                        break;
 
-                                case Blue:
-                                    for (Clothing list1 : list) {
-                                        if (c.getColor() == Colors.Blue) {
-                                            return true;
+                                    case Blue:
+                                        for (Clothing list1 : list) {
+                                            if (c.getColor() == Colors.Blue) {
+                                                return true;
+                                            }
                                         }
-                                    }
-                                    break;
+                                        break;
 
-                                case White:
-                                    for (Clothing list1 : list) {
-                                        if (c.getColor() == Colors.White) {
-                                            return true;
+                                    case White:
+                                        for (Clothing list1 : list) {
+                                            if (c.getColor() == Colors.White) {
+                                                return true;
+                                            }
                                         }
-                                    }
-                                    break;
+                                        break;
 
-                                case Black:
-                                    for (Clothing list1 : list) {
-                                        if (c.getColor() == Colors.Black) {
-                                            return true;
+                                    case Black:
+                                        for (Clothing list1 : list) {
+                                            if (c.getColor() == Colors.Black) {
+                                                return true;
+                                            }
                                         }
-                                    }
-                                    break;
+                                        break;
 
-                                default:
-                                    break;
+                                    default:
+                                        break;
+                                }
                             }
-                        }
-                        return false;
-                    });
-                });
-        SortedList sort = new SortedList(filter);
-        sort.comparatorProperty().bind(items.comparatorProperty());
-        items.setItems(sort);
-        typeFilter.setValue(null);
-        genderFilter.setValue(null);
-        sizeFilter.setValue(null);
-        searchField.setText("");
-    } catch (Exception e) {
+                            return false;
+                        });
+                   // });
+            SortedList sort = new SortedList(filter);
+            sort.comparatorProperty().bind(items.comparatorProperty());
+            items.setItems(sort);
+            typeFilter.setValue(null);
+            genderFilter.setValue(null);
+            sizeFilter.setValue(null);
+            searchField.setText("");
+        } catch (Exception e) {
             System.out.println(e);
+        }
     }
-    }
+
     /**
-     * 
+     *
      * @param event Saves the list of items as a text file in local storage
      */
     @FXML
@@ -841,7 +862,7 @@ public class MainDocumentController implements Initializable {
     }
 
     /**
-     * 
+     *
      * @param event Opening the file sets the table list as the text file opened then calculates the values
      */
     @FXML
@@ -852,7 +873,7 @@ public class MainDocumentController implements Initializable {
     }
 
     /**
-     * 
+     *
      * @return Open method to read a file from a selected text file
      */
     private ObservableList<Clothing> open() {
@@ -897,11 +918,16 @@ public class MainDocumentController implements Initializable {
     }
 
     /**
-     * 
+     *
      * @param event Resets the filter and search bar
      */
     @FXML
     private void resetHandle(ActionEvent event) {
+
+        typeFilter.setDisable(false);
+        genderFilter.setDisable(false);
+        sizeFilter.setDisable(false);
+        colorFilter.setDisable(false);
 
         typeFilter.setValue(null);
         genderFilter.setValue(null);
@@ -912,7 +938,7 @@ public class MainDocumentController implements Initializable {
     }
 
     /**
-     * 
+     *
      * @param event Search function for the search bar
      */
     @FXML
@@ -945,7 +971,5 @@ public class MainDocumentController implements Initializable {
         items.setItems(sort);
 
     }
-    
-    
-    
+
 }
