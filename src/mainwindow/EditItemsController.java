@@ -175,6 +175,18 @@ public class EditItemsController implements Initializable {
 
         //checks if the fields are completed, prompt if not
         try {
+                  if ((genderCombo.getSelectionModel().getSelectedItem() == null) || 
+                            (colorCombo.getSelectionModel().getSelectedItem() == null) || 
+                            (sizeCombo.getSelectionModel().getSelectedItem() == null) || 
+                            (idLabel.getText().length() <= 0) || 
+                            (priceLabel.getText().length() <= 0) || 
+                            (quantityLabel.getText().length() <= 0))
+                            {
+                     confirmation.setText("Please fill in the fields");
+
+            }
+            else {
+            
             if ((Integer.parseInt(idLabel.getText()) <= 0) || Double.parseDouble(priceLabel.getText()) < 0
                     || Integer.parseInt(quantityLabel.getText()) < 0) {
                 confirmation.setText("Please enter positive numbers");
@@ -207,14 +219,7 @@ public class EditItemsController implements Initializable {
                     alert.showAndWait();
                 }
 
-            } else {
-                if (typeCombo.getSelectionModel().isEmpty() || colorCombo.getSelectionModel().isEmpty()
-                        || genderCombo.getSelectionModel().isEmpty()
-                        || priceLabel.getText().isEmpty() || quantityLabel.getText().isEmpty()
-                        || sizeCombo.getSelectionModel().isEmpty() || idLabel.getText().isEmpty()) {
-                    confirmation.setText("Please fill in the fields");
-
-                }
+            }
             }
 
         } catch (NumberFormatException e) {
@@ -225,9 +230,8 @@ public class EditItemsController implements Initializable {
             alert.showAndWait();
             System.out.println(e);
         }
-
     }
-
+    
     /**
      * Closing the current stage
      * @param event Cancels the current window

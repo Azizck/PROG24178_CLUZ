@@ -82,7 +82,7 @@
                <children>
                   <Label fx:id="confirmation" textAlignment="CENTER" textFill="#d00f0f">
                      <font>
-                        <Font name="System Bold" size="23.0" />
+                        <Font size="19.0" />
                      </font>
                   </Label>
                </children>
