@@ -32,7 +32,7 @@
                         <Insets bottom="10.0" />
                      </VBox.margin>
                   </ImageView>
-                  <Button fx:id="openFile" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#openFileHandle" prefHeight="63.0" prefWidth="242.0" text="Open File" textFill="WHITE">
+                  <Button fx:id="openFile" alignment="BASELINE_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#openFileHandle" prefHeight="63.0" prefWidth="248.0" text="  Open File" textFill="WHITE">
                      <font>
                         <Font size="20.0" />
                      </font>
@@ -47,37 +47,64 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button fx:id="addBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#addHandle" prefHeight="70.0" prefWidth="242.0" text="Add" textFill="WHITE">
+                  <Button fx:id="addBtn" alignment="BASELINE_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#addHandle" prefHeight="62.0" prefWidth="248.0" text="    Add " textFill="WHITE">
                      <font>
                         <Font size="20.0" />
                      </font>
                      <VBox.margin>
                         <Insets left="10.0" right="10.0" top="15.0" />
                      </VBox.margin>
+                     <graphic>
+                        <ImageView fitHeight="73.0" fitWidth="49.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@addSymbol.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
                   </Button>
-                  <Button fx:id="editBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#editHandle" prefHeight="69.0" prefWidth="242.0" text="Edit" textFill="WHITE">
+                  <Button fx:id="editBtn" alignment="BASELINE_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#editHandle" prefHeight="69.0" prefWidth="242.0" text="    Edit" textFill="WHITE">
                      <font>
                         <Font size="20.0" />
                      </font>
                      <VBox.margin>
                         <Insets left="10.0" right="10.0" top="15.0" />
                      </VBox.margin>
+                     <graphic>
+                        <ImageView fitHeight="73.0" fitWidth="49.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@editSymbol.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
                   </Button>
-                  <Button fx:id="removeBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#removeHandle" prefHeight="60.0" prefWidth="190.0" text="Remove" textFill="WHITE">
+                  <Button fx:id="removeBtn" alignment="BASELINE_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#removeHandle" prefHeight="60.0" prefWidth="190.0" text="    Remove" textFill="WHITE">
                      <font>
                         <Font size="20.0" />
                      </font>
                      <VBox.margin>
                         <Insets left="10.0" right="10.0" top="15.0" />
                      </VBox.margin>
+                     <graphic>
+                        <ImageView fitHeight="73.0" fitWidth="49.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@removeSymbol.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
                   </Button>
-                  <Button fx:id="saveFile" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#saveHandle" prefHeight="60.0" prefWidth="190.0" text="Save File" textFill="WHITE">
+                  <Button fx:id="saveFile" alignment="BASELINE_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#saveHandle" prefHeight="60.0" prefWidth="190.0" text="  Save File" textFill="WHITE">
                      <font>
                         <Font size="20.0" />
                      </font>
                      <VBox.margin>
                         <Insets left="10.0" right="10.0" top="15.0" />
                      </VBox.margin>
+                     <graphic>
+                        <ImageView fitHeight="73.0" fitWidth="49.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@saveSymbol.png" />
+                           </image></ImageView>
+                     </graphic>
                   </Button>
                </children>
                <padding>

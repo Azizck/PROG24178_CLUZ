@@ -90,7 +90,8 @@ public class LoginController implements Initializable {
 			Scene scene = new Scene(root);
 			Stage stage = new Stage();
 			stage.initModality(Modality.APPLICATION_MODAL);
-			
+			stage.setMinWidth(1278);
+			stage.setMinHeight(734);	
 			stage.setTitle("CLÜZ");
 			stage.setScene(scene);
                          //stage.initStyle(StageStyle.UNDECORATED);

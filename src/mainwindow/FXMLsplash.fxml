@@ -9,9 +9,9 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="splashScene" minHeight="525.0" minWidth="865.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #333333;" stylesheets="@Splash.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mainwindow.FXMLsplashController">
+<AnchorPane id="AnchorPane" fx:id="splashScene" minHeight="738.0" minWidth="178.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="738.0" prefWidth="1278.0" style="-fx-background-color: #333333;" stylesheets="@Splash.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mainwindow.FXMLsplashController">
    <children>
-      <HBox alignment="CENTER" layoutX="55.0" layoutY="104.0" prefHeight="297.0" prefWidth="756.0">
+      <HBox alignment="CENTER" layoutX="-1.0" layoutY="-6.0" prefHeight="405.0" prefWidth="701.0">
          <children>
             <ImageView fitHeight="272.0" fitWidth="274.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -36,5 +36,9 @@
             </Label>
          </children>
       </HBox>
+      <ImageView fitHeight="764.0" fitWidth="1392.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@newImgSplash.jpg" />
+         </image></ImageView>
    </children>
 </AnchorPane>

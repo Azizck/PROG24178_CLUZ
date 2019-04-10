@@ -284,6 +284,7 @@ public class MainDocumentController implements Initializable {
             AddItemsController addItemsController = new FXMLLoader().getController();
 
             Scene scene = new Scene(root);
+	    scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle("Add Items");
@@ -329,7 +330,9 @@ public class MainDocumentController implements Initializable {
                 //keeps the new window focused
                 stage.initModality(Modality.APPLICATION_MODAL);
                 stage.setTitle("Edit Item");
-                stage.setScene(new Scene(root));
+		Scene scene = new Scene(root);
+                stage.setScene(scene);
+		scene.getStylesheets().add(getClass().getResource("style_1.css").toExternalForm());
                 stage.show();
 
             } else {
