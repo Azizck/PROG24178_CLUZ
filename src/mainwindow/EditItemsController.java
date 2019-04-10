@@ -291,12 +291,14 @@ public class EditItemsController implements Initializable {
         priceLabel.setText(mainController.list.get(indexOnEditing).getPrice() + "");
 
         //create an image based on the local storage location
+        if (mainController.list.get(indexOnEditing).getURL() != null) {
         File file = new File(mainController.list.get(indexOnEditing).getURL());
         url = file.toURI().toString();
         myImage = new Image(url);
         image.setImage(myImage);
         this.url = url;
 
+        }
         //displays the total value of the selected product
         double v = (mainController.list.get(indexOnEditing).getPrice() * mainController.list.get(indexOnEditing).getQuantity());
         totalValue.setText("$" + String.format("%.2f", v));

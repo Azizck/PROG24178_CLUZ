@@ -5,7 +5,9 @@
  */
 package mainwindow;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.animation.PauseTransition;
@@ -14,6 +16,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -21,7 +25,7 @@ import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 /**
- * FXML Controller class
+ * Splash effects controller class
  *
  * @author Aziz
  */
@@ -59,14 +63,15 @@ public class FXMLsplashController implements Initializable {
 			scene.getStylesheets().add("mainStyle.css");
 
 
+                        //login.setMinHeight(560);
+                        //login.setMinWidth(400);
                         // swap the scenes 
 			login.setScene(scene);
                          login.show();
-			
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-
+ 
 }

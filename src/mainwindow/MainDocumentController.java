@@ -386,6 +386,8 @@ public class MainDocumentController implements Initializable {
      */
     @FXML
     private void typeFilterHandle(ActionEvent event) {
+        
+        try {
         // takes a selection and compares it with parameters in observableList using addListener
         typeFilter.getSelectionModel().selectedItemProperty()
                 .addListener((ObservableValue<? extends Type> observable, Type oldValue, Type newValue) -> {
@@ -483,6 +485,9 @@ public class MainDocumentController implements Initializable {
         sizeFilter.setValue(null);
         colorFilter.setValue(null);
         searchField.setText("");
+    } catch (Exception e) {
+            System.out.println(e);
+    }
     }
 
     /**
@@ -491,6 +496,7 @@ public class MainDocumentController implements Initializable {
      */
     @FXML
     private void genderFilterHandle(ActionEvent event) {
+        try {
         genderFilter.getSelectionModel().selectedItemProperty()
                 .addListener((observable, oldValue, newValue) -> {
                     filter.setPredicate((Predicate<? super Clothing>) (Clothing c) -> {
@@ -542,6 +548,9 @@ public class MainDocumentController implements Initializable {
         sizeFilter.setValue(null);
         colorFilter.setValue(null);
         searchField.setText("");
+    } catch (Exception e) {
+            System.out.println(e);
+    }
     }
 
     /**
@@ -550,6 +559,7 @@ public class MainDocumentController implements Initializable {
      */
     @FXML
     private void sizeFilterHandle(ActionEvent event) {
+        try {
         sizeFilter.getSelectionModel().selectedItemProperty()
                 .addListener((observable, oldValue, newValue) -> {
                     filter.setPredicate((Predicate<? super Clothing>) (Clothing c) -> {
@@ -705,6 +715,9 @@ public class MainDocumentController implements Initializable {
         genderFilter.setValue(null);
         colorFilter.setValue(null);
         searchField.setText("");
+    } catch (Exception e) {
+            System.out.println(e);
+    }
     }
 
     /**
@@ -713,6 +726,7 @@ public class MainDocumentController implements Initializable {
      */
     @FXML
     private void colorFilterHandle(ActionEvent event) {
+        try {
         colorFilter.getSelectionModel().selectedItemProperty()
                 .addListener((observable, oldValue, newValue) -> {
                     filter.setPredicate((Predicate<? super Clothing>) (Clothing c) -> {
@@ -788,8 +802,10 @@ public class MainDocumentController implements Initializable {
         genderFilter.setValue(null);
         sizeFilter.setValue(null);
         searchField.setText("");
+    } catch (Exception e) {
+            System.out.println(e);
     }
-
+    }
     /**
      * 
      * @param event Saves the list of items as a text file in local storage
@@ -929,4 +945,7 @@ public class MainDocumentController implements Initializable {
         items.setItems(sort);
 
     }
+    
+    
+    
 }

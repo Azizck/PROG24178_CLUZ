@@ -31,7 +31,7 @@ public class MainWindow extends Application {
 			//stage.setMinWidth(865);
 			//stage.setMinHeight(525);
 			stage.setScene(scene);
-			stage.setTitle("Cluz");
+			stage.setTitle("CLÜZ");
 			// test 
 			//stage.initStyle(StageStyle.UNDECORATED);
 			stage.show();
