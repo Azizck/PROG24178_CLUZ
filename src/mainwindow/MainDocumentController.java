@@ -234,7 +234,9 @@ public class MainDocumentController implements Initializable {
                         names[3], Colors.valueOf(names[4]),
                         Double.parseDouble(names[5]),
                         Integer.parseInt(names[6]));
+                if (names[7] != null) {
                 c.setURL(names[7]);
+                }
                 clist.add(c);
             }
 
@@ -891,7 +893,9 @@ public class MainDocumentController implements Initializable {
                         names[3], Colors.valueOf(names[4]),
                         Double.parseDouble(names[5]),
                         Integer.parseInt(names[6]));
+                if (names[7] != null) {
                 c.setURL(names[7]);
+                }
                 clist.add(c);
             }
 

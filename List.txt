@@ -1,10 +1,7 @@
-1, Dress, Girls, 0, Red, 34.99, 5
-2, Jeans, Male, 28W, Red, 49.99, 10
-3, Outerwear, Boys, XS, Red, 59.99, 5
-4, Pants, Girls, 28W, Red, 23.5, 4
-5, Jeans, Female, 28W, Red, 29.99, 9
-6, Shirts, Female, XS, Red, 10.99, 500
-7, Shorts, Female, 30W, Yellow, 29.99, 10
-8, Skirts, Girls, 2, Green, 10.99, 5
-9, Sleepwear, Boys, S, Orange, 10.99
-10, Sweaters, Boys, S, White, 49.99, 10
+1, Jeans, Female, 30W, Orange, 12.99, 5, null
+2, Jeans, Female, 28W, Red, 19.99, 99, null
+3, Outerwear, Female, S, Orange, 29.99, 10, null
+4, Pants, Male, 28W, Orange, 24.99, 15, null
+5, Shirts, Female, L, Green, 9.99, 10, null
+6, Shorts, Girls, 28W, Orange, 10.0, 1, null
+7, Skirts, Female, 2, Yellow, 29.99, 7, null
