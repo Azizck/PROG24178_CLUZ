@@ -16,6 +16,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 /**
@@ -59,7 +60,9 @@ public class FXMLsplashController implements Initializable {
             //login.setMinHeight(560);
             //login.setMinWidth(400);
             // swap the scenes 
+	//login.initStyle(StageStyle.UNDECORATED);
             login.setScene(scene);
+
             login.show();
 
         } catch (IOException e) {

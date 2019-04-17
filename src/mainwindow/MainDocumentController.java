@@ -20,6 +20,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -32,6 +33,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -48,10 +51,13 @@ import javafx.stage.Stage;
  */
 public class MainDocumentController implements Initializable {
 
+	
+	double x,y;
     private ArrayList<Clothing> clothList;
     private Clothing selected;
     private boolean inEdit;
     private int indexOnEditing;
+   	 
 
     ObservableList<Clothing> list = FXCollections.observableArrayList();
     FilteredList filter;
@@ -105,6 +111,8 @@ public class MainDocumentController implements Initializable {
     private Label totalProducts;
     @FXML
     private Label totalValue;
+	@FXML
+	private VBox sLeftSideBar;
 
     /**
      * Initializes the variables upon starting the application.
@@ -947,15 +955,15 @@ public class MainDocumentController implements Initializable {
                     return true;
                 } else if (c.getSize().toLowerCase().contains(newValue)) {
                     return true;
-                } else if (String.valueOf(c.getProductId()).toLowerCase().contains(newValue)) {
+                } else if (String.valueOf(c.getProductId()).toLowerCase().contains(newValue.toLowerCase())) {
                     return true;
-                } else if (String.valueOf(c.getPrice()).toLowerCase().contains(newValue)) {
+                } else if (String.valueOf(c.getPrice()).toLowerCase().contains(newValue.toLowerCase())) {
                     return true;
-                } else if (String.valueOf(c.getColor()).toLowerCase().contains(newValue)) {
+                } else if (String.valueOf(c.getColor()).toLowerCase().contains(newValue.toLowerCase())) {
                     return true;
-                } else if (String.valueOf(c.getType()).toLowerCase().contains(newValue)) {
+                } else if (String.valueOf(c.getType()).toLowerCase().contains(newValue.toLowerCase())) {
                     return true;
-                } else if (String.valueOf(c.getGender()).toLowerCase().contains(newValue)) {
+                } else if (String.valueOf(c.getGender()).toLowerCase().contains(newValue.toLowerCase())) {
                     return true;
                 }
                 return false;
@@ -967,5 +975,42 @@ public class MainDocumentController implements Initializable {
         items.setItems(sort);
 
     }
+
+	@FXML
+	private void mainDragged(MouseEvent event) {
+		Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+		stage.setX(event.getScreenX()- x);
+		stage.setY(event.getScreenY()- y);
+	}
+
+	@FXML
+	private void mainPressed(MouseEvent event) {
+		event.getSceneX();
+		event.getSceneY();
+	}
+
+
+	@FXML
+	private void min(MouseEvent event) {
+		Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+		stage.setIconified(true);
+	}
+
+	@FXML
+	private void max(MouseEvent event) {
+		Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+		stage.setFullScreenExitHint(" ");
+		
+		if(stage.isFullScreen())
+		stage.setFullScreen(false);
+		else
+		stage.setFullScreen(true);
+
+	}
+	@FXML
+	private void btnClose(MouseEvent event) {
+		Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+		stage.close();
+	}
 
 }

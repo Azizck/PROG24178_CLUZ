@@ -18,6 +18,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  * Login Controller class First screen user sees Login button links to splash
@@ -80,7 +81,7 @@ public class LoginController implements Initializable {
                 stage.setMinHeight(734);
                 stage.setTitle("CLÜZ");
                 stage.setScene(scene);
-                //stage.initStyle(StageStyle.UNDECORATED);
+                stage.initStyle(StageStyle.UNDECORATED);
                 stage.show();
 
             } catch (IOException e) {
