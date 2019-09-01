@@ -15,3 +15,9 @@ functions the user can perform:
 
 
 [![Watch the video](https://azizck.github.io/PROG24178_CLUZ/mockup/mockup.png)](https://youtu.be/ykkEgaiPhBA)
+
+ <sub><sup>
+ Languages used: 
+ JAVAFX, CSS, XML
+<p>
+</sup></sub>
