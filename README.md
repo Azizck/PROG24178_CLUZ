@@ -1,5 +1,6 @@
-CLUZ</br>
-<img src="https://azizck.github.io/PROG24178_CLUZ/logo.png" width="100px"
+CLUZ
+</br>
+<img src="https://azizck.github.io/PROG24178_CLUZ/logo.png" width="100px">
 Clothing Mangment System 
 <br>
 functions the user can perform:
