@@ -9,12 +9,5 @@ Search for an item based on criterias.
 filter the displayed items.
 
 
-<img src="https://azizck.github.io/PROG24178_CLUZ/Dress.jpg"/>
-Main Page
 
-<video width="320" height="240" controls>
-  <source src="https://youtu.be/ykkEgaiPhBA" type="video/mp4">
-
-Your browser does not support the video tag.
-</video>
-[![Watch the video](https://azizck.github.io/PROG24178_CLUZ/mockup/mockup.png)](https://youtu.be/T-D1KVIuvjA)
+[![Watch the video](https://azizck.github.io/PROG24178_CLUZ/mockup/mockup.png)](https://youtu.be/ykkEgaiPhBA)
