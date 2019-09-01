@@ -7,4 +7,4 @@ Open a csv that has the data.
 Search for an item based on criterias.
 filter the displayed items.
 <img src="https://azizck.github.io/PROG24178_CLUZ/Dress.jpg"
-        style="float: left; margin-right: 10px;" />
+        />
