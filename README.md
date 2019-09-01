@@ -11,4 +11,9 @@ filter the displayed items.
 
 <img src="https://azizck.github.io/PROG24178_CLUZ/Dress.jpg"/>
 Main Page
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/ykkEgaiPhBA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<video width="320" height="240" controls>
+  <source src="https://youtu.be/ykkEgaiPhBA" type="video/mp4">
+
+Your browser does not support the video tag.
+</video>
