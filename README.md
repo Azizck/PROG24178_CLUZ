@@ -13,7 +13,7 @@ functions the user can perform:
   <li> filter the displayed items.</li>
 </ul>
 
-
+<a href="https://azizck.github.io/PROG24178_CLUZ/proposal.pdf"> click here for details </a>
 [![Watch the video](https://azizck.github.io/PROG24178_CLUZ/mockup/mockup.png)](https://youtu.be/ykkEgaiPhBA)
 
  <sub><sup>
